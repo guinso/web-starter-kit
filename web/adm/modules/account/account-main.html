@@ -1,0 +1,40 @@
+<script>
+	$(function() {
+		$('#accountTab a:first').tab('show');
+	});
+</script>
+
+<div class='container-fluid'>
+	<div class='row'>
+		<div class='col-md-12'>
+			<ul class='nav nav-tabs' id='accountTab'>
+				<li><a href='' data-toggle='tab' data-target='#account'>User Account</a></li>
+				<li><a href='' data-toggle='tab' data-target='#role'>Role</a></li>
+				<li><a href='' data-toggle='tab' data-target='#access'>Access</a></li>
+				<li><a href='' data-toggle='tab' data-target='#loginLog'>Login Activity</a></li>
+				<li><a href='' data-toggle='tab' data-target='#accountLog'>Account Log</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-md-12'>
+			<div class='tab-content'>
+				<div class='tab-pane' id='account'>
+					<div ng-include="'modules/account/account.html'"></div>
+				</div>
+				<div class='tab-pane' id='role'>
+					<div ng-include="'modules/account/role.html'"></div>
+				</div>
+				<div class='tab-pane' id='access'>
+					<div ng-include="'modules/account/access.html'"></div>
+				</div>
+				<div class='tab-pane' id='loginLog'>
+					<div ng-include="'modules/account/login-log.html'"></div>
+				</div>
+				<div class='tab-pane' id='accountLog'>
+					<div ng-include="'modules/account/account-log.html'"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

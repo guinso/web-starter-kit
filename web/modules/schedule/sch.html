@@ -1,0 +1,119 @@
+<div class='container-fluid'>
+<form name='tForm' role='form' class='form-horizontal' ng-submit='sch.updateTask()'>
+
+<h2>Task</h2>
+<div class='form-group'>
+	<div class='col-md-12'>
+		<button type='button' class='btn btn-default' ng-click='sch.addTask()'>
+			Add
+		</button>
+	</div>
+</div>
+
+<div class='form-group'>
+<table class='table table-striped table-hover'>
+	<thead>
+		<tr>
+			<th>no.</th>
+			<th>Class Name</th>
+			<th>Function Name</th>
+			<th>Description</th>
+			<th class='sm-width'>Month</th>
+			<th class='sm-width'>Day</th>
+			<th class='sm-width'>Weekday</th>
+			<th class='sm-width'>Hour</th>
+			<th class='sm-width'>Minute</th>
+			<th>Status</th>
+			<th>Record Options</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat='r in sch.tasks' ng-form='taskForm'>
+			<td>
+				<span ng-if='r.id' ng-bind='$index + 1'></span>
+				<span ng-if='!r.id'>*</span>
+			</td>
+			<td ng-class="{'has-error' : taskForm.classname.$invalid}">
+			    <input 	class='form-control' 
+			            type='text' name='classname'
+			            required
+						ng-model='r.className'>
+			</td>
+			<td ng-class="{'has-error' : taskForm.funcname.$invalid}">
+			    <input 	class='form-control' 
+			            type='text' name='funcname'
+			            required
+						ng-model='r.functionName'>
+			</td>
+			<td ng-class="{'has-error' : taskForm.desc.$invalid}">
+			    <input 	class='form-control' 
+			            type='text' name='desc'
+						ng-model='r.description'>
+			</td>
+			<td ng-class="{'has-error' : taskForm.month.$invalid}">
+			    <input 	class='form-control' 
+			            type='text' name='month'
+			            required
+						ng-model='r.month'>
+			</td>
+			<td ng-class="{'has-error' : taskForm.day.$invalid}">
+			    <input 	class='form-control' 
+			            type='text' name='day'
+			            required
+						ng-model='r.day'>
+			</td>
+			<td ng-class="{'has-error' : taskForm.weekday.$invalid}">
+			    <input 	class='form-control' 
+			            type='text' name='weekday'
+			            required
+						ng-model='r.weekday'>
+			</td>
+			<td ng-class="{'has-error' : taskForm.hour.$invalid}">
+			    <input 	class='form-control' 
+			            type='text' name='hour'
+			            required
+						ng-model='r.hour'>
+			</td>
+			<td ng-class="{'has-error' : taskForm.minute.$invalid}">
+			    <input 	class='form-control' 
+			            type='text' name='minute'
+			            required
+						ng-model='r.minute'>
+			</td>
+			<td ng-class="{'has-error' : taskForm.status.$invalid}">
+				<select ng-model='r.status' 
+						name='status' class='form-control'
+						required
+						ng-options='t.id as t.name for t in sch.taskStatus'>
+				</select>
+			</td>
+			<td ng-class="{'has-error' : taskForm.recordOpt.$invalid}">
+				<select ng-model='r.recordOpt' 
+						name='recordOpt' class='form-control'
+						required
+						ng-options='t.id as t.name for t in sch.recordOpt'>
+				</select>
+			</td>
+			<td>
+				<button type='button' 
+						class='btn btn-default' 
+						ng-click='sch.removeTask(r)'>
+					<span class='glyphicon glyphicon-remove red'></span>
+				</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div class='form-group'>
+	<div class='col-md-12'>
+		<button type='submit' class='btn btn-default pull-right'>
+			Update
+		</button>
+	</div>
+</div>
+
+</form>
+</div>

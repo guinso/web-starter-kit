@@ -1,0 +1,44 @@
+<?php 
+class LanUtility {	
+	/**
+	 * Get server's web language code
+	 */
+	public static function getLanCode() {
+		$serverId = Util::getServerUUID();
+	
+		return Util::getKeyValue('lan_code_' . $serverId, 'en');
+	}
+	
+	/**
+	 * Set server's web language code
+	 * @param String $lanCode
+	 */
+	public static function setLanCode($lanCode = 'en') {
+		$serverId = Util::getServerUUID();
+	
+		//check database exist or not
+		$db = Util::getDb();
+		$cnt = $db->lan_code()->where('code = ?', $lanCode)->count('*');
+		if($cnt == 0) {
+			Util::sendErrorResponse(406, -1, "There is no such language code in database <" . $lanCode . ">");
+		} else {
+			Util::setKeyValue('lan_code_' . $serverId, $lanCode);
+		}
+	}
+	
+	public static function get() {
+		$lanCode = self::getLanCode();
+		
+		return array(
+			'code' => $lanCode		
+		);
+	}
+	
+	public static function post() {
+		$data = Util::getInputData();
+		$lanCode = $data['lanCode'];
+		
+		self::setLanCode($lanCode);
+	}
+}
+?>

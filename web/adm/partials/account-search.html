@@ -1,0 +1,63 @@
+<form class='form-horizontal' role='form' name='{{account.modalId}}Form' 
+	ng-submit="account.search()">
+<div class='modal fade' id='{{account.modalId}}'>
+	<div class='modal-dialog modal-lg'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type="button" 
+						class="close" 
+						data-dismiss="modal" 
+						aria-hidden="true">&times;
+				</button>
+		       	<h4 class="modal-title">{{title}}</h4>
+			</div>
+			<div class='modal-body'>
+				<table class='table table-striped table-hover'>
+					<thead>
+						<tr>
+							<th>no.</th>
+							<th>Name</th>
+							<th>Tel</th>
+							<th>Email</th>
+							<th>Type</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat='r in account.items'
+							ng-click='account.selectedItem = r'
+							ng-dblclick="account.search()"
+							ng-class="{info:r.id == account.selectedItem.id}"
+							class='hover-cursor'>
+							<td ng-bind='$index + (account.query.pgIndex - 1) * account.query.pgSize + 1'></td>
+							<td ng-bind='r.name'></td>
+							<td ng-bind='r.tel'></td>
+							<td ng-bind='r.email'></td>
+							<td>
+								<span ng-if='r.empType == 0'>Trainee</span>
+								<span ng-if='r.empType == 1'>Permanent</span>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan='6'>
+								<pagination 
+									total-items='account.query.pgCnt' 
+									items-per-page='account.query.pgSize'
+									page='account.query.pgIndex' 
+									ng-click='account.reload()'
+									max-size="10" 
+									boundary-links="true">
+								</pagination>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<div class='modal-footer'>
+				<button type='submit' class='btn btn-default'>Select</button>
+			</div>
+		</div>
+	</div>
+</div>
+</form>

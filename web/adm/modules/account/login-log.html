@@ -1,0 +1,50 @@
+<div class='container-fluid'>
+<h2>Login Activity</h2>
+<form name='logLogForm' role='form' class='form-horizontal'>
+<div class='form-group'>
+	<table class='table table-striped table-hover'>
+		<thead>
+			<tr>
+				<th>no.</th>
+				<th>Name</th>
+				<th>username</th>
+				<th>Role</th>
+				<th>Login</th>
+				<th>Logout</th>
+				<th>Last Access</th>
+				<th>Remarks</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat='r in accMain.loginLog.items'
+				ng-click='accMain.loginLog.item = r'
+				ng-class="{info:r.id == accMain.loginLog.items.id}"
+				class='hover-cursor'>
+				<td ng-bind='$index + 1 + ((accMain.loginLogQuery.pgIndex - 1) * accMain.loginLogQuery.pgSize)'></td>
+				<td ng-bind='r.name'></td>
+				<td ng-bind='r.username'></td>
+				<td ng-bind='r.role'></td>
+				<td ng-bind='r.loginTime'></td>
+				<td ng-bind='r.logoutTime'></td>
+				<td ng-bind='r.lastAccess'></td>
+				<td ng-bind='r.remarks'></td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan='7'>
+					<pagination 
+						total-items='accMain.loginLogQuery.pgCnt' 
+						items-per-page='accMain.loginLogQuery.pgSize'
+						page='accMain.loginLogQuery.pgIndex' 
+						ng-click='accMain.reload()'
+						max-size="10" 
+						boundary-links="true">
+					</pagination>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+</form>
+</div>

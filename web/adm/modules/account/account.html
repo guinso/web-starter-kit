@@ -1,0 +1,65 @@
+<div class='container-fluid'>
+	<h2>User Account</h2>
+	<button type='button' 
+			class='btn btn-primary' 
+			ng-click="accMain.callCreateUser('#createUser')" >Create new account</button> <!-- data-toggle='modal' data-target='#newAccModal' -->
+	<br/><br/>
+	
+	<div class='row'>
+		<div class='col-md-12'>
+			<table class='table table-striped table-hover table-condensed'>
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Name</th>
+						<th>Username</th>
+						<th>Role</th>
+						<th>Status</th>
+						<th>Filename</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat='row in accMain.acc.items'
+						ng-class='{info:row.id == accMain.acc.item.id}'>
+						<td ng-bind='$index + 1'></td>
+						<td ng-bind='row.name'></td>
+						<td ng-bind='row.username'></td>
+						<td ng-bind='row.role'></td>
+						<td>
+							<span ng-if='row.status == 1'>Active</span>
+							<span ng-if='row.status == 2'>Disabled</span>
+						</td>
+						<td><a ng-href='api/file-download/{{row.attachment.guid}}' ng-bind='row.attachment.filename' target='_blank'></a></td>
+						<td>
+							<button type='button' class='btn btn-default' 
+									ng-click="accMain.callUpdateUserDetails('#userDetails', row)">Edit
+							</button>
+							<button type='button' class='btn btn-default' 
+									ng-click="accMain.callChangeAccPwd('#changePwd', row)">Change Password
+							</button>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan='7'>
+							<pagination 
+								total-items='accMain.accQuery.pgCnt' 
+								items-per-page='accMain.accQuery.pgSize'
+								page='accMain.accQuery.pgIndex' 
+								ng-click='accMain.reload()'
+								max-size="10" 
+								boundary-links="true">
+							</pagination>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+
+	<div ng-include="'modules/account/change-pwd.html'"></div>
+	<div ng-include="'modules/account/user-edit.html'"></div>
+	<div ng-include="'modules/account/user-create.html'"></div>
+</div>

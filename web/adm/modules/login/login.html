@@ -1,0 +1,31 @@
+<div class='container-fluid'>
+	<form role='form' class='form-horizontal'>
+		<div class='form-group'>
+			<div class='col-md-offset-6'>
+				<h2>Login</h2>
+			</div>
+		</div>
+		<div class='form-group'>
+			<label class='col-md-offset-4 col-md-1 control-label' >Username</label>
+			<div class='col-md-3'>
+				<input type='text' class='form-control' ng-model='usr.username'>
+			</div>
+		</div>
+		<div class='form-group'>
+			<label class='col-md-offset-4 col-md-1 control-label'>Password</label>
+			<div class='col-md-3'>
+				<input type='password' class='form-control' ng-model='usr.password' ng-keypress='usr.checkKey($event)'>
+			</div>
+		</div>
+		<div class='form-group' ng-show='usr.errorMsg'>
+			<div class='col-md-offset-5 col-md-6'>
+				<span class='red' ng-bind='usr.errorMsg'></span>
+			</div>
+		</div>
+		<div class='form-group'>
+			<div class='col-md-offset-5 col-md-3'>
+				<button type='button' class='btn btn-primary' ng-click='usr.login()'>Login</button>
+			</div>
+		</div>
+	</form>
+</div>

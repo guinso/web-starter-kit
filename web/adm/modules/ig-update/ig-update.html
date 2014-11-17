@@ -1,0 +1,30 @@
+<div class='container-fluid'>
+<h2>Update</h2>
+<div class='row'>
+<div class='col-md-12'>
+	<div class='list-group'>
+		<a class='list-group-item hover-cursor' ng-repeat='r in igUpdate.items'>
+			<h4 ng-bind="'Revision: ' + r.revision"></h4>
+			<ul>
+				<li ng-repeat='m in r.msg'>{{m}}</li>
+			</ul>
+		</a>
+	</div>
+</div>
+</div>
+
+<div class='row'>
+<div class='col-md-12'>
+	<button type='button' class='btn btn-default pull-right' 
+			ng-click='igUpdate.submit()' ng-show='igUpdate.items.length > 0'>
+		<span class='glyphicon glyphicon-refresh'></span>Update System
+	</button>
+</div>
+</div>
+
+<div class='jumbotron' ng-show='igUpdate.items.length == 0'>
+	<h1>System are up-to-date</h1>
+	<p>There is no update available at the moment.</p>
+</div>
+
+</div>
