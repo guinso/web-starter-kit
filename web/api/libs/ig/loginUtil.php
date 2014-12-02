@@ -97,7 +97,7 @@ class LoginUtil {
 		if(empty($user['id'])) {
 			Util::sendErrorResponse(-1,
 				"Login fail, please check username or password",
-				null, 203);
+				null, 406);
 		}
 	
 		if($password == $user['password']) {
