@@ -40,8 +40,8 @@ getApi()->get('/sch', array('Schedule', 'get'), EpiApi::external);
 getApi()->get('/sch-cnt', array('Schedule', 'getCount'), EpiApi::external);
 getApi()->get('/sch/(\w+)', array('Schedule', 'getById'), EpiApi::external);
 getApi()->post('/sch-bulk', array('Schedule', 'updateBulk'), EpiApi::external);
-getApi()->get('/sch-run', array('ScheduleUtil', 'run'), EpiApi::external);
-getApi()->get('/sch-run/(\w+)', array('ScheduleUtil', 'execute'), EpiApi::external);
+getApi()->get('/sch-run', array('Schedule', 'run'), EpiApi::external);
+getApi()->get('/sch-run/(\w+)', array('Schedule', 'runById'), EpiApi::external);
 //schedule log
 getApi()->get('/sch-log', array('ScheduleLog', 'get'), EpiApi::external);
 getApi()->get('/sch-log-cnt', array('ScheduleLog', 'getCount'), EpiApi::external);

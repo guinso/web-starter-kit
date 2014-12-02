@@ -71,6 +71,15 @@ class Schedule {
 		$db->schedule->where('id NOT', $ids)->delete();
 		$db->transaction = 'COMMIT';
 	}
+	
+	public static function run() {
+		ScheduleUtil::run();	
+	}
+	
+	public static function runById($id) {
+		ScheduleUtil::execute($id);
+	}
+	
 /*
 	public static function post() {
 		$db = Util::getDb();
