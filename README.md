@@ -8,7 +8,9 @@ Crontab Setup
 
 Set crontab run once per minute
 
+```scala
 /usr/bin/php path-of-project/api/cron.php
+```
 
 License
 -------
