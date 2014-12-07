@@ -5,10 +5,10 @@ This is starter project to build complex web application with dedicated adminstr
 
 Crontab Setup
 -------------
-Set crontab run per minute
+Set crontab run once per minute
 /usr/bin/php path-of-project/api/cron.php
 
 License
 -------
 Copyright (c) 2014 Benjamin Ching
-Published under the [MIT](http://opensource.org/licenses/MIT).
+Published under the [MIT](http://opensource.org/licenses/MIT) license.
