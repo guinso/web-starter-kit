@@ -10,6 +10,5 @@ Set crontab run per minute
 
 License
 -------
-
 Copyright (c) 2014 Benjamin Ching
 Published under the [MIT](http://opensource.org/licenses/MIT).
