@@ -17,7 +17,7 @@ class Access {
 		
 		$db = Util::getDb();
 		
-		$raw = $db->function_group->order('name asc');
+		$raw = $db->function_group->order('weight asc');
 		
 		$result = array();
 		foreach($raw as $tmp) {
@@ -35,19 +35,27 @@ class Access {
 	
 	private static function getMatrixByGroupId($groupId) {
 		$db = Util::getDb();
+		$pdo = Util::getPDO();
 	
 		$result = array();
 	
-		$functions = $db->function->where('group_id = ?', $groupId);
+		$functions = $db->function->where('group_id = ?', $groupId)->order('weight asc');
 		foreach($functions as $function) {
 			$accesses = array();
-			$raw = $db->access->where('function_id = ?', $function['id'])->order('role_id asc');
-			foreach($raw as $tmp) {
-				$role = $db->role[$tmp['role_id']];
+			$raw = $db->access->where('function_id = ?', $function['id']);
+			
+			$sql = "SELECT a.*, b.name FROM access a 
+				JOIN role b ON a.role_id = b.id
+				WHERE function_id = :fId
+				ORDER BY b.weight";
+			$stmt = $pdo->prepare($sql);
+			$stmt->execute(array(':fId' => $function['id']));
+			foreach($stmt as $tmp) {
+				
 				$accesses[] = array(
 						'id' => $tmp['id'],
 						'roleId' => $tmp['role_id'],
-						'role' => $role['name'],
+						'role' => $tmp['name'],
 						'isAuthorize' => ($tmp['authorize'] == 1)
 				);
 			}

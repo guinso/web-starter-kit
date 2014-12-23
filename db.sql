@@ -29,7 +29,11 @@ INSERT INTO `access` (`id`, `function_id`, `role_id`, `authorize`) VALUES
 ('A0000000009',	'A0000000003',	'A0000000003',	0),
 ('A0000000010',	'A0000000001',	'A0000000004',	0),
 ('A0000000011',	'A0000000002',	'A0000000004',	0),
-('A0000000012',	'A0000000003',	'A0000000004',	0);
+('A0000000012',	'A0000000003',	'A0000000004',	0),
+('A0000000013',	'A0000000004',	'A0000000001',	0),
+('A0000000014',	'A0000000004',	'A0000000002',	1),
+('A0000000015',	'A0000000004',	'A0000000003',	0),
+('A0000000016',	'A0000000004',	'A0000000004',	0);
 
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account` (
@@ -108,25 +112,28 @@ CREATE TABLE `function` (
   `id` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `group_id` varchar(100) DEFAULT NULL,
+  `weight` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `group_id` (`group_id`),
   CONSTRAINT `function_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `function_group` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `function` (`id`, `name`, `group_id`) VALUES
-('A0000000001',	'manage user',	'A0000000001'),
-('A0000000002',	'view user',	'A0000000001'),
-('A0000000003',	'manage schedule',	'A0000000001');
+INSERT INTO `function` (`id`, `name`, `group_id`, `weight`) VALUES
+('A0000000001',	'manage user',	'A0000000001',	0),
+('A0000000002',	'view user',	'A0000000001',	0),
+('A0000000003',	'view schedule',	'A0000000001',	0),
+('A0000000004',	'update schedule',	'A0000000001',	0);
 
 DROP TABLE IF EXISTS `function_group`;
 CREATE TABLE `function_group` (
   `id` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
+  `weight` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `function_group` (`id`, `name`) VALUES
-('A0000000001',	'Admin');
+INSERT INTO `function_group` (`id`, `name`, `weight`) VALUES
+('A0000000001',	'Admin',	0);
 
 DROP TABLE IF EXISTS `key_value`;
 CREATE TABLE `key_value` (
@@ -168,7 +175,9 @@ INSERT INTO `login` (`id`, `user_id`, `session_id`, `login`, `logout`, `last_acc
 ('A0000000003',	'A0000000002',	'5kjomqamc71l60v0i62m0v1db5',	'2014-11-07 22:58:28',	'2014-11-09 11:59:37',	'2014-11-09 09:37:44',	'force logout due to new client login with this username'),
 ('A0000000004',	'A0000000002',	'9l0qp3pa7va73pgj392idjq2l3',	'2014-11-09 11:59:37',	'2014-11-10 16:05:27',	'2014-11-09 11:59:46',	'force logout due to new client login with this username'),
 ('A0000000005',	'A0000000002',	'dlaj1a4eehv5tsnnvrqmao8513',	'2014-11-10 16:05:27',	'2014-11-12 15:11:30',	'2014-11-10 16:05:27',	'force logout due to new client login with this username'),
-('A0000000006',	'A0000000002',	'tjb2f5ddujv0l1633qolomu3v3',	'2014-11-12 15:11:30',	NULL,	'2014-11-12 15:16:30',	NULL);
+('A0000000006',	'A0000000002',	'tjb2f5ddujv0l1633qolomu3v3',	'2014-11-12 15:11:30',	'2014-11-16 17:54:50',	'2014-11-12 15:16:30',	'force logout due to new client login with this username'),
+('A0000000007',	'A0000000002',	'9lnj3dbeg1n46eulnkup34h173',	'2014-11-16 17:54:50',	'2014-12-23 09:33:49',	'2014-11-16 17:54:53',	'force logout due to new client login with this username'),
+('A0000000008',	'A0000000002',	'eu9a2chrfrrmp98o5ehbvb1o64',	'2014-12-23 09:33:49',	NULL,	'2014-12-23 09:34:32',	NULL);
 
 DROP TABLE IF EXISTS `log_schedule`;
 CREATE TABLE `log_schedule` (
@@ -187,14 +196,15 @@ CREATE TABLE `role` (
   `id` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `status` int(11) NOT NULL COMMENT '1 is active, 2 is disabled',
+  `weight` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User Role';
 
-INSERT INTO `role` (`id`, `name`, `status`) VALUES
-('A0000000001',	'anonymous',	1),
-('A0000000002',	'admin',	1),
-('A0000000003',	'user',	1),
-('A0000000004',	'manager',	1);
+INSERT INTO `role` (`id`, `name`, `status`, `weight`) VALUES
+('A0000000001',	'anonymous',	1,	0),
+('A0000000002',	'admin',	1,	0),
+('A0000000003',	'user',	1,	0),
+('A0000000004',	'manager',	1,	0);
 
 DROP TABLE IF EXISTS `schedule`;
 CREATE TABLE `schedule` (
@@ -216,4 +226,4 @@ INSERT INTO `schedule` (`id`, `class_name`, `function_name`, `description`, `wee
 ('A0000000001',	'EmailUtil',	'runQueue',	'send email',	'*',	'*',	'*',	'*',	'*/5',	1,	1),
 ('A0000000002',	'LoginUtil',	'checkLogin',	'check user login activitiy',	'*',	'*',	'*',	'*',	'*',	1,	1);
 
--- 2014-11-14 01:41:28
+-- 2014-12-23 01:40:09

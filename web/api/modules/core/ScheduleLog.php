@@ -1,9 +1,9 @@
 <?php 
 class ScheduleLog {
 	public static function get() {
-		if(!AuthorizeUtil::isAuthorize('manage schedule')) {
+		if(!AuthorizeUtil::isAuthorize('view schedule')) {
 			Util::sendErrorResponse(-1, 
-				'You are not authorized to manage schedule.', 401);
+				'You are not authorized to view schedule.', 401);
 		}
 		
 		$db = Util::getDb();
@@ -27,9 +27,9 @@ class ScheduleLog {
 	}
 	
 	public static function getCount() {
-		if(!AuthorizeUtil::isAuthorize('manage schedule')) {
+		if(!AuthorizeUtil::isAuthorize('view schedule')) {
 			Util::sendErrorResponse(-1,
-					'You are not authorized to manage schedule.', 401);
+					'You are not authorized to view schedule.', 401);
 		}
 		
 		$db = Util::getDb();
@@ -42,9 +42,9 @@ class ScheduleLog {
 	}
 	
 	public static function getById($id) {
-		if(!AuthorizeUtil::isAuthorize('manage schedule')) {
+		if(!AuthorizeUtil::isAuthorize('view schedule')) {
 			Util::sendErrorResponse(-1,
-					'You are not authorized to manage schedule.', 401);
+					'You are not authorized to view schedule.', 401);
 		}
 		
 		$db = Util::getDb();

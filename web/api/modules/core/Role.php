@@ -3,7 +3,7 @@ class Role {
 	public static function get() {
 		$db = Util::getDb();
 
-		$raw = $db->role();
+		$raw = $db->role()->order('weight');
 		
 		if(!empty($_GET['status']))
 			$raw = $raw->where('status', intval($_GET['status']));
@@ -11,7 +11,7 @@ class Role {
 		$result = array();
 		foreach($raw as $row)
 			$result[] = self::_getFormat($row);
-			
+		
 		return $result;
 	}
 
