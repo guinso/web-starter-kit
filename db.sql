@@ -33,7 +33,11 @@ INSERT INTO `access` (`id`, `function_id`, `role_id`, `authorize`) VALUES
 ('A0000000013',	'A0000000004',	'A0000000001',	0),
 ('A0000000014',	'A0000000004',	'A0000000002',	1),
 ('A0000000015',	'A0000000004',	'A0000000003',	0),
-('A0000000016',	'A0000000004',	'A0000000004',	0);
+('A0000000016',	'A0000000004',	'A0000000004',	0),
+('A0000000017',	'A0000000005',	'A0000000001',	0),
+('A0000000018',	'A0000000005',	'A0000000002',	1),
+('A0000000019',	'A0000000005',	'A0000000003',	0),
+('A0000000020',	'A0000000005',	'A0000000004',	0);
 
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account` (
@@ -119,10 +123,11 @@ CREATE TABLE `function` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `function` (`id`, `name`, `group_id`, `weight`) VALUES
-('A0000000001',	'manage user',	'A0000000001',	0),
-('A0000000002',	'view user',	'A0000000001',	0),
-('A0000000003',	'view schedule',	'A0000000001',	0),
-('A0000000004',	'update schedule',	'A0000000001',	0);
+('A0000000001',	'view user',	'A0000000001',	0),
+('A0000000002',	'update user',	'A0000000001',	2),
+('A0000000003',	'view schedule',	'A0000000001',	3),
+('A0000000004',	'update schedule',	'A0000000001',	4),
+('A0000000005',	'create user',	'A0000000001',	1);
 
 DROP TABLE IF EXISTS `function_group`;
 CREATE TABLE `function_group` (
@@ -142,8 +147,6 @@ CREATE TABLE `key_value` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='generic key-value storage';
 
-INSERT INTO `key_value` (`id`, `value`) VALUES
-('update-ver',	'i:6;');
 
 DROP TABLE IF EXISTS `lan_code`;
 CREATE TABLE `lan_code` (
@@ -169,15 +172,6 @@ CREATE TABLE `login` (
   CONSTRAINT `login_log_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `account` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User login Activity';
 
-INSERT INTO `login` (`id`, `user_id`, `session_id`, `login`, `logout`, `last_access`, `remarks`) VALUES
-('A0000000001',	'A0000000002',	'hngunluvrh6lf4dia8448g4vj1',	'2014-11-03 19:39:03',	'2014-11-03 19:39:28',	'2014-11-03 19:39:28',	NULL),
-('A0000000002',	'A0000000002',	'5kjomqamc71l60v0i62m0v1db5',	'2014-11-07 22:53:18',	'2014-11-07 22:56:08',	'2014-11-07 22:56:08',	NULL),
-('A0000000003',	'A0000000002',	'5kjomqamc71l60v0i62m0v1db5',	'2014-11-07 22:58:28',	'2014-11-09 11:59:37',	'2014-11-09 09:37:44',	'force logout due to new client login with this username'),
-('A0000000004',	'A0000000002',	'9l0qp3pa7va73pgj392idjq2l3',	'2014-11-09 11:59:37',	'2014-11-10 16:05:27',	'2014-11-09 11:59:46',	'force logout due to new client login with this username'),
-('A0000000005',	'A0000000002',	'dlaj1a4eehv5tsnnvrqmao8513',	'2014-11-10 16:05:27',	'2014-11-12 15:11:30',	'2014-11-10 16:05:27',	'force logout due to new client login with this username'),
-('A0000000006',	'A0000000002',	'tjb2f5ddujv0l1633qolomu3v3',	'2014-11-12 15:11:30',	'2014-11-16 17:54:50',	'2014-11-12 15:16:30',	'force logout due to new client login with this username'),
-('A0000000007',	'A0000000002',	'9lnj3dbeg1n46eulnkup34h173',	'2014-11-16 17:54:50',	'2014-12-23 09:33:49',	'2014-11-16 17:54:53',	'force logout due to new client login with this username'),
-('A0000000008',	'A0000000002',	'eu9a2chrfrrmp98o5ehbvb1o64',	'2014-12-23 09:33:49',	NULL,	'2014-12-23 09:34:32',	NULL);
 
 DROP TABLE IF EXISTS `log_schedule`;
 CREATE TABLE `log_schedule` (
@@ -202,9 +196,9 @@ CREATE TABLE `role` (
 
 INSERT INTO `role` (`id`, `name`, `status`, `weight`) VALUES
 ('A0000000001',	'anonymous',	1,	0),
-('A0000000002',	'admin',	1,	0),
-('A0000000003',	'user',	1,	0),
-('A0000000004',	'manager',	1,	0);
+('A0000000002',	'admin',	1,	1),
+('A0000000003',	'user',	1,	2),
+('A0000000004',	'manager',	1,	3);
 
 DROP TABLE IF EXISTS `schedule`;
 CREATE TABLE `schedule` (
@@ -226,4 +220,4 @@ INSERT INTO `schedule` (`id`, `class_name`, `function_name`, `description`, `wee
 ('A0000000001',	'EmailUtil',	'runQueue',	'send email',	'*',	'*',	'*',	'*',	'*/5',	1,	1),
 ('A0000000002',	'LoginUtil',	'checkLogin',	'check user login activitiy',	'*',	'*',	'*',	'*',	'*',	1,	1);
 
--- 2014-12-23 01:40:09
+-- 2014-12-23 02:32:13

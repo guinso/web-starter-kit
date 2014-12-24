@@ -8,7 +8,7 @@ class UserAccount {
 		$pgIndex = 0;
 		$pgSize = 15;
 		
-		if(!AuthorizeUtil::isAuthorize('manage user')) {
+		if(!AuthorizeUtil::isAuthorize('view user')) {
 			$usr = LoginUtil::getCurrentUser();
 			$users = $users->where('id = ?', $usr['userId']);
 		}
@@ -33,7 +33,7 @@ class UserAccount {
 	
 		$users = $db->account();
 
-		if(!AuthorizeUtil::isAuthorize('manage user'))
+		if(!AuthorizeUtil::isAuthorize('view user'))
 			$cnt = 1;
 		else
 			$cnt = $users->count('*');
@@ -42,7 +42,7 @@ class UserAccount {
 	}
 	
 	public static function getActivityLog() {
-		if(!AuthorizeUtil::isAuthorize('manage user', 'view user')) {
+		if(!AuthorizeUtil::isAuthorize('view user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized to view login activity.');
 		}
 		
@@ -50,7 +50,7 @@ class UserAccount {
 	}
 	
 	public static function getActivityLogCount() {
-		if(!AuthorizeUtil::isAuthorize('manage user', 'view user')) {
+		if(!AuthorizeUtil::isAuthorize('view user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized to view login activity.');
 		}
 		
@@ -58,7 +58,7 @@ class UserAccount {
 	}
 	
 	public static function getById($id) {
-		if(!AuthorizeUtil::isAuthorize('manage user', 'view user')) {
+		if(!AuthorizeUtil::isAuthorize('view user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		
@@ -76,7 +76,7 @@ class UserAccount {
 		$pgIndex = 0;
 		$pgSize = 15;
 	
-		if(!AuthorizeUtil::isAuthorize('manage user')) {
+		if(!AuthorizeUtil::isAuthorize('view user')) {
 			Util::sendErrorResponse(-1, 'You are not authorize to view account log.');
 		}
 	
@@ -105,7 +105,7 @@ class UserAccount {
 	
 		$users = $db->account_log();
 	
-		if(!AuthorizeUtil::isAuthorize('manage user')) {
+		if(!AuthorizeUtil::isAuthorize('view user')) {
 			Util::sendErrorResponse(-1, 'You are not authorize to view account log.');
 		}
 		
@@ -115,7 +115,7 @@ class UserAccount {
 	}
 	
 	public static function post() {
-		if(!AuthorizeUtil::isAuthorize('manage user')) {
+		if(!AuthorizeUtil::isAuthorize('create user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		
@@ -165,7 +165,7 @@ class UserAccount {
 		
 		$user = LoginUtil::getCurrentUser();
 
-		if(!(AuthorizeUtil::isAuthorize('manage user') || $user['userId'] == $userId)) {
+		if(!(AuthorizeUtil::isAuthorize('update user') || $user['userId'] == $userId)) {
 			$userName = $user['username'];
 			Util::sendErrorResponse(-1, "$userName is not authorized to change password.");
 		}
@@ -188,7 +188,7 @@ class UserAccount {
 	}
 	
 	public static function put($id) {
-		if(!AuthorizeUtil::isAuthorize('manage user')) {
+		if(!AuthorizeUtil::isAuthorize('update user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		

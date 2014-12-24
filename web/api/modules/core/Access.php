@@ -11,7 +11,7 @@ class Access {
 	}
 	
 	public static function getMatrix() {
-		if(!AuthorizeUtil::isAuthorize('manage user', 'view user')) {
+		if(!AuthorizeUtil::isAuthorize('view user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized to view authorization.', null, 401);
 		}
 		
@@ -71,7 +71,7 @@ class Access {
 	}
 
 	public static function updateMatrixGroup($groupId) {
-		if(!AuthorizeUtil::isAuthorize('manage user')) {
+		if(!AuthorizeUtil::isAuthorize('update user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized.', null, 401);
 		}
 		

@@ -14,7 +14,7 @@ define('ADM_TMP', ADM_API_DIR . DIRECTORY_SEPARATOR . 'tmp');
 
 //web deploy configuration
 IgConfig::set('web', new IgConfigRecipe(
-	'mysql:dbname=starter;host=localhost;charset=utf8', 'your-db-username', '123456789', 
+	'mysql:dbname=starter;host=localhost;charset=utf8', 'root', '1q2w3e', 
 	10, 'A', 
 	WEB_UPLOAD, WEB_TPL, WEB_TMP,
 	'Asia/Kuala_Lumpur',
@@ -24,7 +24,7 @@ IgConfig::set('web', new IgConfigRecipe(
 
 //admin configuration
 IgConfig::set('adm', new IgConfigRecipe(
-	'mysql:dbname=starter_adm;host=localhost;charset=utf8', 'your-db-username', '123456789', 
+	'mysql:dbname=starter_adm;host=localhost;charset=utf8', 'root', '1q2w3e', 
 	10, 'A', 
 	ADM_UPLOAD, ADM_TPL, ADM_TMP,
 	'Asia/Kuala_Lumpur',
