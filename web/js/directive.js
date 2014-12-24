@@ -6,6 +6,8 @@ angular.module('MyApp').run(["$templateCache", function($templateCache) {
 		"	<a class='btn btn-default' href='javascript:;'>Choose File" +
 		"	<input 	type='file' file-upload='fileModel' " +
 		"		style=\"" +
+		"			width:100%;" +
+		"			height:34px;" +
 		"			position:absolute;" +
 		"			z-index:2;top:0;left:0;" +
 		"			filter: alpha(opacity=0);" +
@@ -36,6 +38,8 @@ angular.module('MyApp').run(["$templateCache", function($templateCache) {
 		"	<a class='btn btn-default' href='javascript:;'>Choose File" +
 		"	<input 	type='file' file-upload='fileModel' " +
 		"		style=\"" +
+		"			width:100%;" +
+		"			height:34px;" +
 		"			position:absolute;" +
 		"			z-index:2;top:0;left:0;" +
 		"			filter: alpha(opacity=0);" +
@@ -67,6 +71,8 @@ angular.module('MyApp').run(["$templateCache", function($templateCache) {
 			"	<a class='btn btn-default' style='position:absolute;' href='javascript:;'>Choose File" +
 			"	<input 	type='file' file-upload='fileModel' " +
 			"		style=\" " +
+			"			width:100%;" +
+			"			height:34px;" +
 			"			position:absolute;" +
 			"			z-index:2;top:0;left:0;" +
 			"			filter: alpha(opacity=0);" +
