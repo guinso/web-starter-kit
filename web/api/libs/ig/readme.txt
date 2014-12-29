@@ -1,5 +1,10 @@
-version 0.4.1	- support secure connection
-				- fix error message capture bug
+version 0.4.2
+support load configuration file 
+support on the fly rewrite configuration file
+
+version 0.4.1
+support secure connection
+fix error message capture bug
 
 version 0.4
 EmailUtil		- revise send email API

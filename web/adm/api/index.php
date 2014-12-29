@@ -1,10 +1,8 @@
 <?php 
 define('URL', dirname(substr($_SERVER['SCRIPT_FILENAME'], strlen($_SERVER['DOCUMENT_ROOT']))));
 define('ROOT_DIR', dirname(__FILE__));
-
-/******************* LOAD PROFILES ********************/
-include_once ROOT_DIR . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'IgConfig.php';
-include_once ROOT_DIR . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'myConfig.php';
+define('MAIN_ROOT_DIR', dirname(dirname(dirname(__FILE__))));
+define('WEB_API_DIR', MAIN_ROOT_DIR . DIRECTORY_SEPARATOR . 'api');
 
 session_start();
 
@@ -39,28 +37,28 @@ spl_autoload_register('myAutoload', true, true);
 
 
 /*************** CORE AND SETTINGS ****************/
-$setting = IgConfig::get('adm');
+IgConfigLoader::configure(MAIN_ROOT_DIR . DIRECTORY_SEPARATOR . 'api' . DIRECTORY_SEPARATOR . 'config.php');
+$setting = IgConfig::getProfile();
 
 Util::configure(
-	$setting['dsm'], $setting['dbUsr'], $setting['dbPwd'], 
-	$setting['dbInitial'], $setting['dbLen'], 
-	$setting['uploadPath'], $setting['temporaryPath'], $setting['templatePath']);
+	$setting->dsm, $setting->dbUsr, $setting->dbPwd, 
+	$setting->dbInitial, $setting->dbLen, 
+	$setting->uploadPath, $setting->temporaryPath, $setting->templatePath);
 
 EmailUtil::configure(
-	$setting['smtpHost'], 
-	$setting['smtpEmail'], $setting['smtpName'], 
-	$setting['smtpUsr'], $setting['smtpPwd'], 
-	$setting['smtpSecure'], $setting['smtpPort']);
+	$setting->smtpHost, $setting->smtpEmail, $setting->smtpName, 
+	$setting->smtpUsr, $setting->smtpPwd, 
+	$setting->smtpSecure, $setting->smtpPort);
 
-FileUtil::configure($setting['uploadPath']);
+FileUtil::configure($setting->uploadPath);
 
-date_default_timezone_set($setting['timeZone']);
+date_default_timezone_set($setting->timeZone);
 
 /********************** Modules ***********************/
 
 //automatic load all module files
 Util::recursiveDir(
-	ROOT_DIR . '/modules', 
+	ROOT_DIR . '/modules',
 	function($filePath){
 		include_once $filePath;
 	}, 
@@ -70,15 +68,18 @@ Util::recursiveDir(
 require_once ROOT_DIR . '/api.php';
 
 function home() {
-	echo 'Starter Kit Web Admin.<br/>';
+	echo 'Web Admin.<br/>';
 	echo Util::getDate() . "<br/>";
+}
+
+function updateConfig() {
+	IgConfigLoader::updateSetting();
+	echo 'update config done.';
 }
 
 /********************* Execute ***********************/
 
-//Ping current login user to keep alive
-LoginUtil::ping();
-
 getRoute()->get('/', 'home');
+getRoute()->get('/update-config', 'updateConfig');
 getRoute()->run();
 ?>

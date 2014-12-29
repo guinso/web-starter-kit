@@ -146,6 +146,7 @@ directive('filePicker2', function() {
 		scope.removeFile = function() {
 			scope.fileName = '';
 			scope.fileGuid = '';
+			scope.fileId = null;
 		}
 		
 		scope.fileChange = function(file) {
@@ -162,6 +163,7 @@ directive('filePicker2', function() {
 			fileName: '=',
 			fileGuid: '=',
 			fileUrl: '=',
+			fileId: '='
 		},
 		link: f,
 		templateUrl: 'modulez/myapp-filepicker2.html'
@@ -173,6 +175,7 @@ directive('filePickerImg', function() {
 		scope.removeFile = function() {
 			scope.fileName = '';
 			scope.fileGuid = '';
+			scope.fileId = null;
 		}
 		
 		scope.fileChange = function(file) {
@@ -189,6 +192,7 @@ directive('filePickerImg', function() {
 			fileName: '=',
 			fileGuid: '=',
 			fileUrl: '=',
+			fileId: '='
 		},
 		link: f,
 		templateUrl: 'modulez/myapp-filepicker-img.html'
