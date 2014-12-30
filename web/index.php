@@ -49,10 +49,10 @@ include_once 'maintenance.php';
 	  				<ul class='nav navbar-nav'>
 						<li class='dropdown' ng-class="{active: navigation.paths[1]=='config'}">
 						  	<a class='dropdown-toggle hover-cursor' data-toggle='dropdown' >
-						  	Setting<span class='caret'></span></a>
+						  	Sample<span class='caret'></span></a>
 						  	<ul class='dropdown-menu'>
-						  		<li><a href='#/config/account-main'>User</a></li>
-						  		<li><a href='#/config/schedule'>Schedule</a></li>
+						  		<li><a href='#/your-path'>item A</a></li>
+						  		<li><a href='#/your/specified-path'>item B</a></li>
 					  		</ul>
 						</li>	
 	  				</ul>
