@@ -59,4 +59,6 @@ getApi()->get('/file-download/(\w+)', array('FileUtil', 'downloadFile'), EpiApi:
 
 getApi()->get('/update-available', array('IgModUpdate', 'getAvailableUpdate'), EpiApi::external);
 getApi()->post('/update-run', array('IgModUpdate', 'executeUpdate'), EpiApi::external);
+
+getApi()->get('/compact-js', array('JsCompact', 'run'), EpiApi::external);
 ?>

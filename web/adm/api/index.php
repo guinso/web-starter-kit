@@ -13,7 +13,8 @@ include_once WEB_API_DIR . '/libs/epiphany/Epi.php';
 require_once WEB_API_DIR . '/libs/phpexcel/PHPExcel.php';
 require_once WEB_API_DIR . '/libs/phpexcel/PHPExcel/IOFactory.php';
 require_once WEB_API_DIR . '/libs/phpmailer/PHPMailerAutoload.php';
-require_once WEB_API_DIR . '/libs/guzzle/autoloader.php';
+//x require_once WEB_API_DIR . '/libs/guzzle/autoloader.php';
+require_once WEB_API_DIR . '/libs/jshrink/Minifier.php';
 
 require_once WEB_API_DIR . '/libs/ig/autoloader.php';
 
