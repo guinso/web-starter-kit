@@ -1,3 +1,7 @@
+<?php 
+include_once 'maintenance.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en" ng-app="MyApp">
 	 <head>
