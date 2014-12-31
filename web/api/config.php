@@ -3,6 +3,9 @@ IgConfig::setLogin('admin','1q2w3e');
 
 IgConfig::setGuid('54a0e8e43cbf1');
 
+IgConfig::setConfig('maintenance', false);
+IgConfig::setConfig('deploy', false);
+
 define('WEB_UPLOAD', WEB_API_DIR . DIRECTORY_SEPARATOR . 'upload');
 define('WEB_TPL', WEB_API_DIR . DIRECTORY_SEPARATOR . 'template');
 define('WEB_TMP', WEB_API_DIR . DIRECTORY_SEPARATOR . 'tmp');

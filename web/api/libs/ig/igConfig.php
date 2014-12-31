@@ -138,15 +138,12 @@ class IgConfig {
 	
 	/**
 	 * Set general configuration
-	 * @param unknown $name
-	 * @param unknown $value
+	 * @param string $name
+	 * @param mixed $value
 	 * @throws Exception
 	 */
 	public static function setConfig($name, $value) {
-		if(empty($name))
-			throw new Exception("Cannot set configuration with empty key");
-		else
-			self::$_config[$name] = $value;
+		self::$_config[$name] = $value;
 	} 
 	
 	/**

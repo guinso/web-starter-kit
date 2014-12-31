@@ -1,11 +1,5 @@
 <?php 
 class JsCompact {
-	public static function run() {
-		if(AdmLogin::isLogin())
-			self::minimizeJs();
-		else
-			Util::sendErrorResponse(-1, "You are not authorize to compact JS files.");
-	}
 	
 	public static function minimizeJs() {
 		$destFile = MAIN_ROOT_DIR . DIRECTORY_SEPARATOR . 

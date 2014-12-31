@@ -23,6 +23,11 @@ config(['$routeProvider', function($routeProvider) {
 		controller:'IgUpdateCtrl'
 	}).
 	
+	when('/config/misc', {
+		templateUrl:'modules/misc/misc.html',
+		controller:'MiscCtrl'
+	}).
+	
 	otherwise({ redirectTo: '/config/update'});
 	
 	//otherwise({ redirectTo: '#'});

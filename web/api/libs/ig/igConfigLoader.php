@@ -16,7 +16,7 @@ public static function configure($filepath) {
 	else {
 		self::$_filepath = $filepath;
 		
-		include_once self::$_filepath;
+		include self::$_filepath;
 	}
 }
 

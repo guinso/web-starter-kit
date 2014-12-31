@@ -1,19 +1,64 @@
 <?php 
+/**
+ * Admin authorization REST interface
+ * @author chingchetsiang
+ *
+ */
+class AdmLoginREST {
+	public static function get() {
+		
+		try {
+			return AdmLogin::getStatus();
+		} catch(Exception $ex) {
+			Util::sendErrorResponse(-1, $ex->getMessage());
+		}
+	}
+	
+	public static function postLogin() {
+		try {
+			$data = Util::getInputData();
+			$result = AdmLogin::login($data['username'], $data['pwd']);
+			
+			if(!$result)
+				Util::sendErrorResponse(-1, "Login fail, username or password not match.");
+			else 
+				return AdmLogin::getStatus();
+			
+		} catch (Exception $ex) {
+			Util::sendErrorResponse(-1, $ex->getMessage());
+		}
+	}
+	
+	public static function getLogout() {
+		try {
+			AdmLogin::logout();
+
+			return AdmLogin::getStatus();
+		} catch (Exception $ex) {
+			Util::sendErrorResponse(-1, $ex->getMessage());
+		}
+	}
+	
+	public static function postAccount() {
+		if(!AdmLogin::isLogin())
+			Util::sendErrorResponse(-1, "You are not authorize to update admin account.");
+		
+		try {
+			$data = Util::getInputData();
+			AdmLogin::updateAccount($data['username'], $data['newPassword']);
+		} catch(Exception $ex) {
+			Util::sendErrorResponse(-1, $ex->getMessage());
+		}
+	}
+}
+
 class AdmLogin {
-	public static function login() {
+	public static function login($username, $password) {
 		$guid = IgConfig::getGuid();
 		
-		$data = Util::getInputData();
+		$_SESSION[$guid . '-log'] = IgConfig::isLoginMatch($username, $password);
 		
-		$username = $data['username'];
-		$password = $data['pwd'];
-		
-		if(IgConfig::isLoginMatch($username, $password)) {
-			$_SESSION[$guid . '-log'] = true;
-		} else {
-			$_SESSION[$guid.'-log'] = false;
-			Util::sendErrorResponse(-1, "Login fail, username or password not match.");
-		}
+		return $_SESSION[$guid . '-log'];
 	}
 	
 	public static function logout() {
@@ -47,6 +92,11 @@ class AdmLogin {
 				'login' => false
 			);
 		}
+	}
+	
+	public static function updateAccount($username, $newPassword) {
+		IgConfig::setLogin($username, $newPassword);
+		IgConfigLoader::updateSetting();
 	}
 }
 ?>

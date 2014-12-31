@@ -1,0 +1,83 @@
+<div class='container-fluid'>
+	<h2>Miscellaneous</h2>
+	<form class='form-horizontal' role='form' name='accountForm' ng-submit='misc.saveAcc()'>
+		<h4>Change Admin Account</h4>
+		<div class='form-group'>
+			<label class='col-md-4 control-label'>New Username</label>
+			<div class='col-md-4' ng-class="{'has-error' : accountForm.username.$invalid}">
+			    <input 	class='form-control' 
+			            type='text' name='username'
+			            required
+						ng-model='misc.acc.username'>
+			</div>
+		</div>
+		<div class='form-group'>
+			<label class='col-md-4 control-label'>New Password</label>
+			<div class='col-md-4' ng-class="{'has-error' : accountForm.pwd.$invalid}">
+			    <input 	class='form-control' 
+			            type='password' name='pwd'
+			            required
+						ng-model='misc.acc.newPassword'>
+			</div>
+		</div>
+		<div class='form-group'>
+			<label class='col-md-4 control-label'>Confirm New Password</label>
+			<div class='col-md-4' ng-class="{'has-error' : accountForm.pwd.$invalid}">
+			    <input 	class='form-control' 
+			            type='password' name='repeatPwd'
+			            required
+						ng-model='misc.acc.repeatNewPassword'>
+			</div>
+		</div>
+		<div class='form-group'>
+			<div class='col-md-12'>
+				<button type='submit' class='btn btn-default pull-right'>
+					update
+				</button>
+			</div>
+		</div>
+	</form>
+	<hr/>
+	
+	
+	<h4>Maintenance Site</h4>
+	<form class='form-horizontal' role='form' name='maintenanceForm' ng-submit='misc.saveMaintenance()'>
+		<div class='form-group'>
+			<label class='col-md-4 control-label'>Put site to maintenance</label>
+			<div class='checkbox col-md-8' ng-class="{'has-error' : accountForm.maintenance.$invalid}">
+			    <input 	
+			            type='checkbox' name='maintenance'
+						ng-model='misc.item.maintenance'>
+			</div>
+		</div>
+		<div class='form-group'>
+			<div class='col-md-12'>
+				<button type='submit' class='btn btn-default pull-right'>
+					update
+				</button>
+			</div>
+		</div>
+	</form>
+	<hr/>
+	
+	<h4>Optimize</h4>
+	<form class='form-horizontal' role='form' name='deployForm' ng-submit='misc.saveDeploy()'>
+		<div class='form-group'>
+			<label class='col-md-4 control-label'>Compact JS files</label>
+			<div class='checkbox col-md-8' ng-class="{'has-error' : accountForm.deploy.$invalid}">
+			    <input 	
+			            type='checkbox' name='deploy'
+						ng-model='misc.item.deploy'>
+			</div>
+		</div>
+		<div class='form-group'>
+			<div class='col-md-12'>
+				<button type='submit' class='btn btn-default pull-right'>
+					update
+				</button>
+			</div>
+		</div>
+	</form>
+	<br/>
+	<span>&nbsp;</span>
+</div>

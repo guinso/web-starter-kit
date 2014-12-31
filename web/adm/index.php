@@ -49,6 +49,7 @@
 						  		<li><a href='#/config/account-main'>User</a></li>
 						  		<li><a href='#/config/schedule'>Schedule</a></li>
 						  		<li><a href='#/config/update'>Update</a></li>
+						  		<li><a href='#/config/misc'>Misc</a></li>
 					  		</ul>
 						</li>	
 	  				</ul>

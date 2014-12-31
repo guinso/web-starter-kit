@@ -1,9 +1,9 @@
 <?php 
 //*************************************** CORE API ********************************************
 //Authentication
-getApi()->get('/current-user', array('AdmLogin', 'getStatus'), EpiApi::external);
-getApi()->get('/logout', array('AdmLogin', 'logout'), EpiApi::external);
-getApi()->post('/login', array('AdmLogin', 'login'), EpiApi::external);
+getApi()->get('/current-user', array('AdmLoginREST', 'get'), EpiApi::external);
+getApi()->get('/logout', array('AdmLoginREST', 'getLogout'), EpiApi::external);
+getApi()->post('/login', array('AdmLoginREST', 'postLogin'), EpiApi::external);
 
 //login log
 getApi()->get('/login-log', array('UserAccount', 'getActivityLog'), EpiApi::external);
@@ -57,8 +57,13 @@ getApi()->get('/file-download/(\w+)', array('FileUtil', 'downloadFile'), EpiApi:
 
 //**************************** END CORE API *************************************
 
+//update module
 getApi()->get('/update-available', array('IgModUpdate', 'getAvailableUpdate'), EpiApi::external);
 getApi()->post('/update-run', array('IgModUpdate', 'executeUpdate'), EpiApi::external);
 
-getApi()->get('/compact-js', array('JsCompact', 'run'), EpiApi::external);
+//misc admin settings
+getApi()->get('/misc-setting', array('AdmMiscREST', 'get'), EpiApi::external);
+getApi()->post('/misc-maintenance', array('AdmMiscREST', 'postMaintenance'), EpiApi::external);
+getApi()->post('/misc-deploy', array('AdmMiscREST', 'postDeploy'), EpiApi::external);
+getApi()->post('/update-account', array('AdmLoginREST', 'postAccount'), EpiApi::external);
 ?>
