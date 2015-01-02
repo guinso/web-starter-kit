@@ -6,14 +6,13 @@ IgConfig::setGuid('54a0e8e43cbf1');
 IgConfig::setConfig('maintenance', false);
 IgConfig::setConfig('deploy', false);
 
-define('WEB_UPLOAD', WEB_API_DIR . DIRECTORY_SEPARATOR . 'upload');
-define('WEB_TPL', WEB_API_DIR . DIRECTORY_SEPARATOR . 'template');
-define('WEB_TMP', WEB_API_DIR . DIRECTORY_SEPARATOR . 'tmp');
+define('WEB_UPLOAD', API_DIR . DS . 'upload');
+define('WEB_TPL', API_DIR . DS . 'template');
+define('WEB_TMP', API_DIR . DS . 'tmp');
 
-define('ADM_API_DIR', MAIN_ROOT_DIR . DIRECTORY_SEPARATOR . 'adm' . DIRECTORY_SEPARATOR . 'api');
-define('ADM_UPLOAD', ADM_API_DIR . DIRECTORY_SEPARATOR . 'upload');
-define('ADM_TPL', ADM_API_DIR . DIRECTORY_SEPARATOR . 'template');
-define('ADM_TMP', ADM_API_DIR . DIRECTORY_SEPARATOR . 'tmp');
+define('ADM_UPLOAD', ADM_API_DIR . DS . 'upload');
+define('ADM_TPL', ADM_API_DIR . DS . 'template');
+define('ADM_TMP', ADM_API_DIR . DS . 'tmp');
 
 //web deploy configuration
 IgConfig::set('web', new IgConfigRecipe(
