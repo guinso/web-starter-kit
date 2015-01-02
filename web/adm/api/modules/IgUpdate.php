@@ -15,7 +15,7 @@ class IgModUpdate {
 	
 	//Discover all revision found in source code
 	public static function getRevision() {
-		$updateDir = ROOT_DIR . DIRECTORY_SEPARATOR . 'update';
+		$updateDir = ADM_API_DIR . DIRECTORY_SEPARATOR . 'update';
 		
 		$result = array();
 		$arrs = glob(
