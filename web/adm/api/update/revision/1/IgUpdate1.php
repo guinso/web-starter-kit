@@ -15,8 +15,8 @@ class IgUpdate1 implements IgUpdate {
 		
 		//get web delpoy setting 
 		$webSetting = IgConfig::get('web');
-		$db = WebCommon::getWebDb();
-		$pdo = WebCommon::getWebPdo();
+		$db = Util::getDb();
+		$pdo = Util::getPDO();
 		
 		//sample running multiple files using web deploy databse gateway
 		Util::runSqlScript($dir . DIRECTORY_SEPARATOR . 'sample.sql', $pdo);
