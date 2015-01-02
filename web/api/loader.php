@@ -5,7 +5,6 @@ define('ADM_URL', URL . '/adm');
 define('DS' , DIRECTORY_SEPARATOR);
 
 define('ROOT_DIR', dirname(dirname(__FILE__)));
-//x define('MAIN_ROOT', dirname(ROOT_DIR));
 
 define('API_DIR', dirname(__FILE__));
 define('ADM_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'adm');
