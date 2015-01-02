@@ -14,7 +14,7 @@ class IgUpdate1 implements IgUpdate {
 		$dir = dirname(__FILE__);
 		
 		//get web delpoy setting 
-		$webSetting = IgConfig::get('web');
+		$webSetting = IgConfig::get();
 		$db = Util::getDb();
 		$pdo = Util::getPDO();
 		
