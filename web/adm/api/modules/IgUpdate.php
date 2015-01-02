@@ -8,10 +8,6 @@ interface IgUpdate {
 }
 
 class IgModUpdate {
-	/**
-	 * Update module is using web-deploy database to keep track version
-	 * Make sure always using 'WebCommon::getKeyValue' to get correct value
-	 */
 	
 	//Discover all revision found in source code
 	public static function getRevision() {
@@ -51,7 +47,7 @@ class IgModUpdate {
 	}
 
 	public static function getAvailableUpdate() {
-		$version = WebCommon::getWebKeyValue('update-ver', 0);
+		$version = Util::getKeyValue('update-ver', 0);
 		$revisions = self::getRevision();
 		
 		$result = array();
@@ -69,8 +65,7 @@ class IgModUpdate {
 	 * @param number $maxRev
 	 */
 	public static function executeUpdate($maxRev = 0) {
-		
-		$version = WebCommon::getWebKeyValue('update-ver', 0);
+		$version = Util::getKeyValue('update-ver', 0);
 		$updates = self::getAvailableUpdate();
 		
 		foreach($updates as $update) {
@@ -79,7 +74,7 @@ class IgModUpdate {
 				
 				try {
 					$className::runScript();
-					WebCommon::setWebKeyValue('update-ver', $update['revision']);
+					Util::setKeyValue('update-ver', $update['revision']);
 				} catch(Exception $ex) {
 					Util::sendErrorResponse(-3, "Update process fail: " . $ex->getMessage());
 					break;
@@ -87,7 +82,7 @@ class IgModUpdate {
 			}
 		}
 		
-		return array('version' => WebCommon::getWebKeyValue('update-ver', 0));
+		return array('version' => Util::getKeyValue('update-ver', 0));
 	}
  }
 ?>
