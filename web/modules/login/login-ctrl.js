@@ -1,6 +1,6 @@
 angular.module('MyApp').
 
-controller('LoginCtrl', function($scope, $resource, $LoginService, $location, $window) {
+controller('LoginCtrl', function($scope, $resource, $location, $window) {
 	
 	$scope.usr = {username: '', password: '', errorMsg: ''};
 	
@@ -11,19 +11,18 @@ controller('LoginCtrl', function($scope, $resource, $LoginService, $location, $w
 	}
 	
 	$scope.usr.login = function() {
-		$LoginService.login($scope.usr.username, $scope.usr.password,
+		$resource('api/login').save(
+			{username: $scope.usr.username, pwd: $scope.usr.password},
 			function() {
 				if($scope.navigation.stackUrl) {
-					var urll = $scope.navigation.stackUrl;
+					var url = $scope.navigation.stackUrl;
 					$scope.navigation.stackUrl = '';
 					
 					//restore back previous attempt visit URL
-					$location.path(urll);
+					$location.path(url);
 				} else {
 					$location.path('#');
 				}
-				
-				//x $window.location.href = 'asd/qwe';
 			},
 			function() {
 				$scope.usr.errorMsg = 'Login failed, please check username and password.';

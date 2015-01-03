@@ -81,7 +81,7 @@ controller('MsgCtrl', function($scope, $timeout) {
 	};
 }).
 
-controller('AppCtrl', function($scope, $resource, $location, $LoginService) {
+controller('AppCtrl', function($scope, $resource, $location) {
 	window.scope = {
 		main: $scope
 	};
@@ -117,7 +117,7 @@ controller('AppCtrl', function($scope, $resource, $location, $LoginService) {
 	$scope.actives = [{name:'active', value:true}, {name:'inactive', value:false}];
 	
 	$scope.checkUser = function() {
-		$LoginService.getCurrentUser(
+		$resource('api/current-user').get(
 			function(response) {
 				var isLogin = response.login;
 				if(!isLogin) {
@@ -133,13 +133,13 @@ controller('AppCtrl', function($scope, $resource, $location, $LoginService) {
 				}
 			},
 			function(response) {
-				$scope.msg.setMsg('Fail to check authentication', 'error');
+				$scope.msg.handleError(response);
 			}
 		);
 	};
 	
 	$scope.logout = function() {
-		$scope.user = $LoginService.logout(
+		$resource('api/logout').get(
 			function() {
 				$location.path('/login');
 			},
