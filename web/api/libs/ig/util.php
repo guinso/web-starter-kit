@@ -265,6 +265,39 @@ public static function prepareDb($pdo) {
 	return new NotORM($pdo);
 }
 
+/**
+ * Execute PDO based on SQL statement with additional parameters
+ * @param string $sql
+ * @param array $whrs	indexed based string array
+ * @param array $params	associate array
+ */
+public static function executePdo($sql, $whrs, $params, $pagination = null, $pdo = null) {
+	if(empty($pdo))
+		$pdo = self::getPDO();
+	
+	if(count($whrs) > 0) {
+		$x = '';
+		for($i = 0; $i < count($whrs); $i++) {
+			$x .= ($i == 0? ' ' : ' AND ') . $whrs[$i];
+		}
+		
+		$sql .= ' WHERE ' . $x;
+	}
+	
+	if(!empty($pagination)) {
+		$index = $pagination['pgIndex'];
+		$size = $pagination['pgSize'];
+		$offset = $index * $size;
+		
+		$sql .= " LIMIT $size OFFSET $offset";
+	}
+	
+	$raw = $pdo->prepare($sql);
+	$raw->execute($params);
+	
+	return $raw;
+}
+
 public static function getNextJobId($tableName, $columnName, $initial, $db = null) {
 	if(empty($db))
 		$db = self::getDb();
