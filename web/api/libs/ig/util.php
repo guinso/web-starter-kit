@@ -178,7 +178,21 @@ public static function getInputData() {
 	$rawJsonString = file_get_contents('php://input');
 	$entityBody = json_decode($rawJsonString, true);
 	
+	if(is_array($entityBody))
+		self::recurArrayTrimString($entityBody);
+	
 	return $entityBody;
+}
+
+private static function recurArrayTrimString(array &$arr) {
+	$cnt = count($arr);
+	foreach($arr as $k => $v) {
+		if(is_string($v))
+			$arr[$k] = trim($v);
+		else if(is_array($v)) {
+			self::recurArrayTrimString($arr[$k]);
+		}
+	}
 }
 
 /**
