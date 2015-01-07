@@ -3,6 +3,7 @@ $igDir = dirname(__FILE__);
 
 require_once $igDir . DIRECTORY_SEPARATOR . 'util.php';
 
+require_once $igDir . DIRECTORY_SEPARATOR . 'igDbUtil.php';
 require_once $igDir . DIRECTORY_SEPARATOR . 'loginUtil.php';
 require_once $igDir . DIRECTORY_SEPARATOR . 'authorizeUtil.php';
 require_once $igDir . DIRECTORY_SEPARATOR . 'emailUtil.php';
