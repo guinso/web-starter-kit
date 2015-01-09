@@ -23,6 +23,24 @@ controller('MiscCtrl', function($scope, $resource, $util) {
 		);
 	};
 	
+	$scope.misc.saveMisc = function() {
+		$scope.loader.showLoader();
+		
+		var x = $resource('api/misc-setting').save(
+			$scope.misc.item,
+			function() {
+				$scope.loader.hideLoader();
+				$scope.msg.setMsg('Successfully update site maintenance.', 'ok');
+				
+				$scope.misc.item = x;
+			},
+			function(response) {
+				$scope.msg.handleError(response);
+				$scope.loader.hideLoader();
+			}
+		);
+	};
+/*	
 	$scope.misc.saveMaintenance = function() {
 		var x = $resource('api/misc-maintenance').save(
 			$scope.misc.item,
@@ -39,7 +57,7 @@ controller('MiscCtrl', function($scope, $resource, $util) {
 			}
 		);
 	};
-	
+
 	$scope.misc.saveDeploy = function() {
 		var x = $resource('api/misc-deploy').save(
 			$scope.misc.item,
@@ -55,7 +73,7 @@ controller('MiscCtrl', function($scope, $resource, $util) {
 			}
 		);
 	};
-	
+*/	
 	$scope.misc.reload = function() {
 		$scope.loader.showLoader();
 		

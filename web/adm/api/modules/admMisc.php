@@ -20,6 +20,18 @@ class AdmMiscREST {
 		}
 	}
 	
+	public static function post() {
+		if(!AdmLogin::isLogin())
+			Util::sendErrorResponse(-1, "You are not authorize to update system admin setting.");
+		
+		try {
+			$data = Util::getInputData();
+			AdmMisc::set($data);
+		} catch(Exception $ex) {
+			Util::sendErrorResponse(-1, $ex->getMessage());
+		}
+	}
+/*	
 	public static function postMaintenance() {
 		if(!AdmLogin::isLogin())
 			Util::sendErrorResponse(-1, "You are not authorize to update system admin setting");
@@ -47,8 +59,9 @@ class AdmMiscREST {
 			Util::sendErrorResponse(-1, $ex->getMessage());
 		}
 	}
+*/
 }
-
+		
 /**
  * Admin miscellaneous setting
  * @author chingchetsiang
@@ -67,6 +80,17 @@ class AdmMisc {
 		);
 	}
 	
+	public static function set($input) {
+		IgConfig::setConfig('maintenance', $input['maintenance']);
+		
+		if($input['deploy'])
+			JsCompact::minimizeJs();
+		
+		IgConfig::setConfig('deploy', $input['deploy']);
+		
+		IgConfigLoader::updateSetting();
+	}
+/*	
 	public static function setMaintenance($isMaintenance) {
 		IgConfig::setConfig('maintenance', $isMaintenance);
 		IgConfigLoader::updateSetting();
@@ -79,5 +103,6 @@ class AdmMisc {
 		IgConfig::setConfig('deploy', $isDeploy);
 		IgConfigLoader::updateSetting();
 	}
+*/
 }
 ?>

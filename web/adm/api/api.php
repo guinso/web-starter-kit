@@ -63,7 +63,6 @@ getApi()->post('/update-run', array('IgModUpdate', 'executeUpdate'), EpiApi::ext
 
 //misc admin settings
 getApi()->get('/misc-setting', array('AdmMiscREST', 'get'), EpiApi::external);
-getApi()->post('/misc-maintenance', array('AdmMiscREST', 'postMaintenance'), EpiApi::external);
-getApi()->post('/misc-deploy', array('AdmMiscREST', 'postDeploy'), EpiApi::external);
+getApi()->post('/misc-setting', array('AdmMiscREST', 'post'), EpiApi::external);
 getApi()->post('/update-account', array('AdmLoginREST', 'postAccount'), EpiApi::external);
 ?>

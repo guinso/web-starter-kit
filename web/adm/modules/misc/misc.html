@@ -40,31 +40,19 @@
 	<hr/>
 	
 	
-	<h4>Maintenance Site</h4>
-	<form class='form-horizontal' role='form' name='maintenanceForm' ng-submit='misc.saveMaintenance()'>
+	<h4>Site</h4>
+	<form class='form-horizontal' role='form' name='maintenanceForm' ng-submit='misc.saveMisc()'>
 		<div class='form-group'>
 			<label class='col-md-4 control-label'>Put site to maintenance</label>
-			<div class='checkbox col-md-8' ng-class="{'has-error' : accountForm.maintenance.$invalid}">
+			<div class='checkbox col-md-8' ng-class="{'has-error' : maintenanceForm.maintenance.$invalid}">
 			    <input 	
 			            type='checkbox' name='maintenance'
 						ng-model='misc.item.maintenance'>
 			</div>
 		</div>
 		<div class='form-group'>
-			<div class='col-md-12'>
-				<button type='submit' class='btn btn-default pull-right'>
-					update
-				</button>
-			</div>
-		</div>
-	</form>
-	<hr/>
-	
-	<h4>Optimize</h4>
-	<form class='form-horizontal' role='form' name='deployForm' ng-submit='misc.saveDeploy()'>
-		<div class='form-group'>
 			<label class='col-md-4 control-label'>Compact JS files</label>
-			<div class='checkbox col-md-8' ng-class="{'has-error' : accountForm.deploy.$invalid}">
+			<div class='checkbox col-md-8' ng-class="{'has-error' : maintenanceForm.deploy.$invalid}">
 			    <input 	
 			            type='checkbox' name='deploy'
 						ng-model='misc.item.deploy'>
@@ -78,6 +66,7 @@
 			</div>
 		</div>
 	</form>
+	
 	<br/>
 	<span>&nbsp;</span>
 </div>
