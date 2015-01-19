@@ -221,7 +221,7 @@ service('$util', ['$resource', '$http', function($resource, $http) {
     };
 	this.uploadFile = uf;
     
-    this.countAndQuery = function(cntUrl, url, query, successCallback, errorCallback) {
+	this.countAndQuery = function(cntUrl, url, query, successCallback, errorCallback) {
 
 		var q = angular.copy(query);
 		q.pgIndex -= 1;
@@ -230,6 +230,11 @@ service('$util', ['$resource', '$http', function($resource, $http) {
 			function() {
 				q.pgCnt = x.count;
 				query.pgCnt = x.count;
+				
+				if(q.pgIndex * q.pgSize >= q.pgCnt) {
+					q.pgIndex = 0;
+					query.pgIndex = 1;
+				}
 				
 				var y = $resource(url).query(
 					q,

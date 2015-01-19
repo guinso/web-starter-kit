@@ -117,6 +117,16 @@ controller('AppCtrl', function($scope, $resource, $location) {
 	$scope.actives = [{name:'active', value:true}, {name:'inactive', value:false}];
 	
 	$scope.checkUser = function() {
+		var x = $resource('api/access-right-list').get(
+			function() {
+				$scope.accessList = x;
+				//x console.log($scope.accessList.ApproveLeave);
+			},
+			function(response) {
+				$scope.msg.handleError(response);
+			}
+		);
+		
 		$resource('api/current-user').get(
 			function(response) {
 				var isLogin = response.login;

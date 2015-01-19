@@ -9,6 +9,7 @@ getApi()->get('/login-log-count', array('UserAccount', 'getActivityLogCount'), E
 
 //Authorization
 getApi()->get('/access-right', array('Access', 'getAccessRight'), EpiApi::external);
+getApi()->get('/access-right-list', array('Access', 'getAccessList'), EpiApi::external);
 getApi()->get('/access-matrix', array('Access', 'getMatrix'), EpiApi::external);
 getApi()->put('/access-matrix/(\w+)', array('Access', 'updateMatrixGroup'), EpiApi::external);
 getApi()->get('/access-matrix-rebuild', array('Access', 'rebuildAccessMatrix'), EpiApi::external);

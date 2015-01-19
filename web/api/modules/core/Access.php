@@ -10,6 +10,20 @@ class Access {
 		return $result;
 	}
 	
+	public static function getAccessList() {
+		$db = Util::getDb();
+		$result = array();
+		
+		$fs = $db->function();
+		foreach($fs as $f) {
+			$name = ucwords($f['name']);
+			$name = str_replace(' ', '', $name);
+			$result[$name] = AuthorizeUtil::isAuthorize($f['name']); 
+		}
+		
+		return $result;
+	}
+	
 	public static function getMatrix() {
 		if(!AuthorizeUtil::isAuthorize('view user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized to view authorization.', null, 401);
