@@ -7,8 +7,8 @@
 	 	
 		<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
 
-		<link href="../lib/bootstrap/css/bootstrap-3.1.1.min.css" rel="stylesheet">
-		<link href="../lib/bootstrap/css/bootstrap-theme-3.1.1.css" rel="stylesheet">
+		<link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../lib/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
 		<link href="../lib/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet">
 		<link href="../lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 		<link href="css/override.css" rel="stylesheet">
@@ -43,7 +43,7 @@
 	
   	<script src="../lib/moment/moment-2.6.0.min.js"></script>
   	
-	<script src="../lib/bootstrap/js/bootstrap-3.1.1.js"></script>
+	<script src="../lib/bootstrap/js/bootstrap.js"></script>
 	<script src="../lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 	<script src="../lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker-3.0.0-min.js"></script>
 
