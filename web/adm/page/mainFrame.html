@@ -1,3 +1,5 @@
+<div ng-class='{blur:loader.show}'>
+
 <nav class='navbar navbar-inverse' role='navigation' ng-show='!navigation.plainPage'>
 	<!-- Brand and toggle get grouped for better mobile display -->
 	<div class='container-fluid'>
@@ -58,14 +60,16 @@
 	</div>
 </div>
 
-<div class='container-fluid'  ng-controller='LoaderCtrl' >
-	<!-- Loader Container -->
-	<div class='row' id="loader" ng-if="loader.show">
-		<div class="loader-big">
-			<img src="img/loader.gif">
+<!-- Main Container -->
+<div ng-view></div>
+</div>
+
+<!-- Loader Container -->  
+<div ng-controller='LoaderCtrl'>
+	<div ng-show="loader.show" class='top-layer my-show-hide'>
+		<div class='center-msg'>
+			<div><img src="img/loader-s.gif"></div>
+			<div><span class='text-center'><b>Loading</b></span></div>
 		</div>
 	</div>
 </div>
-
-<!-- Main Container -->
-<div ng-view></div>
