@@ -16,6 +16,7 @@ include_once 'maintenance.php';
 		<link href="lib/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet">
 		<link href="lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
+		<link href="css/loader.css" rel="stylesheet">
 		<link href="css/override.css" rel="stylesheet">
 		
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -27,7 +28,16 @@ include_once 'maintenance.php';
 	 </head>
   	<body>
   		<div id='loading-msg'>
-  			Please wait while loading
+  			<div align="center" class="center-msg">
+				<div class="contener_general">
+					<div class="contener_mixte"><div class="ballcolor ball_1">&nbsp;</div></div>
+					<div class="contener_mixte"><div class="ballcolor ball_2">&nbsp;</div></div>
+					<div class="contener_mixte"><div class="ballcolor ball_3">&nbsp;</div></div>
+					<div class="contener_mixte"><div class="ballcolor ball_4">&nbsp;</div></div>
+				</div>
+				<h2 class='loader-title'>Web Starter Kit</h2>
+				<p class='loader-desc' id='loading-desc'>Please wait while loading</p>
+			</div>
   		</div>
   		<div id='bodyy' ng-controller='AppCtrl'>
   		</div>
@@ -70,8 +80,11 @@ include_once 'loadModules.php';
 ?>
 
 <script type="text/javascript">
-	$('#loading-msg').hide();
-	$('#bodyy').show();
+	$('#loading-desc').html('Loading completed.');
+	$('#loading-msg').fadeOut(1500, function(){
+		$('#bodyy').fadeIn(500);
+	});
+	
 </script>
 
 </html>
