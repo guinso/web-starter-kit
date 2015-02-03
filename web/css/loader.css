@@ -1,0 +1,156 @@
+/* 
+	Source 
+		http://www.wifeo.com/code/ 
+		http://codepen.io/wifeo/pen/FBpJq
+*/
+
+h2.loader-title {
+	color:#999999;
+	margin-top: 35px;
+}
+
+p.loader-desc {
+	color:#999999;
+}
+
+.contener_general
+{
+  -webkit-animation:animball_two 1s infinite;
+  -moz-animation:animball_two 1s infinite;
+  -ms-animation:animball_two 1s infinite;
+  animation:animball_two 1s infinite;
+  width:44px; height:44px;
+}
+.contener_mixte
+{
+  width:44px; height:44px; position:absolute;
+}
+.ballcolor
+{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.ball_1, .ball_2, .ball_3, .ball_4
+{
+  position: absolute;
+  -webkit-animation:animball_one 1s infinite ease;
+  -moz-animation:animball_one 1s infinite ease;
+  -ms-animation:animball_one 1s infinite ease;
+  animation:animball_one 1s infinite ease;
+}
+.ball_1
+{
+  background-color:#cb2025;
+  top:0; left:0;
+}
+.ball_2
+{
+  background-color:#f8b334;
+  top:0; left:24px;
+}
+.ball_3
+{
+  background-color:#00a096;
+  top:24px; left:0;
+}
+.ball_4
+{
+  background-color:#97bf0d;
+  top:24px; left:24px;
+}
+
+@-webkit-keyframes animball_one
+{
+  0%{ position: absolute;}
+  50%{top:12px; left:12px; position: absolute;opacity:0.5;}
+  100%{ position: absolute;}
+}
+@-moz-keyframes animball_one
+{
+  0%{ position: absolute;}
+  50%{top:12px; left:12px; position: absolute;opacity:0.5;}
+  100%{ position: absolute;}
+}
+@-ms-keyframes animball_one
+{
+  0%{ position: absolute;}
+  50%{top:12px; left:12px; position: absolute;opacity:0.5;}
+  100%{ position: absolute;}
+}
+@keyframes animball_one
+{
+  0%{ position: absolute;}
+  50%{top:12px; left:12px; position: absolute;opacity:0.5;}
+  100%{ position: absolute;}
+}
+
+@-webkit-keyframes animball_two
+{
+  0%{-webkit-transform:rotate(0deg) scale(1);}
+  50%{-webkit-transform:rotate(360deg) scale(1.3);}
+  100%{-webkit-transform:rotate(720deg) scale(1);}
+}
+@-moz-keyframes animball_two
+{
+  0%{-moz-transform:rotate(0deg) scale(1);}
+  50%{-moz-transform:rotate(360deg) scale(1.3);}
+  100%{-moz-transform:rotate(720deg) scale(1);}
+}
+@-ms-keyframes animball_two
+{
+  0%{-ms-transform:rotate(0deg) scale(1);}
+  50%{-ms-transform:rotate(360deg) scale(1.3);}
+  100%{-ms-transform:rotate(720deg) scale(1);}
+}
+@keyframes animball_two
+{
+  0%{transform:rotate(0deg) scale(1);}
+  50%{transform:rotate(360deg) scale(1.3);}
+  100%{transform:rotate(720deg) scale(1);}
+}
+
+/* Circle Loader */
+/* url: http://cssanimate.com/ */
+.circle-rotate{
+  animation: myRotateFrame linear 1s;
+  animation-iteration-count: infinite;
+  transform-origin: 50% 50%;
+  -webkit-animation: myRotateFrame linear 1s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-transform-origin: 50% 50%;
+  -moz-animation: myRotateFrame linear 1s;
+  -moz-animation-iteration-count: infinite;
+  -moz-transform-origin: 50% 50%;
+  -o-animation: myRotateFrame linear 1s;
+  -o-animation-iteration-count: infinite;
+  -o-transform-origin: 50% 50%;
+  -ms-animation: myRotateFrame linear 1s;
+  -ms-animation-iteration-count: infinite;
+  -ms-transform-origin: 50% 50%;
+}
+
+@keyframes myRotateFrame{
+  0% { transform:  rotate(0deg) ; }
+  100% { transform:  rotate(360deg) ; }
+}
+
+@-moz-keyframes myRotateFrame{
+  0% { -moz-transform:  rotate(0deg) ; }
+  100% { -moz-transform:  rotate(360deg) ; }
+}
+
+@-webkit-keyframes myRotateFrame {
+  0% { -webkit-transform:  rotate(0deg) ;}
+  100% { -webkit-transform:  rotate(360deg) ;}
+}
+
+@-o-keyframes myRotateFrame {
+  0% { -o-transform:  rotate(0deg) ;}
+  100% { -o-transform:  rotate(360deg) ;}
+}
+
+@-ms-keyframes myRotateFrame {
+  0% { -ms-transform:  rotate(0deg) ;}
+  100% { -ms-transform:  rotate(360deg) ;}
+}

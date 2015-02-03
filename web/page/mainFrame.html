@@ -69,25 +69,7 @@
 <div ng-controller='LoaderCtrl'>
 	<div ng-show="loader.show" class='top-layer my-show-hide'>
 		<div class='center-msg'>
-			<canvas id='myCircle' width=64px height=64px class='circle-rotate'></canvas>
-			<script type="text/javascript">
-				var canvas = document.getElementById('myCircle');
-		      	var context = canvas.getContext('2d');
-		      	var x = canvas.width / 2;
-		      	var y = canvas.height / 2;
-		      	var radius = x * 0.8;
-		      	var startAngle = 1.2 * Math.PI;
-		      	var endAngle = 1.0 * Math.PI;
-		      	var counterClockwise = false;
-
-		      	context.beginPath();
-		      	context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
-		      	context.lineWidth = 5;
-
-		      	// line color
-		     	context.strokeStyle = 'black';
-		      	context.stroke();
-			</script>
+			<canvas circle-arc width=64px height=64px class='circle-rotate'></canvas>
 			<div style="margin:auto; margin-top:10px;"><span class='text-center'><b>Loading</b></span></div>
 		</div>
 	</div>
