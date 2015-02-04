@@ -167,5 +167,13 @@ controller('AppCtrl', function($scope, $resource, $location) {
 		$scope.navigation.args = $location.search();
 		
 		$scope.checkUser();
+		
+		//unregister onbeforeunload event
+		window.onbeforeunload = null;
+		
+		//unregister $locationChangeStart event
+		$scope.$on('$locationChangeStart', function(event) {
+		    return;
+		});
 	});
 });
