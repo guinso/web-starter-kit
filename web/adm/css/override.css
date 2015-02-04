@@ -136,11 +136,14 @@ th.lg-width {
 }
 
 .blur, .blur-add.blur-add-active {
+/*
    -webkit-filter: blur(20px);
 	-moz-filter: blur(20px);
 	-ms-filter: blur(20px);
 	-o-filter: blur(20px);
 	filter: blur(20px);
+*/
+	opacity:0;
 }
 
 .blur-remove.blur-remove-active {
