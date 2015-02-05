@@ -8,7 +8,7 @@ IgConfig::setConfig('deploy', false);
 
 //web deploy configuration
 IgConfig::set('web', new IgConfigRecipe(
-'mysql:dbname=starter;host=localhost;charset=utf8', 'root', '1q2w3e',
+'starter','localhost', 'root', '1q2w3e',
 10, 'A',
 '@api/upload','@api/template','@api/tmp',
 'Asia/Kuala_Lumpur',
@@ -18,7 +18,7 @@ IgConfig::set('web', new IgConfigRecipe(
 
 //admin configuration
 IgConfig::set('adm', new IgConfigRecipe(
-'mysql:dbname=starter_adm;host=localhost;charset=utf8', 'root', '1q2w3e',
+'starter_adm','localhost', 'root', '1q2w3e',
 10, 'A',
 '@api/upload','@api/template','@api/tmp',
 'Asia/Kuala_Lumpur',

@@ -3,6 +3,8 @@ class IgConfigRecipe {
 
 	//For public web
 	public $dsm = '';
+	public $dbName = '';
+	public $dbHost = '';
 	public $dbUsr = '';
 	public $dbPwd = '';
 	public $dbLen = 10;
@@ -27,14 +29,17 @@ class IgConfigRecipe {
 	public $absTemporaryPath = '';
 	
 	public function __construct(
-		$dsm, $dbUsr, $dbPwd, 
+		$dbName, $dbHost, $dbUsr, $dbPwd, 
 		$dbLen, $dbInitial, 
 		$uploadPath, $templatePath, $temporaryPath,
 		$timeZone,
 		$smtpHost, $smtpUsr, $smtpPwd, $smtpEmail, $smtpName, 
 		$smtpSecure, $smtpPort) {
 		
-		$this->dsm = $dsm;
+		$this->dbName = $dbName;
+		$this->dbHost = $dbHost;
+		
+		$this->dsm = "mysql:dbname=$dbName;host=$dbHost;charset=utf8";
 		$this->dbUsr = $dbUsr;
 		$this->dbPwd = $dbPwd;
 		

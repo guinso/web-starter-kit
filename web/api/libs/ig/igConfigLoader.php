@@ -55,7 +55,7 @@ public static function updateSetting() {
 		$tmp = IgConfig::getProfile($k);
 		
 		$output .= "IgConfig::set('$k', new IgConfigRecipe('" .
-			$tmp->dsm . "','" . $tmp->dbUsr . "','" . $tmp->dbPwd . "'," .
+			$tmp->dbName . "','" . $tmp->dbHost . "','" . $tmp->dbUsr . "','" . $tmp->dbPwd . "'," .
 			$tmp->dbLen . ",'" . $tmp->dbInitial . "','" . 
 			$tmp->uploadPath . "','" . $tmp->templatePath . "','" . $tmp->temporaryPath . "','" . 
 			$tmp->timeZone . "','" .
