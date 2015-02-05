@@ -51,7 +51,7 @@ $setting = IgConfig::getProfile();
 Util::configure(
 $setting->dsm, $setting->dbUsr, $setting->dbPwd,
 $setting->dbInitial, $setting->dbLen,
-$setting->uploadPath, $setting->temporaryPath, $setting->templatePath);
+$setting->absUploadPath, $setting->absTemporaryPath, $setting->absTemplatePath);
 
 EmailUtil::configure(
 $setting->smtpHost,
@@ -59,7 +59,7 @@ $setting->smtpEmail, $setting->smtpName,
 $setting->smtpUsr, $setting->smtpPwd,
 $setting->smtpSecure, $setting->smtpPort);
 
-FileUtil::configure($setting->uploadPath);
+FileUtil::configure($setting->absUploadPath);
 
 date_default_timezone_set($setting->timeZone);
 ?>

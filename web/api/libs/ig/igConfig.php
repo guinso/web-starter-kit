@@ -22,6 +22,10 @@ class IgConfigRecipe {
 	public $smtpPort = null;
 	public $smtpSecure = '';
 	
+	public $absUploadPath = '';
+	public $absTemplatePath = '';
+	public $absTemporaryPath = '';
+	
 	public function __construct(
 		$dsm, $dbUsr, $dbPwd, 
 		$dbLen, $dbInitial, 
@@ -50,6 +54,10 @@ class IgConfigRecipe {
 		$this->smtpName = $smtpName;
 		$this->smtpPort = $smtpPort;
 		$this->smtpSecure = $smtpSecure;
+		
+		$this->absUploadPath = self::_getAbsPath($this->uploadPath);
+		$this->absTemplatePath = self::_getAbsPath($this->templatePath);
+		$this->absTemporaryPath = self::_getAbsPath($this->temporaryPath);
 	}
 	
 	public function get() {
@@ -69,8 +77,24 @@ class IgConfigRecipe {
 			'smtpEmail' => $this->smtpEmail,
 			'smtpName' => $this->smtpName,
 			'smtpPort' => $this->smtpPort,
-			'smtpSecure' => $this->smtpSecure
+			'smtpSecure' => $this->smtpSecure,
+				
+			'absUploadPath' => $this->absUploadPath,
+			'absTemporaryPath' => $this->absTemporaryPath,
+			'absTemplatePath' => $this->absTemplatePath
 		);
+	}
+	
+	private static function _getAbsPath($relativePath) {
+		$abs = '';
+		$x = $relativePath[0];
+		if($x == '@') {
+			$abs = ROOT_DIR . DS . substr($relativePath, 1);
+		} else {
+			$sbs = $relativePath;
+		}
+		
+		return $abs;
 	}
 }
 
@@ -152,18 +176,7 @@ class IgConfig {
 	public static function getConfigKeys() {
 		return array_keys(self::$_config);
 	}
-	
-	/**
-	 * Get configuration profile
-	 * @param string $name
-	 * @return array
-	 */
-	public static function get($name = null) {
-		$x = self::getProfile($name);
-		
-		return $x->get();
-	}
-	
+
 	/**
 	 * Get configuration profile, leave blank to get default profile
 	 * @param string $name
