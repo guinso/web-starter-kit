@@ -28,6 +28,11 @@ config(['$routeProvider', function($routeProvider) {
 		controller:'MiscCtrl'
 	}).
 	
+	when('/config/sp', {
+		templateUrl:'modules/sp-profile/sp-profile.html',
+		controller:'SpCtrl'
+	}).
+	
 	otherwise({ redirectTo: '/config/update'});
 	
 	//otherwise({ redirectTo: '#'});

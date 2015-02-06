@@ -1,0 +1,313 @@
+<div class='container-fluid' >
+	<form role='form' class='form-horizontal ' ng-submit="sp.save()" name="spForm" >
+		<div class='form-group' >
+			<div class='col-md-6 ' >
+				<h2 class='' >
+					Profile Editor
+				</h2>
+			</div>
+			<div class='col-md-6 ' >
+				<button class='btn btn-default pull-right' type='submit' >
+					Update
+				</button>
+			</div>
+		</div>
+		<div class='form-group' >
+			<div class='col-md-2 ' >
+				<div class='form-group' >
+					<div class='col-md-12 ' >
+						<button class='btn btn-default ' type='button'  ng-click="sp.callAddProfile()" >
+							+
+						</button>
+						<button class='btn btn-default ' type='button'  ng-click="sp.callDeleteProfile()" >
+							-
+						</button>
+					</div>
+				</div>
+				<div class='form-group' >
+					<div class='col-md-12 ' >
+						<button class='btn btn-default ' type='button'  ng-click="sp.setDefault()" >
+							set as default
+						</button>
+					</div>
+				</div>
+				<div class='form-group' ng-repeat='(k,r) in sp.item.items' >
+					<div class='col-md-12 ' ng-click='sp.selectProfile(r)' 
+						class='hover-cursor'
+						ng-class="{'bg-info':sp.selectedItem == r}">
+						{{k}}
+					</div>
+				</div>
+			</div>
+			<div class='col-md-10 ' >
+				<div class='form-group' >
+					<h4 class='' >
+						Database
+					</h4>
+					<div class=''><table class='table table-striped table-condensed ' >
+						<tbody class='' >
+							<tr class='' >
+								<td class='' >
+									DB name
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.dbName.$invalid}" >
+										<input type='text'  class='form-control '  required  name='dbName'  ng-model="sp.selectedItem.dbName" >
+									</div>
+								</td>
+							</tr>
+							<tr class='' >
+								<td class='' >
+									Username
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.dbUsr.$invalid}" >
+										<input type='text'  class='form-control '  required  name='dbUsr'  ng-model="sp.selectedItem.dbUsr" >
+									</div>
+								</td>
+							</tr>
+							<tr class='' >
+								<td class='' >
+									Password
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.dbPwd.$invalid}" >
+										<input type='password'  class='form-control '  required  name='dbPwd'  ng-model="sp.selectedItem.dbPwd" >
+									</div>
+								</td>
+							</tr>
+							<tr class='' >
+								<td class='' >
+									Host
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.dbHost.$invalid}" >
+										<input type='text'  class='form-control '  required  name='dbHost'  ng-model="sp.selectedItem.dbHost" >
+									</div>
+								</td>
+							</tr>
+							<tr class='' >
+								<td class='' >
+									ID Initial
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.dbInitial.$invalid}" >
+										<input type='text'  class='form-control '  required  name='dbInitial'  ng-model="sp.selectedItem.dbInitial" >
+									</div>
+								</td>
+							</tr>
+							<tr class='' >
+								<td class='' >
+									ID length
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.dbLen.$invalid}" >
+										<input type='number'  class='form-control '  required  name='dbLen'  ng-model="sp.selectedItem.dbLen"  step='1' >
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table></div>
+					<h4 class='' >
+						Directory
+					</h4>
+					<span class=' ' >
+						you can use '@' as root directory
+					</span>
+					<div class=''><table class='table table-striped table-condensed ' >
+						<tbody class='' >
+							<tr class='' >
+								<td class='' >
+									Upload Path
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.uploadPath.$invalid}" >
+										<input type='text'  class='form-control '  required  name='uploadPath'  ng-model="sp.selectedItem.uploadPath" >
+									</div>
+								</td>
+							</tr>
+							<tr class='' >
+								<td class='' >
+									Template Path
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.templatePath.$invalid}" >
+										<input type='text'  class='form-control '  required  name='templatePath'  ng-model="sp.selectedItem.templatePath" >
+									</div>
+								</td>
+							</tr>
+							<tr class='' >
+								<td class='' >
+									Temparary Path
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.tempararyPath.$invalid}" >
+										<input type='text'  class='form-control '  required  name='tempararyPath'  ng-model="sp.selectedItem.temporaryPath" >
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table></div>
+					<h4 class='' >
+						Time and Location
+					</h4>
+					<div class=''><table class='table table-striped table-condensed ' >
+						<tbody class='' >
+							<tr class='' >
+								<td class='' >
+									Timezone
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.timezone.$invalid}" >
+										<input type='text'  class='form-control '  required  name='timezone'  ng-model="sp.selectedItem.timeZone" >
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table></div>
+					<h4 class='' >
+						Email (smtp)
+					</h4>
+					<div class=''><table class='table table-striped table-condensed ' >
+						<tbody class='' >
+							<tr class='' >
+								<td class='' >
+									Host
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.smtpHost.$invalid}" >
+										<input type='text'  class='form-control '  required  name='smtpHost'  ng-model="sp.selectedItem.smtpHost" >
+									</div>
+								</td>
+							</tr>
+							<tr class='' >
+								<td class='' >
+									Username
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.smtpUsr.$invalid}" >
+										<input type='text'  class='form-control '  required  name='smtpUsr'  ng-model="sp.selectedItem.smtpUsr" >
+									</div>
+								</td>
+							</tr>
+							<tr class='' >
+								<td class='' >
+									Password
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.smtpPwd.$invalid}" >
+										<input type='password'  class='form-control '  required  name='smtpPwd'  ng-model="sp.selectedItem.smtpPwd" >
+									</div>
+								</td>
+							</tr>
+							<tr class='' >
+								<td class='' >
+									Email Address
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.smtpEmail.$invalid}" >
+										<input type='text'  class='form-control '  required  name='smtpEmail'  ng-model="sp.selectedItem.smtpEmail" >
+									</div>
+								</td>
+							</tr>
+							<tr class='' >
+								<td class='' >
+									Display Name
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.smtpName.$invalid}" >
+										<input type='text'  class='form-control '  required  name='smtpName'  ng-model="sp.selectedItem.smtpName" >
+									</div>
+								</td>
+							</tr>
+							<tr class='' >
+								<td class='' >
+									SMTP outgoing port
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.smtpPort.$invalid}" >
+										<input type='number'  class='form-control '  required  name='smtpPort'  ng-model="sp.selectedItem.smtpPort"  step='1' >
+									</div>
+								</td>
+							</tr>
+							<tr class='' >
+								<td class='' >
+									Security (tls or ssl)
+								</td>
+								<td class='' >
+									<div class=''  ng-class="{'has-error' : spForm.smtpSecure.$invalid}" >
+										<input type='text'  class='form-control '  name='smtpSecure'  ng-model="sp.selectedItem.smtpSecure" >
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table></div>
+				</div>
+			</div>
+		</div>
+	</form>
+	
+<form class='form-horizontal' role='form' name='addProfileForm' 
+	ng-submit="sp.addProfile()">
+	<div class='modal fade' id='addProfileMdl'>
+		<div class='modal-dialog'>
+			<div class='modal-content'>
+				<div class='modal-header'>
+					<button type="button" 
+							class="close" 
+							data-dismiss="modal" 
+							aria-hidden="true">&times;
+					</button>
+			       	<h4 class="modal-title">Add Profile</h4>
+				</div>
+				<div class='modal-body'> 
+					<h5>Please write new profile name</h5>
+					<div class='form-group' >
+						<label class='control-label col-md-4' >
+						Profile Name</label>
+						<div class='col-md-8 '  ng-class="{'has-error' : addProfileForm.addSpName.$invalid}" >
+							<input type='text'  class='form-control'  required  name='addSpName'  ng-model="sp.addSpName" >
+						</div>
+					</div>
+				</div>
+				<div class='modal-footer'>
+					<button type="button" 
+							class="btn btn-default">Cancel
+					</button>
+					<button type="submit" 
+							class="btn btn-default">Add Profile
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<form class='form-horizontal' role='form' name='deleteProfileForm' 
+	ng-submit="sp.deleteProfile()">
+	<div class='modal fade' id='deleteProfileMdl'>
+		<div class='modal-dialog'>
+			<div class='modal-content'>
+				<div class='modal-header'>
+					<button type="button" 
+							class="close" 
+							data-dismiss="modal" 
+							aria-hidden="true">&times;
+					</button>
+			       	<h4 class="modal-title">Delete Profile {{sp.selectedName}}</h4>
+				</div>
+				<div class='modal-body'> 
+					<h5>Are you sure want to delete profile '{{sp.selectedName}}'?</h5>
+				</div>
+				<div class='modal-footer'>
+					<button type="button" 
+							class="btn btn-default">no
+					</button>
+					<button type="submit" 
+							class="btn btn-danger">Delete Profile
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+</div>

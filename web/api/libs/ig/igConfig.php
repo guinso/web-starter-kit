@@ -68,6 +68,8 @@ class IgConfigRecipe {
 	public function get() {
 		return array(
 			'dsm' => $this->dsm,
+			'dbName' => $this->dbName,
+			'dbHost' => $this->dbHost,
 			'dbUsr' => $this->dbUsr,
 			'dbPwd' => $this->dbPwd,
 			'dbLen' => intval($this->dbLen),

@@ -65,4 +65,8 @@ getApi()->post('/update-run', array('IgModUpdate', 'executeUpdate'), EpiApi::ext
 getApi()->get('/misc-setting', array('AdmMiscREST', 'get'), EpiApi::external);
 getApi()->post('/misc-setting', array('AdmMiscREST', 'post'), EpiApi::external);
 getApi()->post('/update-account', array('AdmLoginREST', 'postAccount'), EpiApi::external);
+
+//system profile
+getApi()->get('/sys-profile', array('SysProfileRest', 'get'), EpiApi::external);
+getApi()->post('/sys-profile', array('SysProfileRest', 'post'), EpiApi::external);
 ?>
