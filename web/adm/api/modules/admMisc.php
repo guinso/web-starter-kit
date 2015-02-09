@@ -74,19 +74,25 @@ class AdmMisc {
 	 * @param unknown $data
 	 */
 	public static function get() {
-		return array(
-			'maintenance' => IgConfig::getConfig('maintenance'),
-			'deploy' => IgConfig::getConfig('deploy')
-		);
+		$keys = IgConfig::getConfigKeys();
+		$result = array();
+		
+		foreach($keys as $key) {
+			$result[$key] = IgConfig::getConfig($key);
+		}
+		
+		return $result;
 	}
 	
 	public static function set($input) {
-		IgConfig::setConfig('maintenance', $input['maintenance']);
-		
-		if($input['deploy'])
-			JsCompact::minimizeJs();
-		
+		foreach($input as $k => $v) {
+			IgConfig::setConfig($k, $v);
+		}
+
 		IgConfig::setConfig('deploy', $input['deploy']);
+		
+		if(IgConfig::getConfig('deploy'))
+			JsCompact::minimizeJs();
 		
 		IgConfigLoader::updateSetting();
 	}

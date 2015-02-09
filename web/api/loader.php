@@ -59,6 +59,10 @@ $setting->smtpEmail, $setting->smtpName,
 $setting->smtpUsr, $setting->smtpPwd,
 $setting->smtpSecure, $setting->smtpPort);
 
+if(IgConfig::getConfig('debugEmail')) {
+	EmailUtil::setDebug(true, IgConfig::getConfig('debugEmailAddress'));
+}
+
 FileUtil::configure($setting->absUploadPath);
 
 date_default_timezone_set($setting->timeZone);

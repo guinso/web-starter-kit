@@ -17,6 +17,9 @@ private static $username;
 private static $password;
 private static $secure;
 
+private static $debug = false;
+private static $debugEmail = '';
+
 /**
  * One time configuration STMP email setting
  * @param String $host
@@ -46,6 +49,11 @@ public static function configure(
 	self::$password = $password;
 }	
 
+public static function setDebug($debug, $debugEmail) {
+	self::$debug = $debug;
+	self::$debugEmail = $debugEmail;
+}
+
 public static function sendEmail($tos, $ccs, $bccs, $subject, $message, $attachments) {
 	$mail = new PHPMailer();
 
@@ -61,17 +69,21 @@ public static function sendEmail($tos, $ccs, $bccs, $subject, $message, $attachm
 	$mail->From = self::$email;
 	$mail->FromName = self::$displayName;
 	
-	if(!empty($tos))
-		foreach($tos as $to)
-			$mail->addAddress($to['email'], $to['name']);
+	if(self::$debug) {
+		$mail->addAddress(self::$debugEmail, 'DEBUG');
+	} else {
+		if(!empty($tos))
+			foreach($tos as $to)
+				$mail->addAddress($to['email'], $to['name']);
+		
+		if(!empty($ccs))
+			foreach($ccs as $cc)
+				$mail->addCC($cc['email'], $cc['name']);
 	
-	if(!empty($ccs))
-		foreach($ccs as $cc)
-			$mail->addCC($cc['email'], $cc['name']);
-	
-	if(!empty($bccs))
-		foreach($bccs as $bcc)
-			$mail->addBCC($bcc['email'], $bcc['name']);
+		if(!empty($bccs))
+			foreach($bccs as $bcc)
+				$mail->addBCC($bcc['email'], $bcc['name']);
+	}
 	
 	if(!empty($attachments))
 		foreach($attachments as $attachment)
@@ -79,7 +91,11 @@ public static function sendEmail($tos, $ccs, $bccs, $subject, $message, $attachm
 	
 	$mail->isHTML(self::$htmlContent);
 
-	$mail->Subject = $subject;
+	if(self::$debug)
+		$mail->Subject = 'ERP EMAIL DEBUG: ' . $subject;
+	else
+		$mail->Subject = $subject;
+	
 	$mail->Body = $message;
 
 	$result = $mail->send();
