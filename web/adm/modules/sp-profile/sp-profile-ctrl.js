@@ -15,6 +15,10 @@ controller('SpCtrl', function($scope, $resource, $util) {
 		$('#deleteProfileMdl').modal('show');
 	};
 	
+	$scope.sp.setDefault = function() {
+		$scope.sp.item.defaultKey = $scope.sp.selectedName;
+	};
+	
 	$scope.sp.selectProfile = function(item) {
 		$scope.sp.selectedItem = item;
 		

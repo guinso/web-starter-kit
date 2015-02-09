@@ -33,7 +33,12 @@ class SysProfile {
 			$result[$key] = IgConfig::getProfile($key)->get();
 		}
 		
-		return array('items' => $result);
+		$defaultKey = IgConfig::getDefaultProfileKey();
+		
+		return array(
+			'items' => $result,
+			'defaultKey' => $defaultKey
+		);
 	}
 	
 	public static function update($input) {
@@ -50,7 +55,22 @@ class SysProfile {
 			IgConfig::set($k, $recipe);
 		}
 		
-		IgConfigLoader::updateSetting();
+		//check profile key exists or not
+		$keys = IgConfig::getProfileKeys();
+		$keyExists = false;
+		$k = $input['defaultKey'];
+		foreach($keys as $key) {
+			if($key == $k)
+				$keyExists = true;
+		}
+		
+		if($keyExists) {
+			IgConfig::setDefaultProfileKey($k);
+			IgConfigLoader::updateSetting();
+		}
+		else
+			Throw new Exception("Update fault profile key to fail, " . 
+					"such profile '$key' not exists in record.");
 	}
 }
 ?>

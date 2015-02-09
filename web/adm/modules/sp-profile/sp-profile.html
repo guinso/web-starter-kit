@@ -35,7 +35,7 @@
 					<div class='col-md-12 ' ng-click='sp.selectProfile(r)' 
 						class='hover-cursor'
 						ng-class="{'bg-info':sp.selectedItem == r}">
-						{{k}}
+						{{k + (k == sp.item.defaultKey? ' (default)':'')}}
 					</div>
 				</div>
 			</div>
