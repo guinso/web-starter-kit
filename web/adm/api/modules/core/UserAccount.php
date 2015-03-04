@@ -113,6 +113,39 @@ class UserAccount {
 	
 		return array('count' => $cnt);
 	}
+
+	public static function downloadFile($guid) {
+		$db = Util::getDb();
+	
+		$usr = LoginUtil::getCurrentUser();
+		$userId = $usr['userId'];
+	
+		//get account record
+		$x = FileUtil::getByGuid($guid);
+	
+		if(empty($x['id']))
+			Util::sendErrorResponse(-1, "targeted GUID is not a valid ID.");
+	
+		$attachmentId = $x['id'];
+		$m = $db->account->where('attachment_id', $attachmentId)->fetch();
+		if(empty($m['id']))
+			Util::sendErrorResponse(-1, "targeted GUID not found in account record");
+	
+		$authorize = AuthorizeUtil::isAuthorize('view user') || $userId == $m['id'];
+	
+		if($authorize) {
+			FileUtil::downloadFile($guid);
+		} else {
+			Util::sendErrorResponse(-1, "You have no rights to download file");
+		}
+	}
+	
+	public static function getCurrentAccount() {
+		$usr = LoginUtil::getCurrentUser();
+		$userId = $usr['userId'];
+	
+		return self::getById($userId);
+	}
 	
 	public static function post() {
 		if(!AdmLogin::isLogin()) {

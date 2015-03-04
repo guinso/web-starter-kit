@@ -46,6 +46,17 @@ public static function getById($id) {
 		return self::_getFormat($row);
 }
 
+public static function getByGuid($guid) {
+	$db = Util::getDb();
+
+	$row = $db->attachment->where('guid', $guid)->fetch();
+
+	if(empty($row['id']))
+		return null;
+	else
+		return self::_getFormat($row);
+}
+
 /**
  * Author: Ricky Siow
  * Upload file to server

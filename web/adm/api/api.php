@@ -24,6 +24,7 @@ getApi()->get('/user', array('UserAccount', 'get'), EpiApi::external);
 getApi()->get('/user-cnt', array('UserAccount', 'getCount'), EpiApi::external);
 getApi()->get('/user-log', array('UserAccount', 'getLog'), EpiApi::external);
 getApi()->get('/user-log-cnt', array('UserAccount', 'getLogCount'), EpiApi::external);
+getApi()->get('/file-user/(\w+)', array('UserAccount', 'downloadFile'), EpiApi::external);
 getApi()->get('/user/(\w+)', array('UserAccount', 'getById'), EpiApi::external);
 getApi()->post('/user', array('UserAccount', 'post'), EpiApi::external);
 getApi()->put('/user/(\w+)', array('UserAccount', 'put'), EpiApi::external);

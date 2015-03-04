@@ -29,10 +29,10 @@
   		<div id='loading-msg'>
   			<div align="center" class="center-msg">
 				<div class="contener_general">
-					<div class="contener_mixte"><div class="ballcolor ball_1">&nbsp;</div></div>
-					<div class="contener_mixte"><div class="ballcolor ball_2">&nbsp;</div></div>
-					<div class="contener_mixte"><div class="ballcolor ball_3">&nbsp;</div></div>
-					<div class="contener_mixte"><div class="ballcolor ball_4">&nbsp;</div></div>
+					<div class="contener_mixte"><div class="ballcolor ball_dark_1">&nbsp;</div></div>
+					<div class="contener_mixte"><div class="ballcolor ball_dark_2">&nbsp;</div></div>
+					<div class="contener_mixte"><div class="ballcolor ball_dark_3">&nbsp;</div></div>
+					<div class="contener_mixte"><div class="ballcolor ball_dark_4">&nbsp;</div></div>
 				</div>
 				<h2 class='loader-title'>Back Office</h2>
 				<p class='loader-desc' id='loading-desc'>Please wait while loading</p>

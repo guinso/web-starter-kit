@@ -30,7 +30,7 @@
 							<span ng-if='row.status == 1'>Active</span>
 							<span ng-if='row.status == 2'>Disabled</span>
 						</td>
-						<td><a ng-href='api/file-download/{{row.attachment.guid}}' ng-bind='row.attachment.filename' target='_blank'></a></td>
+						<td><a ng-href='api/file-user/{{row.attachment.guid}}' ng-bind='row.attachment.filename' target='_blank'></a></td>
 						<td>
 							<button type='button' class='btn btn-default' 
 									ng-click="accMain.callUpdateUserDetails('#userDetails', row)">Edit

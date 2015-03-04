@@ -31,7 +31,8 @@ p.loader-desc {
   height: 20px;
   border-radius: 50%;
 }
-.ball_1, .ball_2, .ball_3, .ball_4
+.ball_1, .ball_2, .ball_3, .ball_4,
+.ball_dark_1, .ball_dark_2, .ball_dark_3, .ball_dark_4
 {
   position: absolute;
   -webkit-animation:animball_one 1s infinite ease;
@@ -57,6 +58,27 @@ p.loader-desc {
 .ball_4
 {
   background-color:#97bf0d;
+  top:24px; left:24px;
+}
+
+.ball_dark_1
+{
+	background-color:#999967;
+	top:0; left:0;
+}
+.ball_dark_2
+{
+  background-color:#666666;
+  top:0; left:24px;
+}
+.ball_dark_3
+{
+  background-color:#CCCCCC;
+  top:24px; left:0;
+}
+.ball_dark_4
+{
+  background-color:#CCCC9A;
   top:24px; left:24px;
 }
 
