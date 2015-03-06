@@ -70,4 +70,8 @@ getApi()->post('/update-account', array('AdmLoginREST', 'postAccount'), EpiApi::
 //system profile
 getApi()->get('/sys-profile', array('SysProfileRest', 'get'), EpiApi::external);
 getApi()->post('/sys-profile', array('SysProfileRest', 'post'), EpiApi::external);
+
+//company profile
+getApi()->get('/com-profile', array('ComProfileRest', 'get'), EpiApi::external);
+getApi()->post('/com-profile', array('ComProfileRest', 'post'), EpiApi::external);
 ?>

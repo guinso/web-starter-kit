@@ -33,6 +33,11 @@ config(['$routeProvider', function($routeProvider) {
 		controller:'SpCtrl'
 	}).
 	
+	when('/com/cp', {
+		templateUrl:'modules/comProfile/comProfile.html',
+		controller:'CpCtrl'
+	}).
+	
 	otherwise({ redirectTo: '/config/update'});
 	
 	//otherwise({ redirectTo: '#'});

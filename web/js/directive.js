@@ -38,7 +38,7 @@ angular.module('MyApp').run(["$templateCache", function($templateCache) {
 		"	<a class='btn btn-default' href='javascript:;'>Choose File" +
 		"	<input 	type='file' file-upload='fileModel' " +
 		"		style=\"" +
-		"			width:100%;" +
+		"			width:112px;" +
 		"			height:34px;" +
 		"			position:absolute;" +
 		"			z-index:2;top:0;left:0;" +
