@@ -58,7 +58,8 @@ class AdmLogin {
 		
 		$_SESSION[$guid . '-log'] = IgConfig::isLoginMatch($username, $password);
 		
-		//TODO add login session into database
+		//add login session into database
+		LoginUtil::forceLoginAdmin();
 		
 		return $_SESSION[$guid . '-log'];
 	}
@@ -66,7 +67,8 @@ class AdmLogin {
 	public static function logout() {
 		$guid = IgConfig::getGuid();
 		
-		//TODO add logout session into database
+		//add logout session into database
+		LoginUtil::logoutUser();
 		
 		if(isset($_SESSION[$guid . '-log']))
 			unset($_SESSION[$guid . '-log']);

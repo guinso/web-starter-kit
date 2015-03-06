@@ -81,7 +81,7 @@ class LoginUtil {
 	}
 	
 	public static function loginUser() {
-		$sessionId = session_id();
+		
 		$db = Util::getDb();
 	
 		$data = Util::getInputData();
@@ -105,19 +105,33 @@ class LoginUtil {
 				null, 406);
 		}
 	
+		self::_writeLogin($user['id']);
+
+		return self::getCurrentUser();
+	}
+	
+	public static function forceLoginAdmin() {
+		self::_writeLogin(self::_getAdminId());
+	
+		return self::getCurrentUser();
+	}
+
+	private static function _writeLogin($userId) {
+		$sessionId = session_id();
+		$db = Util::getDb();
 		
 		//check current login status
 		$writeLog = false;
 		$x = self::getCurrentUser();
 		
 		//logout other login records if username matched
-		self::logoutUser($user['id'], 
-			'force logout due to new client login with this username');
+		self::logoutUser($user['id'],
+				'force logout due to new client login with this username');
 			
 		if($x['userId'] == self::_getAnonymousId()) {
 			//anonymous user
 			$writeLog = true;
-		} else if($x['username'] != $username){
+		} else if($x['userId'] != $userId){
 			//authenticated login user, logout if login already
 			self::logoutUser($x['userId'],
 					'Force logout due to user log with other username');
@@ -129,18 +143,16 @@ class LoginUtil {
 			$idd = Util::getNextRunningNumber('login');
 			$time = Util::getDatetime();
 			$tmp = array(
-				'id' => $idd,
-				'user_id' => $user['id'],
-				'session_id' => $sessionId,
-				'login' => $time,
-				'last_access' => $time
+					'id' => $idd,
+					'user_id' => $userId,
+					'session_id' => $sessionId,
+					'login' => $time,
+					'last_access' => $time
 			);
 			$db->login()->insert($tmp);
 		}
-
-		return self::getCurrentUser();
 	}
-
+	
 	public static function logoutUser($userId = null, $remarks = null) {
 		$db = Util::getDb();
 		$x = null;
