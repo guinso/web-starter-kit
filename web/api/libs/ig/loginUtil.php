@@ -7,7 +7,6 @@
  *
  */
 class LoginUtil {
-	private static $anonymousId = 'A0000000001';
 	private static $maxLife = 1800; // half an hour, in seconds
 	
 	public static function getLog() {
@@ -50,7 +49,7 @@ class LoginUtil {
 	public static function ping() {
 		$login = self::getCurrentUser();
 		
-		if($login['userId'] != self::$anonymousId) {
+		if($login['userId'] != self::_getAnonymousId()) {
 			$db = Util::getDb();
 			
 			//TODO update last access time to keep alive
@@ -99,46 +98,47 @@ class LoginUtil {
 				"Login fail, please check username or password",
 				null, 406);
 		}
-	
-		if($password == $user['password']) {
-			//check current login status
-			$writeLog = false;
-			$x = self::getCurrentUser();
-			
-			//logout other login records if username matched
-			self::logoutUser($user['id'], 
-				'force logout due to new client login with this username');
-				
-			if($x['userId'] == self::$anonymousId) {
-				//anonymous user
-				$writeLog = true;
-			} else if($x['username'] != $username){
-				//authenticated login user, logout if login already
-				self::logoutUser($x['userId'],
-						'Force logout due to user log with other username');
-				$writeLog = true;
-			}
-				
-			//register login
-			if($writeLog) {
-				$idd = Util::getNextRunningNumber('login');
-				$time = Util::getDatetime();
-				$tmp = array(
-					'id' => $idd,
-					'user_id' => $user['id'],
-					'session_id' => $sessionId,
-					'login' => $time,
-					'last_access' => $time
-				);
-				$db->login()->insert($tmp);
-			}
-
-			return self::getCurrentUser();
-		} else {
+		
+		if($password != $user['password']) {
 			Util::sendErrorResponse(-1,
-			"Login fail, please check username or password",
-			null, 203);
+				"Login fail, please check username or password",
+				null, 406);
 		}
+	
+		
+		//check current login status
+		$writeLog = false;
+		$x = self::getCurrentUser();
+		
+		//logout other login records if username matched
+		self::logoutUser($user['id'], 
+			'force logout due to new client login with this username');
+			
+		if($x['userId'] == self::_getAnonymousId()) {
+			//anonymous user
+			$writeLog = true;
+		} else if($x['username'] != $username){
+			//authenticated login user, logout if login already
+			self::logoutUser($x['userId'],
+					'Force logout due to user log with other username');
+			$writeLog = true;
+		}
+			
+		//register login
+		if($writeLog) {
+			$idd = Util::getNextRunningNumber('login');
+			$time = Util::getDatetime();
+			$tmp = array(
+				'id' => $idd,
+				'user_id' => $user['id'],
+				'session_id' => $sessionId,
+				'login' => $time,
+				'last_access' => $time
+			);
+			$db->login()->insert($tmp);
+		}
+
+		return self::getCurrentUser();
 	}
 
 	public static function logoutUser($userId = null, $remarks = null) {
@@ -154,7 +154,7 @@ class LoginUtil {
 				->where('logout IS NULL')
 				->order('login DESC');
 			
-		} else if($userId != self::$anonymousId) {
+		} else if($userId != self::_getAnonymousId()) {
 			//logout based on userId
 			$x = $db->login()
 				->where('user_id', $userId)
@@ -194,7 +194,7 @@ class LoginUtil {
 	
 	private static function _getFormat($row) {
 		$db = Util::getDb();
-		$userId = empty($row['id'])? self::$anonymousId : $row['user_id'];
+		$userId = empty($row['id'])? self::_getAnonymousId() : $row['user_id'];
 		
 		$account = $db->account[$userId];
 		$role = $db->role[$account['role_id']];
@@ -210,8 +210,30 @@ class LoginUtil {
 			'logoutTime' => $row['logout'],
 			'lastAccess' => $row['last_access'],
 			'remarks' => $row['remarks'],
-			'login' => empty($row['logout']) && $userId != self::$anonymousId
+			'login' => empty($row['logout']) && $userId != self::_getAnonymousId()
 		);
+	}
+	
+	private static function _getAnonymousId() {
+		$profile = IgConfig::getProfile();
+		
+		$len = '';
+		for($i =0; $i < $profile->dbLen - 1; $i++)
+			$len .= '0';
+		$id = $profile->dbInitial . $len . '1';
+		
+		return $id;
+	}
+	
+	private static function _getAdminId() {
+		$profile = IgConfig::getProfile();
+	
+		$len = '';
+		for($i =0; $i < $profile->dbLen - 1; $i++)
+			$len .= '0';
+			$id = $profile->dbInitial . $len . '2';
+	
+			return $id;
 	}
 }
 ?>
