@@ -21,6 +21,8 @@ require_once API_DIR . DS . 'libs' . DS . 'phpexcel' . DS . 'PHPExcel' . DS . 'I
 require_once API_DIR . DS . 'libs' . DS . 'phpmailer' . DS . 'PHPMailerAutoload.php';
 //x require_once API_DIR . '/libs/guzzle/autoloader.php';
 
+require_once API_DIR . DS . 'libs' . DS . 'parsedown' . DS . 'Parsedown.php';
+
 require_once API_DIR . DS . 'libs' . DS . 'jshrink' . DS . 'Minifier.php';
 
 require_once API_DIR . DS . 'libs' . DS . 'ig' . DS . 'autoloader.php';

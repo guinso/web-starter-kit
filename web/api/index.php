@@ -18,6 +18,10 @@ require_once API_DIR . '/api.php';
 function home() {
 	echo 'Web App.<br/>';
 	echo Util::getDate() . "<br/>";
+	
+	$g = new Parsedown();
+	$f = file_get_contents(ROOT_DIR . DS . 'log.md');
+	echo $g->text($f);
 }
 
 /********************* Execute *************************************/
