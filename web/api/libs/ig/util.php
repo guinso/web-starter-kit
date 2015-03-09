@@ -564,6 +564,10 @@ public static function offsetDate($date, $diff, $dateformat = 'Y-m-d') {
 	return $datetime->format($dateformat);
 }
 
+public static function getLastDayOfMonth($date) {
+	return date('Y-m-t', strtotime($date));
+}
+
 /**
  * Get predefined temporary directory
  * NOTE: make sure the directory is readable and writable to Apache web-server (www-data)
