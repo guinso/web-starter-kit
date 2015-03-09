@@ -64,7 +64,7 @@ include_once 'maintenance.php';
 	<script src="lib/angular/angular-route-1.2.13.js"></script>
 	<script src="lib/angular/angular-animate-1.2.13.js"></script>
 	
-	<script src="lib/ui-bootstrap/ui-bootstrap-0.10.0.js"></script>
+	<script src="lib/ui-bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
 	
 	<script src="lib/ig/ig-core-0.1.js"></script>
 	

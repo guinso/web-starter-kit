@@ -44,8 +44,8 @@
 								<pagination 
 									total-items='account.query.pgCnt' 
 									items-per-page='account.query.pgSize'
-									page='account.query.pgIndex' 
-									ng-click='account.reload()'
+									ng-model='account.query.pgIndex' 
+									ng-change='account.reload()'
 									max-size="10" 
 									boundary-links="true">
 								</pagination>

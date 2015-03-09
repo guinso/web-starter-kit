@@ -32,8 +32,8 @@
 				<pagination 
 					total-items='sch.logQuery.pgCnt' 
 					items-per-page='sch.logQuery.pgSize'
-					page='sch.logQuery.pgIndex' 
-					ng-click='sch.reload()'
+					ng-model='sch.logQuery.pgIndex' 
+					ng-change='sch.reload()'
 					max-size="10" 
 					boundary-links="true">
 				</pagination>

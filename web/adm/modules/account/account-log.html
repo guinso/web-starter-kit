@@ -41,8 +41,8 @@
 							<pagination 
 								total-items='accMain.accLogQuery.pgCnt' 
 								items-per-page='accMain.accLogQuery.pgSize'
-								page='accMain.accLogQuery.pgIndex' 
-								ng-click='accMain.reload()'
+								ng-model='accMain.accLogQuery.pgIndex' 
+								ng-change='accMain.reload()'
 								max-size="10" 
 								boundary-links="true">
 							</pagination>
