@@ -11,11 +11,11 @@ controller('CpCtrl', function($scope, $resource, $util) {
 		$resource('api/com-profile').save(
 			$scope.cp.item,
 			function() {
-				$scope.msg.setMsg('Successfully update company profile.', 'ok');
+				$util.setMsg('Successfully update company profile.', 'ok');
 				$scope.loader.hideLoader(true);
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader(true);
 			}
 		);
@@ -30,7 +30,7 @@ controller('CpCtrl', function($scope, $resource, $util) {
 				$scope.loader.hideLoader(true);
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader(true);
 			}
 		);

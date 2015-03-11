@@ -52,10 +52,10 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 			$resource('api/change-pwd').save(
 				{userId: $scope.accMain.acc.item.id, pwd: $scope.accMain.acc.item.pwd},
 				function() {
-					$scope.msg.setMsg('Successfully change ' + $scope.accMain.acc.newItem.username + ' password.', 'ok');
+					$util.setMsg('Successfully change ' + $scope.accMain.acc.newItem.username + ' password.', 'ok');
 				},
 				function(response) {
-					$scope.msg.handleError(response);
+					$util.handleErrorMsg(response);
 				}
 			);
 			
@@ -83,7 +83,7 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 					$scope.accMain.updateAcc();
 				},
 				function(response) {
-					$scope.msg.handleError(response);
+					$util.handleErrorMsg(response);
 				}
 			);
 		}
@@ -97,12 +97,12 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 				
 			$scope.accMain.acc.item,
 			function() {
-				$scope.msg.setMsg('Update account success.','ok');
+				$util.setMsg('Update account success.','ok');
 				$scope.accMain.acc.items = $resource('api/user').query();
 				$scope.accMain.acc.item = {};
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.accMain.acc.items = $resource('api/user').query();
 			}
 		);
@@ -126,7 +126,7 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 					$scope.accMain.acc.item.attachmentId = response.id;
 					$scope.accMain.createAcc();
 				},
-				function(response) { $scope.msg.handleError(response); }
+				function(response) { $util.handleErrorMsg(response); }
 			);
 		}
 		
@@ -137,11 +137,11 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 		$resource('api/user').save(
 			$scope.accMain.acc.item,
 			function() {
-				$scope.msg.setMsg('New account created successfully.', 'ok');
+				$util.setMsg('New account created successfully.', 'ok');
 				$scope.accMain.reload();
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 			}
 		);
 	}
@@ -150,12 +150,12 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 		$resource('api/user/' + $scope.accMain.acc.item.id).remove(
 			{userId: $scope.accMain.acc.item.id},
 			function() {
-				$scope.msg.setMsg('Delete account success.','ok');
+				$util.setMsg('Delete account success.','ok');
 				$scope.accMain.acc.items = $resource('api/user').query();
 				$scope.accMain.acc.item = {};
 			},
 			function() {
-				$scope.msg.setMsg('Delete account fail.','error');
+				$util.setMsg('Delete account fail.','error');
 				$scope.accMain.acc.items = $resource('api/user').query();
 			}
 		);
@@ -179,11 +179,11 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 	$scope.accMain.updateRole = function() {
 		$resource('api/role-bulk').save($scope.accMain.role.items,
 			function() {
-				$scope.msg.setMsg("Role had been update sucessfully", 'ok');
+				$util.setMsg("Role had been update sucessfully", 'ok');
 				
 				$scope.accMain.reload();
 			},
-			function(response) { $scope.msg.handleError(response); }
+			function(response) { $util.handleErrorMsg(response); }
 		);
 	}
 	
@@ -194,12 +194,12 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 		$resource('api/access-matrix/' + group.id, {}, {update: {method:'PUT'}}).update(
 			group,
 			function(response) {
-				$scope.msg.setMsg('Update access success.', 'ok');
+				$util.setMsg('Update access success.', 'ok');
 				$scope.loader.hideLoader();
 				$scope.accMain.reload();
 			},
 			function(response) {
-				$scope.msg.setMsg('Update access fail.', 'error');
+				$util.setMsg('Update access fail.', 'error');
 				$scope.loader.hideLoader();
 			}
 		);
@@ -208,7 +208,7 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 	$scope.accMain.rebuildAuth = function() {
 		$resource('api/access-matrix-rebuild').get(
 			function() { $scope.accMain.reload(); },
-			function(response) { $scope.msg.handleError(response); } 
+			function(response) { $util.handleErrorMsg(response); } 
 		);
 	}
 
@@ -228,7 +228,7 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 				$scope.accMain.acc.items = x; 
 			},
 			function(response) { 
-				$scope.msg.handleError(response); 
+				$util.handleErrorMsg(response); 
 				$scope.loader.hideLoader();
 			} 
 		);
@@ -242,7 +242,7 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 					$scope.accMain.accLog.items = x; 
 				},
 				function(response) { 
-					$scope.msg.handleError(response); 
+					$util.handleErrorMsg(response); 
 					$scope.loader.hideLoader();
 				} 
 			);
@@ -256,7 +256,7 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 					$scope.loader.hideLoader();
 			},
 			function(response) { 
-				$scope.msg.handleError(response); 
+				$util.handleErrorMsg(response); 
 				$scope.loader.hideLoader();
 			} 
 		);
@@ -271,7 +271,7 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 					$scope.loader.hideLoader();
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader();
 			}
 			
@@ -287,7 +287,7 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 					$scope.loader.hideLoader();
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader();
 			}
 		);

@@ -17,11 +17,11 @@ controller('ScheduleCtrl', function($scope, $resource, $location, $util) {
 		$resource('api/sch-bulk').save(
 			$scope.sch.tasks,
 			function() { 
-				$scope.msg.setMsg("Successfully update task.", 'ok');
+				$util.setMsg("Successfully update task.", 'ok');
 				$scope.sch.reload();
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader();
 			}
 		);
@@ -47,7 +47,7 @@ controller('ScheduleCtrl', function($scope, $resource, $location, $util) {
 					$scope.loader.hideLoader(true);
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader(true);
 			}	
 		);
@@ -60,7 +60,7 @@ controller('ScheduleCtrl', function($scope, $resource, $location, $util) {
 					$scope.loader.hideLoader(true);
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader(true);
 			}
 		);

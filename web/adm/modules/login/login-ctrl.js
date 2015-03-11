@@ -1,6 +1,6 @@
 angular.module('MyApp').
 
-controller('LoginCtrl', function($scope, $resource, $location, $window) {
+controller('LoginCtrl', function($scope, $resource, $location, $window, $util) {
 	
 	$scope.usr = {username: '', password: '', errorMsg: ''};
 	

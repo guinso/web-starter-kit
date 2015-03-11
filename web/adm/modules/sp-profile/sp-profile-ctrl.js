@@ -58,11 +58,11 @@ controller('SpCtrl', function($scope, $resource, $util) {
 		$resource('api/sys-profile').save(
 			$scope.sp.item,
 			function() {
-				$scope.msg.setMsg('Update profile success.', 'ok');
+				$util.setMsg('Update profile success.', 'ok');
 				$scope.loader.hideLoader(true);
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader(true);
 			}
 		);
@@ -77,7 +77,7 @@ controller('SpCtrl', function($scope, $resource, $util) {
 				$scope.loader.hideLoader(true);
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader(true);
 			}
 		);

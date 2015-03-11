@@ -11,12 +11,14 @@ include_once 'maintenance.php';
 	 	
 		<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
 	
+		<link href="lib/animate-css/animate.min.css" rel="stylesheet">
 		<link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
 		<link href="lib/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
 		<link href="lib/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet">
 		<link href="lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
 		<link href="css/loader.css" rel="stylesheet">
+		<link href="css/msg.css" rel="stylesheet">
 		<link href="css/override.css" rel="stylesheet">
 		
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -58,6 +60,7 @@ include_once 'maintenance.php';
 	<script src="lib/bootstrap/js/bootstrap.js"></script>
 	<script src="lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 	<script src="lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker-3.0.0-min.js"></script>
+	<script src="lib/bootstrap-notify/bootstrap-notify.min.js"></script>
 	
 	<script src="lib/angular/angular-1.2.13.js"></script>
 	<script src="lib/angular/angular-resource-1.2.13.js"></script>
@@ -66,7 +69,7 @@ include_once 'maintenance.php';
 	
 	<script src="lib/ui-bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
 	
-	<script src="lib/ig/ig-core-0.1.js"></script>
+	<script src="lib/ig/ig-core-0.2.js"></script>
 	
 	<script src='js/app.js'></script>
 	<script src='js/directive.js'></script>

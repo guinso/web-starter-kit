@@ -14,10 +14,10 @@ controller('MiscCtrl', function($scope, $resource, $util) {
 			function() {
 				$scope.msc.acc = {};
 				$scope.loader.hideLoader();
-				$scope.msg.setMsg('Succesfully change admin account.', 'ok');
+				$util.setMsg('Succesfully change admin account.', 'ok');
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader();
 			}
 		);
@@ -30,12 +30,12 @@ controller('MiscCtrl', function($scope, $resource, $util) {
 			$scope.misc.item,
 			function() {
 				$scope.loader.hideLoader();
-				$scope.msg.setMsg('Successfully update site maintenance.', 'ok');
+				$util.setMsg('Successfully update site maintenance.', 'ok');
 				
 				$scope.misc.item = x;
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader();
 			}
 		);
@@ -47,12 +47,12 @@ controller('MiscCtrl', function($scope, $resource, $util) {
 			function() {
 				
 				$scope.loader.hideLoader();
-				$scope.msg.setMsg('Successfully update site maintenance.', 'ok');
+				$util.setMsg('Successfully update site maintenance.', 'ok');
 				
 				$scope.misc.item = x;
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader();
 			}
 		);
@@ -63,12 +63,12 @@ controller('MiscCtrl', function($scope, $resource, $util) {
 			$scope.misc.item,
 			function() {
 				$scope.loader.hideLoader();
-				$scope.msg.setMsg('Successfully update site optimization.', 'ok');
+				$util.setMsg('Successfully update site optimization.', 'ok');
 				
 				$scope.misc.item = x;
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader();
 			}
 		);
@@ -83,7 +83,7 @@ controller('MiscCtrl', function($scope, $resource, $util) {
 				$scope.loader.hideLoader();
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 				$scope.loader.hideLoader();
 			}
 		);

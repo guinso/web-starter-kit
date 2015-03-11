@@ -48,26 +48,6 @@
 	</div>
 </nav>
 
-<div class='container-fluid' id='mainMsg' ng-controller='MsgCtrl' ng-class="{'avoid-clicks': !msg.show}">
-	<!-- Message Container -->
-	<div class='row'>
-		<div class='alert alert-danger my-show-hide drop-shadow'
-			ng-show='msg.show'
-			ng-class="{	'alert-danger': msg.status=='error', 
-						'alert-warning': msg.status=='warning',
-						'alert-success': msg.status=='ok'}">
-			<button type="button" class="close" 
-					ng-click='msg.hideMsg()' aria-hidden="true">
-				&times;
-			</button>
-			
-			<span ng-show='!msg.lock' class='glyphicon glyphicon-pushpin' ng-click='msg.cancelHide()'></span>
-			<span ng-show='msg.lock' class='glyphicon glyphicon-lock' ng-click='msg.hideMsg()'></span>
-			<span ng-bind='msg.message'></span>
-		</div>
-	</div>
-</div>
-
 <!-- Main Container -->
 <div ng-view></div>
 </div>

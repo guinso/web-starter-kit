@@ -301,4 +301,43 @@ service('$util', ['$resource', '$http', function($resource, $http) {
 			);
 		}
     };
+    
+    this.setMsg = function(msg, status) {
+		
+		var statusType = 'info';
+		switch(status) {
+			case 'ok': statusType = 'success'; break;
+			case 'error': statusType = 'danger'; break;
+			case 'warning': statusType = 'warning'; break;
+			case 'info': statusType = 'info'; break;
+			default: statusType = 'info'; break;
+		}
+		
+		$.notify({
+			// options
+			message: msg
+		},{
+			// settings
+			type: statusType,
+			mouse_over: 'pause',
+			allow_dismiss: true
+		});
+	};
+	
+	this.handleErrorMsg = function(response) {
+		var code = response.status;
+		var err = response.data;
+		var internalCode = err.code;
+		var internalMsg = err.msg;
+		
+		if(err.attachment) {
+			console.info(err.attachment);
+		}
+		
+		if(code == 500) {
+			$util.setMsg('error code 500: internal server error, please contact system administration.', 'error');
+		} else {
+			$util.setMsg('error code ' + internalCode + ': ' + internalMsg, 'error');
+		}
+	};
 }]);

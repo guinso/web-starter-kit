@@ -26,61 +26,6 @@ controller('LoaderCtrl', function($scope, $timeout) {
 	};
 }).
 
-controller('MsgCtrl', function($scope, $timeout) {
-	$scope.msg.timer = null;
-	$scope.msg.lock = false;
-	$scope.msg.show = false;
-	
-	$scope.msg.setMsg = function(msg, status) {
-		//$scope.msg.show = true;
-		
-		$scope.msg.lock = false;
-		$scope.msg.status = status;
-		$scope.msg.message = msg;
-		
-		//POOR-MAN-SOLUTION: ensure run at main thread
-		$scope.msg.timer = $timeout($scope.msg.showMsg, 0);
-	};
-	
-	$scope.msg.showMsg = function() {
-		$scope.msg.show = true;
-		
-		$scope.msg.lock = false;
-		
-		$scope.msg.timer = $timeout($scope.msg.hideMsg, 1500);
-	};
-	
-	$scope.msg.hideMsg = function() {
-		$scope.msg.show = false;
-		
-		$scope.msg.lock = false;
-	};
-	
-	$scope.msg.cancelHide = function() {
-		if($scope.msg.timer) {
-			$scope.msg.lock = true;
-			$timeout.cancel($scope.msg.timer);
-		}
-	};
-	
-	$scope.msg.handleError = function(response) {
-		var code = response.status;
-		var err = response.data;
-		var internalCode = err.code;
-		var internalMsg = err.msg;
-		
-		if(err.attachment) {
-			console.info(err.attachment);
-		}
-		
-		if(code == 500) {
-			$scope.msg.setMsg('error code 500: internal server error, please contact system administration.', 'error');
-		} else {
-			$scope.msg.setMsg('error code ' + internalCode + ': ' + internalMsg, 'error');
-		}
-	};
-}).
-
 controller('AppCtrl', function($scope, $resource, $location) {
 	window.scope = {
 		main: $scope
@@ -92,14 +37,7 @@ controller('AppCtrl', function($scope, $resource, $location) {
 		plainPage: false,
 		stackUrl: ''
 	};
-	
-	//notfication
-	$scope.msg = {
-		message: '',
-		show: false,
-		status: 'error' //error, ok, warning
-	};
-	
+
 	//loader
 	$scope.loader = {
 		show: false
@@ -123,7 +61,7 @@ controller('AppCtrl', function($scope, $resource, $location) {
 				//x console.log($scope.accessList.ApproveLeave);
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 			}
 		);
 		
@@ -143,7 +81,7 @@ controller('AppCtrl', function($scope, $resource, $location) {
 				}
 			},
 			function(response) {
-				$scope.msg.handleError(response);
+				$util.handleErrorMsg(response);
 			}
 		);
 	};
@@ -154,7 +92,7 @@ controller('AppCtrl', function($scope, $resource, $location) {
 				$location.path('/login');
 			},
 			function() {
-				$scope.msg.setMsg('logout fail', 'error');
+				$util.setMsg('logout fail', 'error');
 			}
 		);
 	}
