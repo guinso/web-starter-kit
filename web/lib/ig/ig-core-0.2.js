@@ -335,9 +335,9 @@ service('$util', ['$resource', '$http', function($resource, $http) {
 		}
 		
 		if(code == 500) {
-			$util.setMsg('error code 500: internal server error, please contact system administration.', 'error');
+			this.setMsg('error code 500: internal server error, please contact system administration.', 'error');
 		} else {
-			$util.setMsg('error code ' + internalCode + ': ' + internalMsg, 'error');
+			this.setMsg('error code ' + internalCode + ': ' + internalMsg, 'error');
 		}
 	};
 }]);
