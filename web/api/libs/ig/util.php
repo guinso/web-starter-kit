@@ -606,5 +606,33 @@ public static function getDbInitial() {
 	return self::$dbIdInitial;
 }
 
+/**
+ * Get server host name with support reverse proxy request as well
+ * @return string
+ */
+public static function getServerHostname() {
+	$hostname = '';
+	if(isset($_SERVER['HTTP_X_FORWARDED_HOST']))
+		$hostname = $_SERVER['HTTP_X_FORWARDED_HOST'];
+	else if(isset($_SERVER['SERVER_HOST']))
+		$hostname = $_SERVER['SERVER_HOST'];
+	else
+		$hostname = $_SERVER['HTTP_HOST'];
+	
+	$protocal = $_SERVER['REQUEST_SCHEME'] . '://';
+	
+	return $protocal . $hostname;
+}
+
+/**
+ * Get server full URL with support reverse proxy request as well
+ * @return string
+ */
+public static function getServerUrl() {
+	$uri = dirname(substr($_SERVER['SCRIPT_FILENAME'], strlen($_SERVER['DOCUMENT_ROOT'])));
+
+	return self::getServerHostname() . $uri;
+}
+
 }
 ?>

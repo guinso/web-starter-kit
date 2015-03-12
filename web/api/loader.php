@@ -1,7 +1,4 @@
 <?php 
-define('URL', dirname(substr($_SERVER['SCRIPT_FILENAME'], strlen($_SERVER['DOCUMENT_ROOT']))));
-define('ADM_URL', URL . '/adm');
-
 define('DS' , DIRECTORY_SEPARATOR);
 
 define('ROOT_DIR', dirname(dirname(__FILE__)));
@@ -30,6 +27,10 @@ require_once API_DIR . DS . 'libs' . DS . 'ig' . DS . 'autoloader.php';
 Epi::setPath('base', API_DIR . DS . 'libs' . DS . 'epiphany');
 Epi::init('api');
 Epi::setSetting('exceptions', true);
+
+/**************** Server URL ****************************/
+define('SERVER_URL', substr(Util::getServerUrl(), 0, -4)); //to remove '/api'
+define('SERVER_ADM_URL', SERVER_HOSTNAME . '/adm');
 
 /**************** SPL-0 autoloading *********************/
 
