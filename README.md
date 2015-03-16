@@ -1,8 +1,7 @@
 web-starter-kit
 ===============
 
-This is general purpose client-server model web
-This project consist of 2 main pages:
+This is general purpose client-server model web. This project consist of 2 main page section:
 - Production page (use by enduser)
 - Admistration page (use by back office administrator)
 
@@ -27,7 +26,7 @@ Library Stacks
 - *guzzle* interserver communication framework
 - *parsedown* markdown parser tool
 
-###frontend Library
+###Frontend Library
 - *Animate CSS* collection of CSS animation library
 - *Font Awesome* font library
 - *AngularJS* databinding tool
