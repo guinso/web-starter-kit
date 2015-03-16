@@ -1,7 +1,10 @@
 web-starter-kit
 ===============
 
-This is starter project to build complex web application with dedicated adminstrator page
+This is general purpose client-server model web
+This project consist of 2 main pages:
+- Production page (use by enduser)
+- Admistration page (use by back office administrator)
 
 Crontab Setup
 -------------
