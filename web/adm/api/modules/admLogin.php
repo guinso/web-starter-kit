@@ -58,8 +58,12 @@ class AdmLogin {
 		
 		$_SESSION[$guid . '-log'] = IgConfig::isLoginMatch($username, $password);
 		
-		//add login session into database
-		LoginUtil::forceLoginAdmin();
+		try {
+			//add login session into database
+			LoginUtil::forceLoginAdmin();
+		} catch(Exception $ex) {
+			//do nothing to bypass PHP error exception
+		}
 		
 		return $_SESSION[$guid . '-log'];
 	}
@@ -67,8 +71,12 @@ class AdmLogin {
 	public static function logout() {
 		$guid = IgConfig::getGuid();
 		
-		//add logout session into database
-		LoginUtil::logoutUser();
+		try {
+			//add logout session into database
+			LoginUtil::logoutUser();
+		} catch(Exception $ex) {
+			//do nothing to bypass PHP error exception
+		}
 		
 		if(isset($_SESSION[$guid . '-log']))
 			unset($_SESSION[$guid . '-log']);
