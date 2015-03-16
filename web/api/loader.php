@@ -30,7 +30,7 @@ Epi::setSetting('exceptions', true);
 
 /**************** Server URL ****************************/
 define('SERVER_URL', substr(Util::getServerUrl(), 0, -4)); //to remove '/api'
-define('SERVER_ADM_URL', SERVER_HOSTNAME . '/adm');
+define('SERVER_ADM_URL', SERVER_URL . '/adm');
 
 /**************** SPL-0 autoloading *********************/
 

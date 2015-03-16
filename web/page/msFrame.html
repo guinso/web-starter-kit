@@ -1,0 +1,70 @@
+<link href="css/ms.css" rel="stylesheet">
+
+<!-- Top Bar -->
+<div id='ms-topbar' ng-show='!navigation.plainPage' class=''>
+	<a id="ms-menu-toggle" class='btn' ng-click='toggleMenu()'>
+		<span class='glyphicon glyphicon-menu-hamburger'></span>
+	</a>
+	<a>Starter Kit</a>
+	<div class='dropdown pull-right'>
+		<a class="btn dropdown-toggle" type="button" 
+				data-toggle="dropdown" 
+				aria-expanded="true">
+			{{user.username}}
+			<span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+			<li role="presentation"><a href='' role="menuitem" tabindex="-1" ng-click='logout()'>logout</a></li>
+		</ul>
+	</div>
+</div>
+
+<div id='ms-wrapper' ng-class="{toggled: needToggleMenu}" ng-show='!navigation.plainPage'>
+
+	<!-- Side Bar -->
+	<div id='ms-sidebar-wrapper'>
+		<div class='sidebar'>
+			<div class='sidebar-nav'>
+			<ul id='ms-menu'>
+				<li class=''>
+				  	<a ng-class="{highlighted: navigation.paths[1]=='sample'}" >
+				  	Sample<span class='fa arrow'></span></a>
+				  	<ul>
+				  		<li><a href='#/your-path' 
+				  			ng-class="{selected: navigation.url == '/your-path' }">item A</a></li>
+				  		<li><a href='#/sample/your-specified-path' 
+				  			ng-class="{selected: navigation.url == '/sample/your-specified-path' }">item B</a></li>
+			  		</ul>
+				</li>
+			</ul>
+			</div>
+		</div>
+		<br/><br/><br/>
+	</div>
+	
+	<!-- Container -->
+	<div id='ms-content-wrapper'>
+		<!-- Main Container -->
+		<div ng-view class='ms-view' ng-class='{blur:loader.show}'></div>
+		
+		<!-- Loader Container -->  
+		<div ng-controller='LoaderCtrl'>
+			<div ng-show="loader.show" class='top-layer my-show-hide'>
+				<div class='center-msg'>
+					<canvas circle-arc width=64px height=64px class='circle-rotate'></canvas>
+					<div style="margin:auto; margin-top:10px;"><span class='text-center'><b>Loading</b></span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Main Container -->
+<div ng-view ng-show='navigation.plainPage'></div>
+		
+<!-- Menu Toggle Script -->
+<script>
+$(function(){
+	$("#ms-menu").metisMenu();
+});
+</script>

@@ -49,11 +49,19 @@ controller('AppCtrl', function($scope, $resource, $location) {
 		role: '',
 		roleId: '',
 		login: false,
-	}
+	};
+	
+	$scope.accessList = [];
 	
 	//misc
 	$scope.actives = [{name:'active', value:true}, {name:'inactive', value:false}];
 	
+	//menu
+	$scope.needToggleMenu = false;
+	$scope.toggleMenu = function() {
+		$scope.needToggleMenu = !$scope.needToggleMenu;
+	};
+
 	$scope.checkUser = function() {
 		var x = $resource('api/access-right-list').get(
 			function() {
@@ -96,13 +104,16 @@ controller('AppCtrl', function($scope, $resource, $location) {
 			}
 		);
 	}
-	
-	//x $scope.dateRegex = "/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/";
-	
+	/*
+	$scope.$on('$locationChangeStart', function(event){
+		$scope.loader.showLoader();
+	});
+	*/
 	$scope.$on('$locationChangeSuccess', function(event){
 		$scope.navigation.plainPage = false;
 		$scope.navigation.paths = $location.path().split('/');
 		$scope.navigation.args = $location.search();
+		$scope.navigation.url = $location.path();
 		
 		$scope.checkUser();
 		

@@ -12,11 +12,14 @@ include_once 'maintenance.php';
 		<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
 	
 		<link href="lib/animate-css/animate.min.css" rel="stylesheet">
+		<link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		
 		<link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
 		<link href="lib/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
 		<link href="lib/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet">
 		<link href="lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-
+		<link href="lib/metis-menu/metisMenu.min.css" rel="stylesheet">
+		
 		<link href="css/loader.css" rel="stylesheet">
 		<link href="css/msg.css" rel="stylesheet">
 		<link href="css/override.css" rel="stylesheet">
@@ -49,7 +52,7 @@ include_once 'maintenance.php';
   	<script type="text/javascript">
 		$('#bodyy').hide();
 		$.ajaxSetup({async:false});
-		$('#bodyy').load('page/mainFrame.html');
+		$('#bodyy').load('page/msFrame.html');
 		
 		//$.getScript("../lib/moment/moment-2.6.0.min.js");
 		$.ajaxSetup({async:true});
@@ -61,6 +64,8 @@ include_once 'maintenance.php';
 	<script src="lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 	<script src="lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker-3.0.0-min.js"></script>
 	<script src="lib/bootstrap-notify/bootstrap-notify.min.js"></script>
+	
+	<script src="lib/metis-menu/metisMenu.min.js"></script>
 	
 	<script src="lib/angular/angular-1.2.13.js"></script>
 	<script src="lib/angular/angular-resource-1.2.13.js"></script>

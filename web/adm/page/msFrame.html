@@ -1,0 +1,90 @@
+<link href="../css/ms.css" rel="stylesheet">
+
+<!-- Top Bar -->
+<div id='ms-topbar' ng-show='!navigation.plainPage' class=''>
+	<a id="ms-menu-toggle" class='btn' ng-click='toggleMenu()'>
+		<span class='glyphicon glyphicon-menu-hamburger'></span>
+	</a>
+	<a>Back Office</a>
+	<div class='dropdown pull-right'>
+		<a class="btn dropdown-toggle" type="button" 
+				data-toggle="dropdown" 
+				aria-expanded="true">
+			{{user.username}}
+			<span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+			<li role="presentation"><a href='' role="menuitem" tabindex="-1" ng-click='logout()'>logout</a></li>
+		</ul>
+	</div>
+</div>
+
+<div id='ms-wrapper' ng-class="{toggled: needToggleMenu}" ng-show='!navigation.plainPage'>
+
+	<!-- Side Bar -->
+	<div id='ms-sidebar-wrapper'>
+		<div class='sidebar'>
+			<div class='sidebar-nav'>
+			<ul id='ms-menu'>
+				<li class='' >
+				  	<a class='' ng-class="{highlighted: navigation.paths[1] == 'config'}">
+				  	Setting<span class="fa arrow"></span></a>
+				  	<ul>
+				  		<li><a href='#/config/account-main' 
+				  			ng-class="{selected: navigation.url == '/config/account-main' }">User</a>
+				  		</li>
+				  		<li><a href='#/config/schedule' 
+				  			ng-class="{selected: navigation.url == '/config/schedule' }">Schedule</a>
+				  		</li>
+				  		<li><a href='#/config/update' 
+				  			ng-class="{selected: navigation.url == '/config/update' }">Update</a>
+				  		</li>
+				  		<li><a href='#/config/sp' 
+				  			ng-class="{selected: navigation.url == '/config/sp' }">System Profile</a>
+				  		</li>
+				  		<li><a href='#/config/misc' 
+				  			ng-class="{selected: navigation.url == '/config/misc' }">Misc</a>
+				  		</li>
+			  		</ul>
+				</li>
+				<li class='' >
+				  	<a class='' ng-class="{highlighted: navigation.paths[1] == 'com'}">
+				  	Company<span class="fa arrow"></span></a>
+				  	<ul>
+				  		<li><a href='#/com/cp' 
+				  			ng-class="{selected: navigation.url == '/com/cp' }">Company Profile</a>
+				  		</li>
+			  		</ul>
+				</li>	
+			</ul>
+			</div>
+		</div>
+		<br/><br/><br/>
+	</div>
+	
+	<!-- Container -->
+	<div id='ms-content-wrapper'>
+		<!-- Main Container -->
+		<div ng-view class='ms-view' ng-class='{blur:loader.show}'></div>
+		
+		<!-- Loader Container -->  
+		<div ng-controller='LoaderCtrl'>
+			<div ng-show="loader.show" class='top-layer my-show-hide'>
+				<div class='center-msg'>
+					<canvas circle-arc width=64px height=64px class='circle-rotate'></canvas>
+					<div style="margin:auto; margin-top:10px;"><span class='text-center'><b>Loading</b></span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Main Container -->
+<div ng-view ng-show='navigation.plainPage'></div>
+		
+<!-- Menu Toggle Script -->
+<script>
+$(function(){
+	$("#ms-menu").metisMenu();
+});
+</script>
