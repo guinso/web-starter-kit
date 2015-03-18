@@ -26,7 +26,7 @@ controller('LoaderCtrl', function($scope, $timeout) {
 	};
 }).
 
-controller('AppCtrl', function($scope, $resource, $location) {
+controller('AppCtrl', function($scope, $resource, $location, $util) {
 	window.scope = {
 		main: $scope
 	};

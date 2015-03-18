@@ -1,4 +1,8 @@
 <?php 
+//uncomment this to observe error message
+//x error_reporting(E_ALL);
+//x ini_set( 'display_errors','1');
+
 /********************* Load libraries and Settings ******************/
 include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'loader.php';
 
