@@ -63,6 +63,7 @@ controller('AppCtrl', function($scope, $resource, $location, $util) {
 	};
 
 	$scope.checkUser = function() {
+		/*
 		var x = $resource('api/access-right-list').get(
 			function() {
 				$scope.accessList = x;
@@ -72,7 +73,7 @@ controller('AppCtrl', function($scope, $resource, $location, $util) {
 				$util.handleErrorMsg(response);
 			}
 		);
-		
+		*/
 		$resource('api/current-user').get(
 			function(response) {
 				var isLogin = response.login;
