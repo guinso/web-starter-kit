@@ -132,7 +132,8 @@ public static function queueEmail($tos, $ccs, $bccs, $subject, $message, $attach
 		'msg' => $message,
 		'attchs' => serialize($attachments),
 		'last_update' => Util::getDateTime(),
-		'status' => 1 //not start yet
+		'status' => 1, //not start yet
+		'attempt' => 0
 	);
 
 	$db->email_queue->insert($item);
