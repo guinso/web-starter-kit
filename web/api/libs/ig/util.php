@@ -568,6 +568,18 @@ public static function getLastDayOfMonth($date) {
 	return date('Y-m-t', strtotime($date));
 }
 
+public static function getDateRange($month, $year) {
+	$fromDate = date('Y-m-d', strtotime($year . '-' . $month . '-1'));
+	$toDate = self::getLastDayOfMonth($year . '-' . $month . '-1');
+	$carryFwdDate = self::offsetDate($fromDate, -1);
+	
+	return array(
+		'fromDate' => $fromDate,
+		'toDate' => $toDate,
+		'carryFwdDate' => $carryFwdDate
+	);
+}
+
 /**
  * Get predefined temporary directory
  * NOTE: make sure the directory is readable and writable to Apache web-server (www-data)
@@ -632,6 +644,18 @@ public static function getServerUrl() {
 	$uri = dirname(substr($_SERVER['SCRIPT_FILENAME'], strlen($_SERVER['DOCUMENT_ROOT'])));
 
 	return self::getServerHostname() . $uri;
+}
+
+/**
+ * Check is associative array or not
+ * @param unknown $array
+ * @return boolean
+ */
+function isAssociatoveArray($array) {
+	//skip this step to fastern process but resource wise, is expensive
+	$array = array_keys($array); 
+	
+	return ($array !== array_keys($array));
 }
 
 }
