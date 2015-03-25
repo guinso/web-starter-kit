@@ -52,7 +52,7 @@ class LoginUtil {
 		if($login['userId'] != self::_getAnonymousId()) {
 			$db = Util::getDb();
 			
-			//TODO update last access time to keep alive
+			//update last access time to keep alive
 			$x = $db->login[$login['id']];
 			$x->update(array('last_access' => Util::getDatetime()));
 		}
@@ -83,10 +83,11 @@ class LoginUtil {
 	public static function loginUser() {
 		
 		$db = Util::getDb();
-	
+	 
 		$data = Util::getInputData();
 		$username = $data['username'];
 		$password = $data['pwd'];
+		$rememberMe = $data['rememberMe'];
 	
 		$user = $db->account()
 			->where('status', 1) //active
@@ -105,7 +106,7 @@ class LoginUtil {
 				null, 406);
 		}
 	
-		self::_writeLogin($user['id']);
+		self::_writeLogin($user['id'], $rememberMe);
 
 		return self::getCurrentUser();
 	}
@@ -116,8 +117,7 @@ class LoginUtil {
 		return self::getCurrentUser();
 	}
 
-	private static function _writeLogin($userId) {
-		$sessionId = session_id();
+	private static function _writeLogin($userId, $rememberMe = false) {
 		$db = Util::getDb();
 		
 		//check current login status
@@ -140,14 +140,17 @@ class LoginUtil {
 			
 		//register login
 		if($writeLog) {
+			$token = self::_createToken($userId);
+			
 			$idd = Util::getNextRunningNumber('login');
 			$time = Util::getDatetime();
 			$tmp = array(
 					'id' => $idd,
 					'user_id' => $userId,
-					'session_id' => $sessionId,
+					'session_id' => $token['tokenValue'],
 					'login' => $time,
-					'last_access' => $time
+					'last_access' => $time,
+					'remember_me' => $rememberMe? 1: 0
 			);
 			$db->login()->insert($tmp);
 		}
@@ -158,7 +161,7 @@ class LoginUtil {
 		$x = null;
 		
 		if(empty($userId)) {
-			$sessionId = session_id();
+			$sessionId = self::_getTokenValue();
 			
 			//logout based on session ID
 			$x = $db->login()
@@ -183,10 +186,13 @@ class LoginUtil {
 			
 			$xx->update($tmp);
 		}
+		
+		//unregister token value
+		self::_deleteToken();
 	}
 	
 	public static function getCurrentUser() { //!!! get current user by id
-		$sessionId = session_id();
+		$sessionId = self::_getTokenValue();
 		$db = Util::getDb();
 	
 		$row = $db->login()
@@ -222,7 +228,8 @@ class LoginUtil {
 			'logoutTime' => $row['logout'],
 			'lastAccess' => $row['last_access'],
 			'remarks' => $row['remarks'],
-			'login' => empty($row['logout']) && $userId != self::_getAnonymousId()
+			'login' => empty($row['logout']) && $userId != self::_getAnonymousId(),
+			'rememberMe' => intval($row['remember_me']) == 1
 		);
 	}
 	
@@ -246,6 +253,52 @@ class LoginUtil {
 			$id = $profile->dbInitial . $len . '2';
 	
 			return $id;
+	}
+	
+	/**
+	 * Get token key based on server GUID
+	 */
+	private static function _getTokenKey() {
+		return 'ig-token-' . IgConfig::getGuid();
+	}
+	
+	/**
+	 * Dynamic create token value using MD5 hashing
+	 */
+	private static function _createToken($username) {
+		$tokenKey = self::_getTokenKey();
+		
+		$raw = $username . IgConfig::getGuid() . session_id() . time();
+		
+		$hash = md5($raw);
+		
+		$oneYear = 365 * 24 * 3600;
+		
+		//cookie will expired after one year starting current server time
+		setcookie($tokenKey, $hash, time() + $oneYear);
+		
+		return array(
+			'tokenKey' => $tokenKey,
+			'tokenValue' => $hash
+		);
+	}
+	
+	/**
+	 * Delete current login user's token
+	 */
+	private static function _deleteToken() {
+		$tokenKey = self::_getTokenKey();
+		
+		setcookie($tokenKey, '', time() - 3600); // 1 hour ealier
+	}
+	
+	/**
+	 * Retrieve client token value from cookie
+	 */
+	private static function _getTokenValue() {
+		$tokenKey = self::_getTokenKey();
+		
+		return $_COOKIE[$tokenKey];
 	}
 }
 ?>

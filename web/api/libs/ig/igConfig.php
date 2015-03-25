@@ -150,9 +150,10 @@ class IgConfig {
 	}
 	
 	public static function getGuid() {
+		/*
 		if(empty(self::$_guid))
 			self::$_guid = uniqid();
-		
+		*/
 		return self::$_guid;
 	}
 	

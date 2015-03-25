@@ -1,6 +1,6 @@
--- Adminer 4.1.0 MySQL dump
+-- Adminer 4.2.0 MySQL dump
 
-SET NAMES utf8;
+SET NAMES utf8mb4;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
@@ -60,7 +60,7 @@ CREATE TABLE `account` (
 INSERT INTO `account` (`id`, `name`, `status`, `role_id`, `username`, `password`, `attachment_id`) VALUES
 ('A0000000001',	'Anonymous',	1,	'A0000000001',	'anonymous',	'',	NULL),
 ('A0000000002',	'Admin',	1,	'A0000000002',	'admin',	'1q2w3e',	NULL),
-('A0000000003',	'User',	1,	'A0000000003',	'user',	'123456789',	NULL);
+('A0000000003',	'User',	1,	'A0000000003',	'user',	'123456789',	'A0000000001');
 
 DROP TABLE IF EXISTS `account_log`;
 CREATE TABLE `account_log` (
@@ -93,6 +93,8 @@ CREATE TABLE `attachment` (
   UNIQUE KEY `filepath` (`filepath`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='file handling';
 
+INSERT INTO `attachment` (`id`, `filename`, `filepath`, `guid`, `checksum`, `mime`) VALUES
+('A0000000001',	'NRT_TempLoC.doc',	'54eee738939f2-NRT_TempLoC.doc',	'54eee738939f2',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `email_queue`;
 CREATE TABLE `email_queue` (
@@ -147,6 +149,9 @@ CREATE TABLE `key_value` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='generic key-value storage';
 
+INSERT INTO `key_value` (`id`, `value`) VALUES
+('com-profile',	'a:9:{s:4:\"name\";s:3:\"ABC\";s:7:\"comName\";s:11:\"ABC sdn bhd\";s:4:\"addr\";s:40:\"12, Jln Koko, 113560, Butterworth Penang\";s:3:\"tel\";s:10:\"0124385745\";s:3:\"fax\";s:0:\"\";s:5:\"regNo\";s:10:\"PGV3454564\";s:5:\"email\";s:13:\"sales@abc.com\";s:7:\"website\";s:14:\"www.abc.com.my\";s:8:\"logoGuid\";s:0:\"\";}'),
+('update-ver',	'i:0;');
 
 DROP TABLE IF EXISTS `lan_code`;
 CREATE TABLE `lan_code` (
@@ -168,6 +173,7 @@ CREATE TABLE `login` (
   `logout` datetime DEFAULT NULL COMMENT 'can force logout by server',
   `last_access` datetime NOT NULL,
   `remarks` text,
+  `remember_me` int(11) NOT NULL DEFAULT '0',
   KEY `user_id` (`user_id`),
   CONSTRAINT `login_log_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `account` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User login Activity';
@@ -220,4 +226,4 @@ INSERT INTO `schedule` (`id`, `class_name`, `function_name`, `description`, `wee
 ('A0000000001',	'EmailUtil',	'runQueue',	'send email',	'*',	'*',	'*',	'*',	'*/5',	1,	1),
 ('A0000000002',	'LoginUtil',	'checkLogin',	'check user login activitiy',	'*',	'*',	'*',	'*',	'*',	1,	1);
 
--- 2014-12-23 02:32:13
+-- 2015-03-25 10:33:43
