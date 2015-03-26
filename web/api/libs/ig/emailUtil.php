@@ -69,21 +69,21 @@ public static function sendEmail($tos, $ccs, $bccs, $subject, $message, $attachm
 	$mail->From = self::$email;
 	$mail->FromName = self::$displayName;
 	
-	if(self::$debug) {
-		$mail->addAddress(self::$debugEmail, 'DEBUG');
-	} else {
-		if(!empty($tos))
-			foreach($tos as $to)
-				$mail->addAddress($to['email'], $to['name']);
-		
-		if(!empty($ccs))
-			foreach($ccs as $cc)
-				$mail->addCC($cc['email'], $cc['name']);
+	if(self::$debug)
+		$mail->addCC(self::$debugEmail, 'DEBUGGER');
 	
-		if(!empty($bccs))
-			foreach($bccs as $bcc)
-				$mail->addBCC($bcc['email'], $bcc['name']);
-	}
+	if(!empty($tos))
+		foreach($tos as $to)
+			$mail->addAddress($to['email'], $to['name']);
+	
+	if(!empty($ccs))
+		foreach($ccs as $cc)
+			$mail->addCC($cc['email'], $cc['name']);
+
+	if(!empty($bccs))
+		foreach($bccs as $bcc)
+			$mail->addBCC($bcc['email'], $bcc['name']);
+
 	
 	if(!empty($attachments))
 		foreach($attachments as $attachment)
@@ -91,10 +91,7 @@ public static function sendEmail($tos, $ccs, $bccs, $subject, $message, $attachm
 	
 	$mail->isHTML(self::$htmlContent);
 
-	if(self::$debug)
-		$mail->Subject = 'ERP EMAIL DEBUG: ' . $subject;
-	else
-		$mail->Subject = $subject;
+	$mail->Subject = $subject;
 	
 	$mail->Body = $message;
 
