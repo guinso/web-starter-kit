@@ -18,31 +18,35 @@ Library Stacks
 --------------
 
 ###Backend Library
-- *notORM* database tool
-- *epiphany* mirco PHP framework
-- *phpExcel* spreadsheet library
-- *phpMailer* email library
-- *jShrink* javasrcipt compressor library
-- *guzzle* interserver communication framework
-- *parsedown* markdown parser tool
+- *[notORM](https://github.com/vrana/notorm)* database tool [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
+- *[epiphany](https://github.com/jmathai/epiphany)* mirco PHP framework [BSD](http://opensource.org/licenses/BSD-3-Clause)
+- *[phpExcel](https://github.com/PHPOffice/PHPExcel)* spreadsheet library [LGPL](https://github.com/PHPOffice/PHPExcel/blob/master/license.md)
+- *[phpMailer](https://github.com/PHPMailer/PHPMailer)* email library [LGPL 2.1](http://www.gnu.org/licenses/lgpl-2.1.html)
+- *[jShrink](https://github.com/tedious/JShrink)* javasrcipt compressor library [BSD](http://opensource.org/licenses/BSD-3-Clause)
+- *[guzzle](https://github.com/guzzle/guzzle)* interserver communication framework [MIT](http://opensource.org/licenses/MIT)
+- *[parsedown](https://github.com/erusev/parsedown)* markdown parser tool [MIT](http://opensource.org/licenses/MIT)
 
 ###Frontend Library
-- *Animate CSS* collection of CSS animation library
-- *Font Awesome* font library
-- *AngularJS* databinding tool
-- *Bootstrap* web GUI library
-- *UI Bottstrap* web GUI library
-- *Jquery* javascript library
-- *JqueryUI* jquery web GUI library
-- *moment* javascript time library
-- *bootstrap datepicker* web GUI library
-- *bootstrap datetimepicker* web GUI library
-- *bootstrap notify* web GUI notificatino library
-- *metis menu* web GUI interactive menu builder library
+- *Animate CSS* collection of CSS animation library [MIT](http://opensource.org/licenses/MIT)
+- *Font Awesome* font library [SIL OFL](http://fontawesome.io/license/)
+- *AngularJS* databinding tool [MIT](http://opensource.org/licenses/MIT)
+- *Bootstrap* web GUI library [MIT](http://opensource.org/licenses/MIT)
+- *UI Bottstrap* web GUI library [MIT](http://opensource.org/licenses/MIT)
+- *Jquery* javascript library [MIT](http://opensource.org/licenses/MIT)
+- *JqueryUI* jquery web GUI library [Jquery License](https://jquery.org/license/)
+- *moment* javascript time library [MIT](http://opensource.org/licenses/MIT)
+- *bootstrap datepicker* web GUI library [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
+- *bootstrap datetimepicker* web GUI library [MIT](http://opensource.org/licenses/MIT)
+- *bootstrap notify* web GUI notification library [MIT](http://opensource.org/licenses/MIT)
+- *metis menu* web GUI interactive menu builder library [MIT](http://opensource.org/licenses/MIT)
+
+###Special Thanks
+- *[SB Admin 2](http://startbootstrap.com/template-overviews/sb-admin-2/)* Bootstrap Theme for inspiring sidebar menu design
+- *[Wifeo CSS artwork](http://www.wifeo.com/code/22-pure-css-loader.html)* Used as page initial loading component
 
 License
 -------
 
-Copyright (c) 2014 Benjamin Ching
+Copyright (c) 2014-2015 Benjamin Ching
 
 Published under the [MIT](http://opensource.org/licenses/MIT) license.
