@@ -25,6 +25,8 @@ Credits
 - *[jShrink](https://github.com/tedious/JShrink)* javasrcipt compressor library [BSD](http://opensource.org/licenses/BSD-3-Clause)
 - *[guzzle](https://github.com/guzzle/guzzle)* interserver communication framework [MIT](http://opensource.org/licenses/MIT)
 - *[parsedown](https://github.com/erusev/parsedown)* markdown parser tool [MIT](http://opensource.org/licenses/MIT)
+- *[phpjasperXML](https://github.com/SIMITGROUP/phpjasperxml)* jasper report generator __open source, not decided yet__
+- *[tcpdf](http://www.tcpdf.org/)* pdf generator [LGLP v3](https://www.gnu.org/licenses/lgpl.html)
 
 ###Frontend Library
 - *[Animate CSS](http://daneden.github.io/animate.css/)* collection of CSS animation library [MIT](http://opensource.org/licenses/MIT)

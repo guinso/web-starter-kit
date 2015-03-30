@@ -22,6 +22,9 @@ require_once API_DIR . DS . 'libs' . DS . 'parsedown' . DS . 'Parsedown.php';
 
 require_once API_DIR . DS . 'libs' . DS . 'jshrink' . DS . 'Minifier.php';
 
+include_once API_DIR . DS . 'libs' . DS . 'tcpdf' . DS . 'tcpdf.php';
+include_once API_DIR . DS . 'libs' . DS . 'phpjasperxml' . DS . 'PHPJasperXML.inc.php';
+
 require_once API_DIR . DS . 'libs' . DS . 'ig' . DS . 'autoloader.php';
 
 Epi::setPath('base', API_DIR . DS . 'libs' . DS . 'epiphany');
