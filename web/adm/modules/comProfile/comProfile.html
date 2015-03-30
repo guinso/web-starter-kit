@@ -28,6 +28,13 @@
 					</div>
 					<div class='form-group' >
 						<label class='control-label col-md-4  ' >
+						GST No.</label>
+						<div class='col-md-8 '  ng-class="{'has-error' : cpForm.gstNo.$invalid}" >
+							<input type='text'  class='form-control '  required  name='gstNo'  ng-model="cp.item.gstNo" >
+						</div>
+					</div>
+					<div class='form-group' >
+						<label class='control-label col-md-4  ' >
 						Address</label>
 						<div class='col-md-8 '  ng-class="{'has-error' : cpForm.addr.$invalid}" >
 							<textarea class='form-control ' rows='3'  required  name='addr'  ng-model="cp.item.addr" >

@@ -35,6 +35,7 @@ class ComProfile {
 			'tel' => '',
 			'fax' => '',
 			'regNo' => '',
+			'gstNo' => '',
 			'email' => '',
 			'website' => '',
 			'logoGuid' => '' //company logo store in <attachment> by using guid to track
@@ -53,6 +54,7 @@ class ComProfile {
 			'tel' => $param['tel'],
 			'fax' => $param['fax'],
 			'regNo' => $param['regNo'],
+			'gstNo' => $param['gstNo'],
 			'email' => $param['email'],
 			'website' => $param['website'],
 			'logoGuid' => $param['logoGuid']
