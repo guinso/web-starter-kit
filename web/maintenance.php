@@ -8,7 +8,7 @@ define('ADM_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'adm');
 define('ADM_API_DIR', ADM_DIR . DIRECTORY_SEPARATOR . 'api');
 
 require_once ROOT_DIR . DIRECTORY_SEPARATOR . 'api' . DIRECTORY_SEPARATOR . 
-			'libs' . DIRECTORY_SEPARATOR . 'ig' . DIRECTORY_SEPARATOR . 'igConfig.php';
+			'libs' . DIRECTORY_SEPARATOR . 'Ig' . DIRECTORY_SEPARATOR . 'igConfig.php';
 
 require_once ROOT_DIR . DIRECTORY_SEPARATOR . 'api' . DIRECTORY_SEPARATOR . 'config.php';
 

@@ -1,0 +1,115 @@
+<?php 
+namespace Ig\Pdf\Tag;
+
+use Ig\Pdf\PdmTagHandler;
+class Div implements \Ig\Pdf\IPdmTag {
+	
+	public static function run(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) {
+
+		foreach($xmlObj->attributes() as $k => $v) {
+			if($v == (string)(double)$v)
+				$v = doubleval($v);
+			
+			$pdf->setStyle($k, $v);
+		}
+		
+		$x = $pdf->getStyle('x');
+		$y = $pdf->getStyle('y');
+		$pdf->SetXY($x, $y);
+		$size = self::simulate($pdf, $xmlObj);
+		
+		
+		$pdf->pushStyle();
+		$children = $xmlObj->children();
+		foreach($children as $child) {
+			$tag = $child->getName();
+			
+			\Ig\Pdf\PdmTagHandler::handleTag($pdf, $tag, $child);
+		}
+		$pdf->popStyle();
+		
+		if($pdf->getStyle('inline') == 1) {
+			$pdf->SetXY($x + $size['width'], $y);
+			$pdf->setStyle('x', $x + $size['width']);
+			$pdf->setStyle('y', $y);
+		} else {
+			$pdf->SetXY($x, $y + $size['height']);
+			$pdf->setStyle('x', $x);
+			$pdf->setStyle('y', $y + $size['height']);
+		}
+	}
+	
+	public static function simulate(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) {
+		$pdf->pushStyle();
+		foreach($xmlObj->attributes() as $k => $v) {
+			if($v == (string)(double)$v)
+				$v = doubleval($v);
+			
+			$pdf->setStyle($k, $v);
+		}
+		
+		$wMargin = 0; //\Ig\Pdf\PdmTagHandler::calWidthOffset($pdf);
+		$hMargin = 0; //\Ig\Pdf\PdmTagHandler::calHeightOffset($pdf);
+		$x = 0;
+		$y = 0;
+
+		$isInline = $pdf->getStyle('inline') == 1;
+		$size = array(0, 0);
+		$maxX = 0;
+		$maxY = 0;
+		
+		//allow multiple tags render ()
+		$children = $xmlObj->children();
+		foreach($children as $child) {
+			$tag = $child->getName();
+			
+			$size = \Ig\Pdf\PdmTagHandler::calDimension($pdf, $child->getName(), $child);
+			
+			if(isset($child['inline']))
+				$isInline = intval($child['inline']) == 1;
+			
+			if($isInline) {
+				//cumulate current row width
+				$x += $size['width'];
+				
+				//get higest height
+				if($maxY < $size['height'])
+					$maxY = $size['height'];
+			} else {
+				$y += $maxY > $size['height']? $maxY : $size['height'];
+				$maxY = $size['height'];
+				
+				//get greatest width
+				if($maxX < $x)
+					$maxX = $x;
+				
+				//reset to first row item's width
+				$x = $size['width'];
+			}				
+		}
+		
+		if($isInline) {
+			$y += $maxY > $size['height']? $maxY : $size['height'];
+		} else {
+			if($maxX < $x)
+				$maxX = $x;
+		}
+		
+		$pdf->popStyle();
+		
+		//always use user defined width
+		if(isset($xmlObj['width']))
+			$width = $wMargin + doubleval($xmlObj['width']);
+		else 
+			$width = $wMargin + $x;
+		
+		//always use user defined height
+		if(isset($xmlObj['height']))
+			$height = $hMargin + doubleval($xmlObj['height']);
+		else 
+			$height = $hMargin + $y;
+		
+		return array('width' => $width, 'height' => $height);
+	}
+}
+?>

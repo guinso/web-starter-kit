@@ -1,0 +1,17 @@
+<?php 
+namespace Ig\Pdf\Tag;
+
+class Cdiv extends Div {
+	public static function run(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) {
+		$xmlObj['inline'] = 1;
+		
+		parent::run($pdf, $xmlObj);
+	}
+	
+	public static function simulate(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) {
+		$xmlObj['inline'] = 1;
+	
+		return parent::simulate($pdf, $xmlObj);
+	}
+}
+?>
