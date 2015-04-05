@@ -22,16 +22,16 @@ Project Structure
 			* update _(back office update script)_
 			* module _(back office REST API module)_
 		* module _(back office html module)_
-	* api _(production REST API)_
+	* **api** _(REST API)_
 		* lib _(PHP libraries collection)_
 			* **Ig** _(unified 2nd tier library to access PHP library, recommend to use this instead of direct access primitive PHP libraries)_
-		* module _(REST API module)_
+		* **module** _(REST API module)_
 		* template _(default template directory)_
 		* upload _(default upload directory)_
 		* tmp _(default cache directory)_
 		* **config.php** _(system configuration file, used for keeping production and back office setup)_
 	* lib _(HTML library)_
-	* module _(html module)_
+	* **module** _(html module)_
 	* page _(main page design, this where you design main page frame layout)_
 	* partial _(AngularJS reusable components)_
 	* log.md _(write change log or any info for end user to view)_
