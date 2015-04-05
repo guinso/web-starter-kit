@@ -1,10 +1,41 @@
 web-starter-kit
 ===============
 
-This is general purpose client-server model web. This project consist of 2 main page section:
-- Production page (use by enduser)
-- Admistration page (use by back office administrator)
+This is general purpose client-server model web. This project compile libraries to unify all essential services to web developers:
+* **REST API**	headless data (_JSON_) communication, general service for all modern application client (html, android, ios, .NET, etc.)
+* **Database**	one time setup, no need to hardcord database username and password during development (audit trail ready, key-value service)
+* **Email**		SMTP based email agent to sent email, in dependent from server email configuration
+* **PDF**		Template based markup scripting for easier PDF creation without using PHP coding instead of simple template scripting (sandbox model, reusable JSON data from REST)
+* **Excel**		Provide Excel generator for general data export (need PHP scripting)
+* **HTML**		Using _AngularJS_ to develop dynamic single page design web application
 
+This project divide production and admin page to two independent server:
+- Production page _/_, (for enduser, this is end product)
+- Admistration page _/adm_, (for administrator, configure system setting like database, email, company profile)
+
+Project Structure
+-----------------
+
+* **Web** _(targeted web deploy directory)_
+	* **adm** _(back office)_
+		* api _(back office REST API)_
+			* update _(back office update script)_
+			* module _(back office REST API module)_
+		* module _(back office html module)_
+	* api _(production REST API)_
+		* lib _(PHP libraries collection)_
+			* **Ig** _(unified 2nd tier library to access PHP library, recommend to use this instead of direct access primitive PHP libraries)_
+		* module _(REST API module)_
+		* template _(default template directory)_
+		* upload _(default upload directory)_
+		* tmp _(default cache directory)_
+		* **config.php** _(system configuration file, used for keeping production and back office setup)_
+	* lib _(HTML library)_
+	* module _(html module)_
+	* page _(main page design, this where you design main page frame layout)_
+	* partial _(AngularJS reusable components)_
+	* log.md _(write change log or any info for end user to view)_
+	
 Crontab Setup
 -------------
 
@@ -27,6 +58,7 @@ Credits
 - *[parsedown](https://github.com/erusev/parsedown)* markdown parser tool [MIT](http://opensource.org/licenses/MIT)
 - *[phpjasperXML](https://github.com/SIMITGROUP/phpjasperxml)* jasper report generator __open source, not decided yet__
 - *[tcpdf](http://www.tcpdf.org/)* pdf generator [LGLP v3](https://www.gnu.org/licenses/lgpl.html)
+- *[RainTpl](http://www.raintpl.com) Template engine [MIT](http://opensource.org/licenses/MIT)
 
 ###Frontend Library
 - *[Animate CSS](http://daneden.github.io/animate.css/)* collection of CSS animation library [MIT](http://opensource.org/licenses/MIT)
