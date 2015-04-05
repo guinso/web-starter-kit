@@ -6,7 +6,7 @@ This is general purpose client-server model web. This project compile libraries 
 * **Database**	one time setup, no need to hardcord database username and password during development (audit trail ready, key-value service)
 * **Email**		SMTP based email agent to sent email, in dependent from server email configuration
 * **PDF**		Template based markup scripting for easier PDF creation without using PHP coding instead of simple template scripting (sandbox model, reusable JSON data from REST)
-* **Excel**		Provide Excel generator for general data export (need PHP scripting)
+* **MS Excel**	Provide Excel generator (.xlsx) for general data export (need PHP scripting)
 * **HTML**		Using _AngularJS_ to develop dynamic single page design web application
 
 This project divide production and admin page to two independent server:
