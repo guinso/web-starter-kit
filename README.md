@@ -78,6 +78,16 @@ Credits
 - *[SB Admin 2](http://startbootstrap.com/template-overviews/sb-admin-2/)* Bootstrap Theme for inspiring sidebar menu design
 - *[Wifeo CSS artwork](http://www.wifeo.com/code/22-pure-css-loader.html)* Used as page initial loading component
 
+Milestone
+---------
+
+* Support server update from version server
+* Add basic database creation scripting
+* Support database backup to _DropBox_ with encrypted content
+* Support REST request from server side
+* Add central data repository with distributed micro-server configuration
+* Build side project which support android development
+
 License
 -------
 
