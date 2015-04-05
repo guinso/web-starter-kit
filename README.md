@@ -1,17 +1,18 @@
 web-starter-kit
 ===============
 
-This is general purpose client-server model web. This project compile libraries to unify all essential services to web developers:
+This is general purpose client-server web server model. 
+This project collect various libraries to unify and simplified all services into single library package (**Ig lib**) for developers:
 * **REST API**	headless data (_JSON_) communication, general service for all modern application client (html, android, ios, .NET, etc.)
 * **Database**	one time setup, no need to hardcord database username and password during development (audit trail ready, key-value service)
-* **Email**		SMTP based email agent to sent email, in dependent from server email configuration
+* **Email**		SMTP based email agent to sent email, independent from site server email configuration
 * **PDF**		Template based markup scripting for easier PDF creation without using PHP coding instead of simple template scripting (sandbox model, reusable JSON data from REST)
 * **MS Excel**	Provide Excel generator (.xlsx) for general data export (need PHP scripting)
-* **HTML**		Using _AngularJS_ to develop dynamic single page design web application
+* **HTML**		Using _AngularJS_ to develop dynamic front-end single page design web application
 
-This project divide production and admin page to two independent server:
-- Production page _/_, (for enduser, this is end product)
-- Admistration page _/adm_, (for administrator, configure system setting like database, email, company profile)
+This project consists of two main web sites:
+- Production site _/_, (for enduser, this is end product)
+- Admistration site _/adm_, (for administrator, configure system setting like database, email, etc.)
 
 Project Structure
 -----------------
@@ -46,7 +47,7 @@ Set crontab run once per minute
 ```
 
 Credits
---------------
+-------
 
 ###Backend Library
 - *[notORM](https://github.com/vrana/notorm)* database tool [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)

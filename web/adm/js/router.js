@@ -13,6 +13,11 @@ config(['$routeProvider', function($routeProvider) {
 		controller:'ScheduleCtrl'
 	}).
 	
+	when('/config/access', {
+		templateUrl:'modules/access/access.html',
+		controller:'AccessCtrl'
+	}).
+	
 	when('/login', {
 		templateUrl:'modules/login/login.html',
 		controller:'LoginCtrl'

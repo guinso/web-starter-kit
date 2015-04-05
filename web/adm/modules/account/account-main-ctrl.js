@@ -187,30 +187,6 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 		);
 	}
 	
-	//---------------------- Authorization ------------------------
-	$scope.accMain.updateAuth = function(group) {
-		$scope.loader.showLoader();
-		
-		$resource('api/access-matrix/' + group.id, {}, {update: {method:'PUT'}}).update(
-			group,
-			function(response) {
-				$util.setMsg('Update access success.', 'ok');
-				$scope.loader.hideLoader();
-				$scope.accMain.reload();
-			},
-			function(response) {
-				$util.setMsg('Update access fail.', 'error');
-				$scope.loader.hideLoader();
-			}
-		);
-	};
-	
-	$scope.accMain.rebuildAuth = function() {
-		$resource('api/access-matrix-rebuild').get(
-			function() { $scope.accMain.reload(); },
-			function(response) { $util.handleErrorMsg(response); } 
-		);
-	}
 
 	//-------------------- General ---------------------------------
 	$scope.accMain.reload = function() {
@@ -223,7 +199,7 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 			$scope.accMain.accQuery,
 			function(x) { 
 				++cnt;
-				if(cnt >= 5)
+				if(cnt >= 4)
 					$scope.loader.hideLoader();
 				$scope.accMain.acc.items = x; 
 			},
@@ -237,7 +213,7 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 				$scope.accMain.accLogQuery,
 				function(x) { 
 					++cnt;
-					if(cnt >= 5)
+					if(cnt >= 4)
 						$scope.loader.hideLoader();
 					$scope.accMain.accLog.items = x; 
 				},
@@ -249,25 +225,13 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 		
 		$scope.accMain.role.items = $resource('api/role').query();
 		
-		$scope.accMain.auth.items = $resource('api/access-matrix').query(
-			function() {
-				++cnt;
-				if(cnt >= 5)
-					$scope.loader.hideLoader();
-			},
-			function(response) { 
-				$util.handleErrorMsg(response); 
-				$scope.loader.hideLoader();
-			} 
-		);
-		
 		$util.countAndQuery('api/login-log-count', 'api/login-log', 
 			$scope.accMain.loginLogQuery,
 			function(x) {
 				$scope.accMain.loginLog.items = x;
 				
 				++cnt;
-				if(cnt >= 5)
+				if(cnt >= 4)
 					$scope.loader.hideLoader();
 			},
 			function(response) {
@@ -283,7 +247,7 @@ controller('AccMainCtrl', function($scope, $resource, $util) {
 				$scope.accMain.manageUser = x.access;
 				
 				++cnt;
-				if(cnt >= 5)
+				if(cnt >= 4)
 					$scope.loader.hideLoader();
 			},
 			function(response) {

@@ -17,27 +17,6 @@ CREATE TABLE `access` (
   CONSTRAINT `access_ibfk_3` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='user authority record';
 
-INSERT INTO `access` (`id`, `function_id`, `role_id`, `authorize`) VALUES
-('A0000000001',	'A0000000001',	'A0000000001',	0),
-('A0000000002',	'A0000000001',	'A0000000002',	1),
-('A0000000003',	'A0000000001',	'A0000000003',	0),
-('A0000000004',	'A0000000002',	'A0000000001',	0),
-('A0000000005',	'A0000000002',	'A0000000002',	1),
-('A0000000006',	'A0000000002',	'A0000000003',	0),
-('A0000000007',	'A0000000003',	'A0000000001',	0),
-('A0000000008',	'A0000000003',	'A0000000002',	1),
-('A0000000009',	'A0000000003',	'A0000000003',	0),
-('A0000000010',	'A0000000001',	'A0000000004',	0),
-('A0000000011',	'A0000000002',	'A0000000004',	0),
-('A0000000012',	'A0000000003',	'A0000000004',	0),
-('A0000000013',	'A0000000004',	'A0000000001',	0),
-('A0000000014',	'A0000000004',	'A0000000002',	1),
-('A0000000015',	'A0000000004',	'A0000000003',	0),
-('A0000000016',	'A0000000004',	'A0000000004',	0),
-('A0000000017',	'A0000000005',	'A0000000001',	0),
-('A0000000018',	'A0000000005',	'A0000000002',	1),
-('A0000000019',	'A0000000005',	'A0000000003',	0),
-('A0000000020',	'A0000000005',	'A0000000004',	0);
 
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account` (
@@ -60,7 +39,7 @@ CREATE TABLE `account` (
 INSERT INTO `account` (`id`, `name`, `status`, `role_id`, `username`, `password`, `attachment_id`) VALUES
 ('A0000000001',	'Anonymous',	1,	'A0000000001',	'anonymous',	'',	NULL),
 ('A0000000002',	'Admin',	1,	'A0000000002',	'admin',	'1q2w3e',	NULL),
-('A0000000003',	'User',	1,	'A0000000003',	'user',	'123456789',	'A0000000001');
+('A0000000003',	'User',	1,	'A0000000003',	'user',	'123456789',	NULL);
 
 DROP TABLE IF EXISTS `account_log`;
 CREATE TABLE `account_log` (
@@ -93,8 +72,6 @@ CREATE TABLE `attachment` (
   UNIQUE KEY `filepath` (`filepath`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='file handling';
 
-INSERT INTO `attachment` (`id`, `filename`, `filepath`, `guid`, `checksum`, `mime`) VALUES
-('A0000000001',	'NRT_TempLoC.doc',	'54eee738939f2-NRT_TempLoC.doc',	'54eee738939f2',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `email_queue`;
 CREATE TABLE `email_queue` (
@@ -150,7 +127,7 @@ CREATE TABLE `key_value` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='generic key-value storage';
 
 INSERT INTO `key_value` (`id`, `value`) VALUES
-('com-profile',	'a:9:{s:4:\"name\";s:3:\"ABC\";s:7:\"comName\";s:11:\"ABC sdn bhd\";s:4:\"addr\";s:40:\"12, Jln Koko, 113560, Butterworth Penang\";s:3:\"tel\";s:10:\"0124385745\";s:3:\"fax\";s:0:\"\";s:5:\"regNo\";s:10:\"PGV3454564\";s:5:\"email\";s:13:\"sales@abc.com\";s:7:\"website\";s:14:\"www.abc.com.my\";s:8:\"logoGuid\";s:0:\"\";}'),
+('com-profile',	'a:10:{s:4:\"name\";s:0:\"\";s:7:\"comName\";s:0:\"\";s:4:\"addr\";s:0:\"\";s:3:\"tel\";s:0:\"\";s:3:\"fax\";s:0:\"\";s:5:\"regNo\";s:0:\"\";s:5:\"gstNo\";s:0:\"\";s:5:\"email\";s:0:\"\";s:7:\"website\";s:0:\"\";s:8:\"logoGuid\";s:0:\"\";}'),
 ('update-ver',	'i:0;');
 
 DROP TABLE IF EXISTS `lan_code`;
@@ -203,8 +180,7 @@ CREATE TABLE `role` (
 INSERT INTO `role` (`id`, `name`, `status`, `weight`) VALUES
 ('A0000000001',	'anonymous',	1,	0),
 ('A0000000002',	'admin',	1,	1),
-('A0000000003',	'user',	1,	2),
-('A0000000004',	'manager',	1,	3);
+('A0000000003',	'user',	1,	2);
 
 DROP TABLE IF EXISTS `schedule`;
 CREATE TABLE `schedule` (
@@ -223,7 +199,7 @@ CREATE TABLE `schedule` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='scheduler task';
 
 INSERT INTO `schedule` (`id`, `class_name`, `function_name`, `description`, `weekday`, `month`, `day`, `hour`, `minute`, `status`, `record_opt`) VALUES
-('A0000000001',	'EmailUtil',	'runQueue',	'send email',	'*',	'*',	'*',	'*',	'*/5',	1,	1),
-('A0000000002',	'LoginUtil',	'checkLogin',	'check user login activitiy',	'*',	'*',	'*',	'*',	'*',	1,	1);
+('A0000000001',	'EmailUtil',	'runQueue',	'send email',	'*',	'*',	'*',	'*',	'*/5',	2,	1),
+('A0000000002',	'LoginUtil',	'checkLogin',	'check user login activitiy',	'*',	'*',	'*',	'*',	'*',	2,	1);
 
--- 2015-03-25 10:33:43
+-- 2015-04-05 14:29:43
