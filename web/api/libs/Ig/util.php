@@ -415,9 +415,14 @@ public static function getServerHostname() {
 	else
 		$hostname = $_SERVER['HTTP_HOST'];
 	
-	$protocal = $_SERVER['REQUEST_SCHEME'] . '://';
+	if(!empty($_SERVER['REQUEST_SCHEME']))
+		$protocal = $_SERVER['REQUEST_SCHEME'];
+	else if(isset($_SERVER['HTTPS']))
+		$protocal = 'https:';
+	else // bo idea liao
+		$protocal = 'http';
 	
-	return $protocal . $hostname;
+	return $protocal .  '://' . $hostname;
 }
 
 /**

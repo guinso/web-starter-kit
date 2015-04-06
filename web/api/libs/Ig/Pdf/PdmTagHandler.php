@@ -31,7 +31,11 @@ class PdmTagHandler {
 		$borderTop = isset($border['T'])? $border['T']['width'] : 0;
 		$borderBottom = isset($border['B'])? $border['B']['width'] : 0;
 		
-		return $pdf->getStyle('margin-top') + $pdf->getStyle('margin-bottom') + $borderTop + $borderBottom;
+		$paddingTop = $pdf->getStyle('padding-top');
+		$paddingBottom = $pdf->getStyle('padding-bottom');
+		
+		return $pdf->getStyle('margin-top') + $pdf->getStyle('margin-bottom') + 
+			$borderTop + $borderBottom + $paddingBottom + $paddingTop;
 	}
 
 	public static function calWidthOffset(ExtTcpdf $pdf) {
@@ -41,7 +45,11 @@ class PdmTagHandler {
 		$borderLeft = isset($border['L'])? $border['L']['width'] : 0;
 		$borderRight = isset($border['R'])? $border['R']['width'] : 0;
 		
-		return $pdf->getStyle('margin-left') + $pdf->getStyle('margin-right') + $borderLeft + $borderRight;
+		$paddingLeft = $pdf->getStyle('padding-left');
+		$paddingRight = $pdf->getStyle('padding-right');
+		
+		return $pdf->getStyle('margin-left') + $pdf->getStyle('margin-right') + 
+			$borderLeft + $borderRight + $paddingLeft + $paddingRight;
 	}
 }
 ?>

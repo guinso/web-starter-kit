@@ -24,8 +24,8 @@ class PdfReport {
 			'margin-bottom' => 20,
 			'margin-left' => 15,
 			'margin-right' => 15,
-			'margin-header' => 30,
-			'margin-footer' => 20,
+			'margin-header' => 0,
+			'margin-footer' => 0,
 				
 			'autoPageBerak' => true
 		);	
@@ -150,6 +150,26 @@ class PdfReport {
 			$pdf->setPdmHeader($header);
 		
 		//3.  prepare footer by referring XML->footer tag
+		$footer = $xml->footer;
+		if(!empty($footer))
+			$pdf->setPdmFooter($footer);
+		
+		//3.1 calculate total rendered pages
+		$pdf->pushStyle();
+		$footSize = \Ig\Pdf\PdmTagHandler::calDimension($pdf, 'footer', $xml->footer);
+		$headerSize = \Ig\Pdf\PdmTagHandler::calDimension($pdf, 'header', $xml->header);
+		$pdf->setHeaderMargin($headerSize['height']);
+		$pdf->setFooterMargin($footSize['height']);
+		$h = 0;
+		foreach($xml->page as $pg) {
+			$sizeeez = \Ig\pdf\PdmTagHandler::calDimension($pdf, 'page', $pg);
+			$h += $sizeeez['height'];
+		}
+		$pgCnt = intval($h / $pdf->getPageHeight());
+		$pgH = $pdf->getPageHeight();
+		$pdf->popStyle();
+		$pdf->setPageCount($pgCnt);
+
 		
 		$pdf->setStyle('y', $pdf->GetY());
 		//4.  loop each <page> tags

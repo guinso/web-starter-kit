@@ -6,6 +6,7 @@ class Col implements \Ig\Pdf\IPdmTag {
 	private static $allowTags = array('Row', 'Span', 'Img', 'Hr');
 	
 	public static function run(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) {
+		self::setDefaultStyle($pdf);
 
 		foreach($xmlObj->attributes() as $k => $v) {
 			if($v == (string)(double)$v)
@@ -50,6 +51,8 @@ class Col implements \Ig\Pdf\IPdmTag {
 	
 	public static function simulate(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) {
 		$pdf->pushStyle();
+		self::setDefaultStyle($pdf);
+		
 		foreach($xmlObj->attributes() as $k => $v) {
 			if($v == (string)(double)$v)
 				$v = doubleval($v);
@@ -58,7 +61,7 @@ class Col implements \Ig\Pdf\IPdmTag {
 		}
 		
 		$width = \Ig\Pdf\PdmTagHandler::calWidthOffset($pdf);
-		$height = \Ig\Pdf\PdmTagHandler::calHeightOffset($pdf);
+		$height = 0; //\Ig\Pdf\PdmTagHandler::calHeightOffset($pdf);
 		$colX = $pdf->getStyle('x');
 		$colY = $pdf->getStyle('y');
 		$x = $pdf->getStyle('x');
@@ -76,13 +79,16 @@ class Col implements \Ig\Pdf\IPdmTag {
 				//	$child['width'] = $pdf->getStyle('width');
 				
 				$size = \Ig\Pdf\PdmTagHandler::calDimension($pdf, $child->getName(), $child);
-				
+				/*
 				if($child['inline'] == 1) {
 					$x += $size['width'];
 				} else {
 					$y += $size['height'];
 					$x = $colX + $size['width'];
 				}
+				*/
+				$y += $size['height'];
+				$x = $colX + $size['width'];
 				
 				if($x > $maxX)
 					$maxX = $x;
@@ -91,6 +97,17 @@ class Col implements \Ig\Pdf\IPdmTag {
 		$pdf->popStyle();
 		
 		return array('width' => $width + $maxX - $colX, 'height' => $height + $y - $colY);
+	}
+	
+	private static function setDefaultStyle(\Ig\Pdf\ExtTcpdf $pdf) {
+		$pdf->setStyle('padding-top', 0);
+		$pdf->setStyle('padding-left', 0);
+		$pdf->setStyle('padding-bottom', 0);
+		$pdf->setStyle('padding-right', 0);
+		$pdf->setStyle('margin-top', 0);
+		$pdf->setStyle('margin-top', 0);
+		$pdf->setStyle('margin-top', 0);
+		$pdf->setStyle('margin-top', 0);
 	}
 }
 ?>

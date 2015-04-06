@@ -32,8 +32,7 @@ class Hr implements \Ig\Pdf\IPdmTag {
 		}
 		
 		$width = $xmlObj['width'] + \Ig\Pdf\PdmTagHandler::calWidthOffset($pdf);
-		$height = $pdf->getStyle('line-width') + \Ig\Pdf\PdmTagHandler::calHeightOffset($pdf) + 
-			$pdf->getStyle('padding-top') + $pdf->getStyle('padding-bottom');
+		$height = $pdf->getStyle('line-width') + \Ig\Pdf\PdmTagHandler::calHeightOffset($pdf);
 		$pdf->popStyle();
 		
 		return array('height' => $height, 'width' => $width);

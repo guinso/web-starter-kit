@@ -12,6 +12,8 @@ namespace Ig\Pdf;
  */
 class ExtTcpdf extends \TCPDF {
 	var $igHeaderPdmObj;
+	var $igFooterPdmObj;
+	var $igPageCount;
 	
 	var $igStackStyle;
 	var $igStyle;
@@ -19,6 +21,8 @@ class ExtTcpdf extends \TCPDF {
 	function __construct($orientation='P', $unit='mm', $format='A4', $unicode=true, $encoding='UTF-8', $diskcache=false, $pdfa=false) {
 		parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
 	
+		$this->igPageCount = 0;
+		
 		$this->resetStyle();
 		
 		$this->setCellStyle(self::getDefaultStyle());
@@ -68,7 +72,10 @@ class ExtTcpdf extends \TCPDF {
 		$x = end($this->igStackStyle);
 		$key = key($this->igStackStyle);
 		
-		return $this->igStackStyle[$key][$name];
+		if(!empty($name) && array_key_exists($name, $this->igStackStyle[$key]))
+			return $this->igStackStyle[$key][$name];
+		else 
+			return null;
 	}
 	
 	public function setStyle($name, $value) {
@@ -77,12 +84,24 @@ class ExtTcpdf extends \TCPDF {
 		
 		$this->igStackStyle[$key][$name] = $value;
 	}
+	
+	public function setPageCount($pgCnt) {
+		$this->igPageCount = $pgCnt;
+	}
+	
+	public function getPageCount() {
+		return $this->igPageCount;
+	}
 
 	public function setPdmHeader($igHeaderPdmObj) {
 		$this->igHeaderPdmObj = $igHeaderPdmObj;
 	}
 	
-	//override parent function
+	public function setPdmFooter($igFooterPdmObj) {
+		$this->igFooterPdmObj = $igFooterPdmObj;
+	}
+	
+	//override parent function - header
 	public function Header() {
 		if(!empty($this->igHeaderPdmObj)) {
 			$tag = $this->igHeaderPdmObj->getName();
@@ -91,6 +110,18 @@ class ExtTcpdf extends \TCPDF {
 				\Ig\Pdf\PdmTagHandler::handleTag($this, $tag, $this->igHeaderPdmObj);
 			else
 				Throw new \Exception("IgPdfTagHeader:- Draw header rejected, you must pass <header> tag.");
+		}
+	}
+	
+	//override parent fucntion - footer
+	public function Footer() {
+		if(!empty($this->igFooterPdmObj)) {
+			$tag = $this->igFooterPdmObj->getName();
+		
+			if($tag == 'footer')
+				\Ig\Pdf\PdmTagHandler::handleTag($this, $tag, $this->igFooterPdmObj);
+			else
+				Throw new \Exception("IgPdfTagHeader:- Draw header rejected, you must pass <footer> tag.");
 		}
 	}
 	
@@ -399,7 +430,7 @@ class ExtTcpdf extends \TCPDF {
 	public static function convertBorderStyle($style) {
 		$result = array();
 		
-		if(isset($style['border'])) {
+		if(!empty($style['border'])) {
 			$x = self::convertBorderLineStyle($style['border']);
 			if(!empty($x)) {
 				$result['L'] = $x;
@@ -407,29 +438,26 @@ class ExtTcpdf extends \TCPDF {
 				$result['T'] = $x;
 				$result['B'] = $x;
 			}
-			else 
-				$result = array();
-		} else {
-			if(isset($style['border-top'])) {
-				$x = self::convertBorderLineStyle($style['border-top']);
-				if(empty($x))
-					$result['T'] = $x;
-			}
-			if(isset($style['border-bottom'])) {
-				$x = self::convertBorderLineStyle($style['border-bottom']);
-				if(empty($x))
-					$result['B'] = $x;
-			}
-			if(isset($style['border-left'])) {
-				$x = self::convertBorderLineStyle($style['border-left']);
-				if(empty($x))
-					$result['L'] = $x;
-			}
-			if(isset($style['border-right'])) {
-				$x = self::convertBorderLineStyle($style['border-right']);
-				if(empty($x))
-					$result['R'] = $x;
-			}
+		}
+		if(!empty($style['border-top'])) {
+			$x = self::convertBorderLineStyle($style['border-top']);
+			if(!empty($x))
+				$result['T'] = $x;
+		}
+		if(!empty($style['border-bottom'])) {
+			$x = self::convertBorderLineStyle($style['border-bottom']);
+			if(!empty($x))
+				$result['B'] = $x;
+		}
+		if(!empty($style['border-left'])) {
+			$x = self::convertBorderLineStyle($style['border-left']);
+			if(!empty($x))
+				$result['L'] = $x;
+		}
+		if(!empty($style['border-right'])) {
+			$x = self::convertBorderLineStyle($style['border-right']);
+			if(!empty($x))
+				$result['R'] = $x;
 		}
 		
 		return $result;
