@@ -95,7 +95,7 @@ if(IgConfig::getConfig('debugEmail')) {
 	\Ig\Email::setDebug(true, IgConfig::getConfig('debugEmailAddress'));
 }
 
-FileUtil::configure($setting->absUploadPath);
+\Ig\File\Attachment::configure($setting->absUploadPath);
 
 //timezone
 date_default_timezone_set($setting->timeZone);

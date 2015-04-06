@@ -41,7 +41,7 @@ class ComProfile {
 			'logoGuid' => '' //company logo store in <attachment> by using guid to track
 		));
 		
-		//x $result['logo'] = FileUtil::getByGuid($result['logoGuid']);
+		//x $result['logo'] = \Ig\File\Attachment::getByGuid($result['logoGuid']);
 		
 		return $result;
 	}

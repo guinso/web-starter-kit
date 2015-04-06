@@ -53,8 +53,8 @@ getApi()->get('/sch-log-cnt', array('ScheduleLog', 'getCount'), EpiApi::external
 getApi()->post('/upload-file', array('Util', 'uploadFile'), EpiApi::external);
 
 //new file upload-download
-getApi()->post('/file-upload', array('FileUtil', 'uploadFile'), EpiApi::external);
-getApi()->get('/file-download/(\w+)', array('FileUtil', 'downloadFile'), EpiApi::external);
+getApi()->post('/file-upload', array('\Ig\File\Attachment', 'uploadFile'), EpiApi::external);
+getApi()->get('/file-download/(\w+)', array('\Ig\File\Attachment', 'downloadFile'), EpiApi::external);
 
 //**************************** END CORE API *************************************
 

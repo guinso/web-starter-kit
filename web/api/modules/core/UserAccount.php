@@ -121,7 +121,7 @@ class UserAccount {
 		$userId = $usr['userId'];
 	
 		//get account record
-		$x = FileUtil::getByGuid($guid);
+		$x = \Ig\File\Attachment::getByGuid($guid);
 	
 		if(empty($x['id']))
 			Util::sendErrorResponse(-1, "targeted GUID is not a valid ID.");
@@ -134,7 +134,7 @@ class UserAccount {
 		$authorize = AuthorizeUtil::isAuthorize('view user') || $userId == $m['id'];
 	
 		if($authorize) {
-			FileUtil::downloadFile($guid);
+			\Ig\File\Attachment::downloadFile($guid);
 		} else {
 			Util::sendErrorResponse(-1, "You have no rights to download file");
 		}
@@ -288,7 +288,7 @@ class UserAccount {
 		$data = Util::getInputData();
 		
 		$role = $db->role[$row['role_id']];
-		$attachment = FileUtil::getById($row['attachment_id']);
+		$attachment = \Ig\File\Attachment::getById($row['attachment_id']);
 		
 		return array(
 			'id' => $row['id'],
