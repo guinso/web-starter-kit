@@ -5,9 +5,9 @@ class SqlBuilder {
 	private $pdo;
 	private $selects, $table, $alias, $whrs, $odrs, $params, $joins, $grps, $pgIndex, $pgSize;
 	
-	public function __construct(PDO $pdo, $table = '', $alias = '') {
+	public function __construct(\PDO $pdo, $table = '', $alias = '') {
 		if(empty($pdo))
-			throw new Exception("You must provide valid PDO parameter");
+			throw new \Exception("You must provide valid PDO parameter");
 		
 		self::clear();
 		
