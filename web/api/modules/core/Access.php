@@ -4,7 +4,7 @@ class Access {
 	public static function getAccessRight() {
 		$name = $_GET['name'];
 		$result = array(
-			'access' => AuthorizeUtil::isAuthorize($name)
+			'access' => \Ig\Authorize::isAuthorize($name)
 		);
 	
 		return $result;
@@ -18,14 +18,14 @@ class Access {
 		foreach($fs as $f) {
 			$name = ucwords($f['name']);
 			$name = str_replace(' ', '', $name);
-			$result[$name] = AuthorizeUtil::isAuthorize($f['name']); 
+			$result[$name] = \Ig\Authorize::isAuthorize($f['name']); 
 		}
 		
 		return $result;
 	}
 	
 	public static function getMatrix() {
-		if(!AuthorizeUtil::isAuthorize('view user')) {
+		if(!\Ig\Authorize::isAuthorize('view user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized to view authorization.', null, 401);
 		}
 		
@@ -85,7 +85,7 @@ class Access {
 	}
 
 	public static function updateMatrixGroup($groupId) {
-		if(!AuthorizeUtil::isAuthorize('update user')) {
+		if(!\Ig\Authorize::isAuthorize('update user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized.', null, 401);
 		}
 		

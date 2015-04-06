@@ -1,4 +1,5 @@
 <?php
+namespace Ig;
 /**
  * Authenticate Utility
  * Only allow per user login at a point of time
@@ -6,7 +7,7 @@
  * @author chingchetsiang
  *
  */
-class LoginUtil {
+class Login {
 	private static $maxLife = 1800; // half an hour, in seconds
 	
 	public static function getLog() {
@@ -54,7 +55,7 @@ class LoginUtil {
 			
 			//update last access time to keep alive
 			$x = $db->login[$login['id']];
-			$x->update(array('last_access' => Util::getDatetime()));
+			$x->update(array('last_access' => \Util::getDatetime()));
 		}
 	}
 	
@@ -62,7 +63,7 @@ class LoginUtil {
 	 * Check all login records, force logout if timeout from allowed threshold
 	 */
 	public static function checkLogin() {
-		$now = strtotime(Util::getDatetime());
+		$now = strtotime(\Util::getDatetime());
 		$db = \Ig\Db::getDb();
 		
 		$raw = $db->login->where('logout IS NULL');
@@ -73,7 +74,7 @@ class LoginUtil {
 			
 			if($diff > self::$maxLife) {
 				$row->update(array(
-					'logout' => Util::getDatetime(), 
+					'logout' => \Util::getDatetime(), 
 					'remarks' => 'timeout'));
 			}
 		}
@@ -84,7 +85,7 @@ class LoginUtil {
 		
 		$db = \Ig\Db::getDb();
 	 
-		$data = Util::getInputData();
+		$data = \Util::getInputData();
 		$username = $data['username'];
 		$password = $data['pwd'];
 		$rememberMe = $data['rememberMe'];
@@ -95,13 +96,13 @@ class LoginUtil {
 			->fetch();
 	
 		if(empty($user['id'])) {
-			Util::sendErrorResponse(-1,
+			\Util::sendErrorResponse(-1,
 				"Login fail, please check username or password",
 				null, 406);
 		}
 		
 		if($password != $user['password']) {
-			Util::sendErrorResponse(-1,
+			\Util::sendErrorResponse(-1,
 				"Login fail, please check username or password",
 				null, 406);
 		}
@@ -143,7 +144,7 @@ class LoginUtil {
 			$token = self::_createToken($userId);
 			
 			$idd = \Ig\Db::getNextRunningNumber('login');
-			$time = Util::getDatetime();
+			$time = \Util::getDatetime();
 			$tmp = array(
 					'id' => $idd,
 					'user_id' => $userId,
@@ -180,7 +181,7 @@ class LoginUtil {
 		//logout record
 		foreach($x as $xx) {
 			$tmp = array(
-				'logout' => Util::getDatetime(),
+				'logout' => \Util::getDatetime(),
 				'remarks' => $remarks
 			);
 			
@@ -234,7 +235,7 @@ class LoginUtil {
 	}
 	
 	private static function _getAnonymousId() {
-		$profile = IgConfig::getProfile();
+		$profile = \IgConfig::getProfile();
 		
 		$len = '';
 		for($i =0; $i < $profile->dbLen - 1; $i++)
@@ -245,7 +246,7 @@ class LoginUtil {
 	}
 	
 	private static function _getAdminId() {
-		$profile = IgConfig::getProfile();
+		$profile = \IgConfig::getProfile();
 	
 		$len = '';
 		for($i =0; $i < $profile->dbLen - 1; $i++)
@@ -259,7 +260,7 @@ class LoginUtil {
 	 * Get token key based on server GUID
 	 */
 	private static function _getTokenKey() {
-		return 'ig-token-' . IgConfig::getGuid();
+		return 'ig-token-' . \IgConfig::getGuid();
 	}
 	
 	/**
@@ -268,7 +269,7 @@ class LoginUtil {
 	private static function _createToken($username) {
 		$tokenKey = self::_getTokenKey();
 		
-		$raw = $username . IgConfig::getGuid() . session_id() . time();
+		$raw = $username . \IgConfig::getGuid() . session_id() . time();
 		
 		$hash = md5($raw);
 		

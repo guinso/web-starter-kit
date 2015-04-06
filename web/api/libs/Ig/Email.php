@@ -57,7 +57,7 @@ public static function setDebug($debug, $debugEmail) {
 }
 
 public static function sendEmail($tos, $ccs, $bccs, $subject, $message, $attachments) {
-	$mail = new PHPMailer();
+	$mail = new \PHPMailer();
 
 	$mail->isSMTP();
 	$mail->SMTPSecure = self::$secure;
@@ -130,7 +130,7 @@ public static function queueEmail($tos, $ccs, $bccs, $subject, $message, $attach
 		'subject' => $subject,
 		'msg' => $message,
 		'attchs' => serialize($attachments),
-		'last_update' => Util::getDateTime(),
+		'last_update' => \Util::getDateTime(),
 		'status' => 1, //not start yet
 		'attempt' => 0
 	);
@@ -166,13 +166,13 @@ public static function runQueue() {
 			$tos, $ccs, $bccs,
 			$raw['subject'], $raw['msg'], 
 			$attachments);
-		
-	} catch(phpmailerException $ex) {
+
+	} catch(\phpmailerException $ex) {
 		$result = array(
 			'success' => $result,
 			'error' => $ex->getMessage()
 		);
-	} catch(Exception $ex) {
+	} catch(\Exception $ex) {
 		$result = array(
 			'success' => $result,
 			'error' => $ex->getMessage()
@@ -182,13 +182,13 @@ public static function runQueue() {
 	$attempt = intVal($raw['attempt']) + 1;
 	if($result['success']) {
 		$raw->update(array(
-			'last_update' => Util::getDatetime(),
+			'last_update' => \Util::getDatetime(),
 			'status' => 2, //success
 			'attempt' => $attempt
 		));
 	} else {
 		$raw->update(array(
-			'last_update' => Util::getDatetime(),
+			'last_update' => \Util::getDatetime(),
 			'status' => 3, //fail
 			'attempt' => $attempt,
 			'error_msg' => $result['error']

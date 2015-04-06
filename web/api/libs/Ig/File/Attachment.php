@@ -72,16 +72,16 @@ class Attachment {
 	 */
 	public static function uploadFile() {
 		if ($_FILES["file"]["error"] > 0)
-			Util::sendErrorResponse(-1,
+			\Util::sendErrorResponse(-1,
 					'Submit upload file error: ' . $_FILES["file"]["error"]);
 	
 		//check directory exist of not
 		if(!is_dir(self::$directory))
-			Util::sendErrorResponse(-1,
+			\Util::sendErrorResponse(-1,
 					'Directory not found! please set properly.');
 	
 		if(!is_writable(self::$directory))
-			Util::sendErrorResponse(-1,
+			\Util::sendErrorResponse(-1,
 					'Targeted directory is not writtable for server.');
 	
 		$guid = uniqid();
@@ -91,7 +91,7 @@ class Attachment {
 				self::$directory .DIRECTORY_SEPARATOR. $uniqueFile);
 	
 		if($var == false)
-			Util::sendErrorResponse(-1,
+			\Util::sendErrorResponse(-1,
 					'Internal move file failed. Please check directory permission.');
 	
 		$db = \Ig\Db::getDb();
@@ -116,7 +116,7 @@ class Attachment {
 		$attachment = $db->attachment->where('guid', $fileGuid)->fetch();
 	
 		if(empty($attachment['id']))
-			Util::sendResponse(404, "File $fileGuid not found in server");
+			\Util::sendResponse(404, "File $fileGuid not found in server");
 	
 		//TODO add user access control features
 	

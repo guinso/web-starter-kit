@@ -38,12 +38,12 @@ class Log {
 			Throw new \Exception("IgDbLog:- $dbTable $id not found in database.");
 	
 		if(empty($userId)) {
-			$user = LoginUtil::getCurrentUser();
+			$user = \Ig\Login::getCurrentUser();
 			$userId = $user['userId'];
 		}
 	
 		if(empty($datetime))
-			$datetime = Util::getDateTime();
+			$datetime = \Util::getDateTime();
 	
 		/*
 			//skip if no changes

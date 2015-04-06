@@ -1,9 +1,9 @@
 <?php 
 //*************************************** CORE API ********************************************
 //Authentication
-getApi()->get('/current-user', array('LoginUtil', 'getCurrentUser'), EpiApi::external);
-getApi()->get('/logout', array('LoginUtil', 'logoutUser'), EpiApi::external);
-getApi()->post('/login', array('LoginUtil', 'loginUser'), EpiApi::external);
+getApi()->get('/current-user', array('Ig\Login', 'getCurrentUser'), EpiApi::external);
+getApi()->get('/logout', array('\Ig\Login', 'logoutUser'), EpiApi::external);
+getApi()->post('/login', array('\Ig\Login', 'loginUser'), EpiApi::external);
 getApi()->get('/login-log', array('UserAccount', 'getActivityLog'), EpiApi::external);
 getApi()->get('/login-log-count', array('UserAccount', 'getActivityLogCount'), EpiApi::external);
 

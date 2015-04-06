@@ -1,7 +1,7 @@
 <?php 
 class Schedule {
 	public static function get() {
-		if(!AuthorizeUtil::isAuthorize('view schedule')) {
+		if(!\Ig\Authorize::isAuthorize('view schedule')) {
 			Util::sendErrorResponse(-1,
 					'You are not authorized to view schedule.', 401);
 		}
@@ -18,7 +18,7 @@ class Schedule {
 	}
 	
 	public static function getById($id) {
-		if(!AuthorizeUtil::isAuthorize('view schedule')) {
+		if(!\Ig\Authorize::isAuthorize('view schedule')) {
 			Util::sendErrorResponse(-1,
 					'You are not authorized to view schedule.', 401);
 		}
@@ -31,7 +31,7 @@ class Schedule {
 	}
 	
 	public static function updateBulk() {
-		if(!AuthorizeUtil::isAuthorize('update schedule')) {
+		if(!\Ig\Authorize::isAuthorize('update schedule')) {
 			Util::sendErrorResponse(-1,
 					'You are not authorized to update schedule.', 401);
 		}

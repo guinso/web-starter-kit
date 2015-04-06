@@ -1,7 +1,7 @@
 <?php 
 class ScheduleLog {
 	public static function get() {
-		if(!AuthorizeUtil::isAuthorize('view schedule')) {
+		if(!\Ig\Authorize::isAuthorize('view schedule')) {
 			Util::sendErrorResponse(-1, 
 				'You are not authorized to view schedule.', 401);
 		}
@@ -27,7 +27,7 @@ class ScheduleLog {
 	}
 	
 	public static function getCount() {
-		if(!AuthorizeUtil::isAuthorize('view schedule')) {
+		if(!\Ig\Authorize::isAuthorize('view schedule')) {
 			Util::sendErrorResponse(-1,
 					'You are not authorized to view schedule.', 401);
 		}
@@ -42,7 +42,7 @@ class ScheduleLog {
 	}
 	
 	public static function getById($id) {
-		if(!AuthorizeUtil::isAuthorize('view schedule')) {
+		if(!\Ig\Authorize::isAuthorize('view schedule')) {
 			Util::sendErrorResponse(-1,
 					'You are not authorized to view schedule.', 401);
 		}

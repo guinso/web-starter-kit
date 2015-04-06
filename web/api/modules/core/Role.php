@@ -16,7 +16,7 @@ class Role {
 	}
 
 	public static function putBulk() {
-		if(!AuthorizeUtil::isAuthorize('update user')) {
+		if(!\Ig\Authorize::isAuthorize('update user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized to update role.', 401);
 		}
 		

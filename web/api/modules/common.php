@@ -5,7 +5,7 @@ class Common {
 			$dbColumn = 'attachment_id', $functionNames = array()) {
 	
 		$fileWithIn = \Ig\File\Attachment::isWithinRecord($dbtable, $guid, $dbColumn);
-		$authorize = AuthorizeUtil::isAuthorize2($functionNames);
+		$authorize = \Ig\Authorize::isAuthorize2($functionNames);
 	
 		if($fileWithIn && $authorize)
 			\Ig\File\Attachment::downloadFile($guid);

@@ -60,7 +60,7 @@ class AdmLogin {
 		
 		try {
 			//add login session into database
-			LoginUtil::forceLoginAdmin();
+			\Ig\Login::forceLoginAdmin();
 		} catch(Exception $ex) {
 			//do nothing to bypass PHP error exception
 		}
@@ -73,7 +73,7 @@ class AdmLogin {
 		
 		try {
 			//add logout session into database
-			LoginUtil::logoutUser();
+			\Ig\Login::logoutUser();
 		} catch(Exception $ex) {
 			//do nothing to bypass PHP error exception
 		}

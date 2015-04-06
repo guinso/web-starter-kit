@@ -1,10 +1,11 @@
 <?php 
+namespace Ig;
 /**
  * Authorization Utility
  * @author chingchetsiang
  *
  */
-class AuthorizeUtil {
+class Authorize {
 		
 	/**
 	 * Determine current login user is authorize to targeted access(s)
@@ -12,14 +13,14 @@ class AuthorizeUtil {
 	 * @return boolean
 	 */
 	public static function isAuthorize2($functionNames) {
-		$user = LoginUtil::getCurrentUser();
+		$user = \Ig\Login::getCurrentUser();
 		
 		return self::_isAuthorizeByUser($user['userId'], $functionNames);
 	}
 	
 	public static function isAuthorize() {
 		$functionNames = func_get_args();
-		$user = LoginUtil::getCurrentUser();
+		$user = \Ig\Login::getCurrentUser();
 		
 		return self::_isAuthorizeByUser($user['userId'], $functionNames);
 	}

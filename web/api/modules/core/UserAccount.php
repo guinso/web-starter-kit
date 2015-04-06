@@ -8,8 +8,8 @@ class UserAccount {
 		$pgIndex = 0;
 		$pgSize = 15;
 		
-		if(!AuthorizeUtil::isAuthorize('view user')) {
-			$usr = LoginUtil::getCurrentUser();
+		if(!\Ig\Authorize::isAuthorize('view user')) {
+			$usr = \Ig\Login::getCurrentUser();
 			$users = $users->where('id = ?', $usr['userId']);
 		}
 		
@@ -33,7 +33,7 @@ class UserAccount {
 	
 		$users = $db->account();
 
-		if(!AuthorizeUtil::isAuthorize('view user'))
+		if(!\Ig\Authorize::isAuthorize('view user'))
 			$cnt = 1;
 		else
 			$cnt = $users->count('*');
@@ -42,23 +42,23 @@ class UserAccount {
 	}
 	
 	public static function getActivityLog() {
-		if(!AuthorizeUtil::isAuthorize('view user')) {
+		if(!\Ig\Authorize::isAuthorize('view user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized to view login activity.');
 		}
 		
-		return LoginUtil::getLog();
+		return \Ig\Login::getLog();
 	}
 	
 	public static function getActivityLogCount() {
-		if(!AuthorizeUtil::isAuthorize('view user')) {
+		if(!\Ig\Authorize::isAuthorize('view user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized to view login activity.');
 		}
 		
-		return LoginUtil::getLogCount();
+		return \Ig\Login::getLogCount();
 	}
 	
 	public static function getById($id) {
-		if(!AuthorizeUtil::isAuthorize('view user')) {
+		if(!\Ig\Authorize::isAuthorize('view user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		
@@ -76,7 +76,7 @@ class UserAccount {
 		$pgIndex = 0;
 		$pgSize = 15;
 	
-		if(!AuthorizeUtil::isAuthorize('view user')) {
+		if(!\Ig\Authorize::isAuthorize('view user')) {
 			Util::sendErrorResponse(-1, 'You are not authorize to view account log.');
 		}
 	
@@ -105,7 +105,7 @@ class UserAccount {
 	
 		$users = $db->account_log();
 	
-		if(!AuthorizeUtil::isAuthorize('view user')) {
+		if(!\Ig\Authorize::isAuthorize('view user')) {
 			Util::sendErrorResponse(-1, 'You are not authorize to view account log.');
 		}
 		
@@ -117,7 +117,7 @@ class UserAccount {
 	public static function downloadFile($guid) {
 		$db = \Ig\Db::getDb();
 	
-		$usr = LoginUtil::getCurrentUser();
+		$usr = \Ig\Login::getCurrentUser();
 		$userId = $usr['userId'];
 	
 		//get account record
@@ -131,7 +131,7 @@ class UserAccount {
 		if(empty($m['id']))
 			Util::sendErrorResponse(-1, "targeted GUID not found in account record");
 	
-		$authorize = AuthorizeUtil::isAuthorize('view user') || $userId == $m['id'];
+		$authorize = \Ig\Authorize::isAuthorize('view user') || $userId == $m['id'];
 	
 		if($authorize) {
 			\Ig\File\Attachment::downloadFile($guid);
@@ -141,14 +141,14 @@ class UserAccount {
 	}
 	
 	public static function getCurrentAccount() {
-		$usr = LoginUtil::getCurrentUser();
+		$usr = \Ig\Login::getCurrentUser();
 		$userId = $usr['userId'];
 	
 		return self::getById($userId);
 	}
 	
 	public static function post() {
-		if(!AuthorizeUtil::isAuthorize('create user')) {
+		if(!\Ig\Authorize::isAuthorize('create user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		
@@ -196,9 +196,9 @@ class UserAccount {
 		$userId = $data['userId'];
 		$pwd = $data['pwd'];
 		
-		$user = LoginUtil::getCurrentUser();
+		$user = \Ig\Login::getCurrentUser();
 
-		if(!(AuthorizeUtil::isAuthorize('update user') || $user['userId'] == $userId)) {
+		if(!(\Ig\Authorize::isAuthorize('update user') || $user['userId'] == $userId)) {
 			$userName = $user['username'];
 			Util::sendErrorResponse(-1, "$userName is not authorized to change password.");
 		}
@@ -221,7 +221,7 @@ class UserAccount {
 	}
 	
 	public static function put($id) {
-		if(!AuthorizeUtil::isAuthorize('update user')) {
+		if(!\Ig\Authorize::isAuthorize('update user')) {
 			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		

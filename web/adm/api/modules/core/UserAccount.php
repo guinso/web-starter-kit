@@ -9,7 +9,7 @@ class UserAccount {
 		$pgSize = 15;
 		
 		if(!AdmLogin::isLogin()) {
-			$usr = LoginUtil::getCurrentUser();
+			$usr = \Ig\Login::getCurrentUser();
 			$users = $users->where('id = ?', $usr['userId']);
 		}
 		
@@ -46,7 +46,7 @@ class UserAccount {
 			Util::sendErrorResponse(-1, 'You are not authorized to view login activity.');
 		}
 		
-		return LoginUtil::getLog();
+		return \Ig\Login::getLog();
 	}
 	
 	public static function getActivityLogCount() {
@@ -54,7 +54,7 @@ class UserAccount {
 			Util::sendErrorResponse(-1, 'You are not authorized to view login activity.');
 		}
 		
-		return LoginUtil::getLogCount();
+		return \Ig\Login::getLogCount();
 	}
 	
 	public static function getById($id) {
@@ -117,7 +117,7 @@ class UserAccount {
 	public static function downloadFile($guid) {
 		$db = \Ig\Db::getDb();
 	
-		$usr = LoginUtil::getCurrentUser();
+		$usr = \Ig\Login::getCurrentUser();
 		$userId = $usr['userId'];
 	
 		//get account record
@@ -131,7 +131,7 @@ class UserAccount {
 		if(empty($m['id']))
 			Util::sendErrorResponse(-1, "targeted GUID not found in account record");
 	
-		$authorize = AuthorizeUtil::isAuthorize('view user') || $userId == $m['id'];
+		$authorize = \Ig\Authorize::isAuthorize('view user') || $userId == $m['id'];
 	
 		if($authorize) {
 			\Ig\File\Attachment::downloadFile($guid);
@@ -141,7 +141,7 @@ class UserAccount {
 	}
 	
 	public static function getCurrentAccount() {
-		$usr = LoginUtil::getCurrentUser();
+		$usr = \Ig\Login::getCurrentUser();
 		$userId = $usr['userId'];
 	
 		return self::getById($userId);
@@ -196,7 +196,7 @@ class UserAccount {
 		$userId = $data['userId'];
 		$pwd = $data['pwd'];
 		
-		$user = LoginUtil::getCurrentUser();
+		$user = \Ig\Login::getCurrentUser();
 
 		if(!AdmLogin::isLogin()) {
 			Util::sendErrorResponse(-1, "You are not authorized to change password.");
