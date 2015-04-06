@@ -3,7 +3,6 @@ $igDir = dirname(__FILE__);
 
 require_once $igDir . DIRECTORY_SEPARATOR . 'util.php';
 
-require_once $igDir . DIRECTORY_SEPARATOR . 'igDbUtil.php';
 require_once $igDir . DIRECTORY_SEPARATOR . 'loginUtil.php';
 require_once $igDir . DIRECTORY_SEPARATOR . 'authorizeUtil.php';
 require_once $igDir . DIRECTORY_SEPARATOR . 'emailUtil.php';
@@ -20,10 +19,10 @@ require_once $igDir . DIRECTORY_SEPARATOR . 'igConfigLoader.php';
 function IgAutoload($className)
 {
 	$baseDir = dirname(dirname(__FILE__));
-
+	
 	$filePath = $baseDir . DIRECTORY_SEPARATOR .
 	str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php';
-
+	
 	if(is_readable($filePath)) {
 		require_once $filePath;
 	}

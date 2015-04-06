@@ -1,5 +1,7 @@
 <?php 
-class IgDbUtil {
+namespace Ig\Db;
+
+class SqlBuilder {
 	private $pdo;
 	private $selects, $table, $alias, $whrs, $odrs, $params, $joins, $grps, $pgIndex, $pgSize;
 	
