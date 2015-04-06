@@ -85,14 +85,14 @@ $setting = IgConfig::getProfile();
 Util::configure(
 	$setting->absUploadPath, $setting->absTemporaryPath, $setting->absTemplatePath);
 
-EmailUtil::configure(
+\Ig\Email::configure(
 	$setting->smtpHost,
 	$setting->smtpEmail, $setting->smtpName,
 	$setting->smtpUsr, $setting->smtpPwd,
 	$setting->smtpSecure, $setting->smtpPort);
 
 if(IgConfig::getConfig('debugEmail')) {
-	EmailUtil::setDebug(true, IgConfig::getConfig('debugEmailAddress'));
+	\Ig\Email::setDebug(true, IgConfig::getConfig('debugEmailAddress'));
 }
 
 FileUtil::configure($setting->absUploadPath);

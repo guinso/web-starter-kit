@@ -1,11 +1,13 @@
 <?php 
+namespace Ig;
+
 /**
  * SMTP email utility class
  * 		depends on IG\Util classs
  * @author chingchetsiang
  *
  */
-class EmailUtil {
+class Email {
 	
 private static $host;
 private static $port = 25;
