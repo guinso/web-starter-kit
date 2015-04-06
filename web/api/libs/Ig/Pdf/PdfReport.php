@@ -124,7 +124,7 @@ class PdfReport {
 	 * @param string $template		template file path
 	 * @param string $outputMode	TCPDF output mode: I, O
 	 */
-	public static function generatePdf($pdm, $outputMode = 'I') {
+	public static function generatePdf($pdm, $title, $outputMode = 'I') {
 		//generate IG Pdf Document Markup
 		//x $pdm = self::_generatePdm($data, $template);
 
@@ -179,7 +179,7 @@ class PdfReport {
 		}
 		
 		//5.  output buffer
-		$pdf->Output('asd.pdf', $outputMode);
+		$pdf->Output($title . '.pdf', $outputMode);
 	}
 
 	/**
