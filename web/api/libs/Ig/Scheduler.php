@@ -1,10 +1,11 @@
 <?php
+namespace Ig;
 /**
  * In-house cron jon to perform greater control such as log record and concurrent task
  * @author hx
  *
  */ 
-class ScheduleUtil {
+class Scheduler {
 	private static $timeoutBuffer = 3600; // 1 hour
 	
 	public static function configure($maxTimeout) {

@@ -19,5 +19,5 @@ if(IgConfig::getConfig('maintenance'))
 	Util::sendErrorResponse(0, "Site under maintenance", null, 503);
 
 //run schedule
-ScheduleUtil::run();
+\Ig\Scheduler::run();
 ?>

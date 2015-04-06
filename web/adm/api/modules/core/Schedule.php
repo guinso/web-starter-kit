@@ -73,11 +73,11 @@ class Schedule {
 	}
 	
 	public static function run() {
-		ScheduleUtil::run();	
+		\Ig\Scheduler::run();	
 	}
 	
 	public static function runById($id) {
-		ScheduleUtil::execute($id);
+		\Ig\Scheduler::execute($id);
 	}
 	
 /*
