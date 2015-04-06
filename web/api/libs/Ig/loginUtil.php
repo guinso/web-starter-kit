@@ -10,7 +10,7 @@ class LoginUtil {
 	private static $maxLife = 1800; // half an hour, in seconds
 	
 	public static function getLog() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$pgIndex = 0;
 		$pgSize = 15;
 		
@@ -31,7 +31,7 @@ class LoginUtil {
 	}
 	
 	public static function getLogCount() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 
 		$cnt = $db->login()->count('*');
 	
@@ -50,7 +50,7 @@ class LoginUtil {
 		$login = self::getCurrentUser();
 		
 		if($login['userId'] != self::_getAnonymousId()) {
-			$db = Util::getDb();
+			$db = \Ig\Db::getDb();
 			
 			//update last access time to keep alive
 			$x = $db->login[$login['id']];
@@ -63,7 +63,7 @@ class LoginUtil {
 	 */
 	public static function checkLogin() {
 		$now = strtotime(Util::getDatetime());
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		$raw = $db->login->where('logout IS NULL');
 		$db->transaction = 'BEGIN';
@@ -82,7 +82,7 @@ class LoginUtil {
 	
 	public static function loginUser() {
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 	 
 		$data = Util::getInputData();
 		$username = $data['username'];
@@ -118,7 +118,7 @@ class LoginUtil {
 	}
 
 	private static function _writeLogin($userId, $rememberMe = false) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		//check current login status
 		$writeLog = false;
@@ -142,7 +142,7 @@ class LoginUtil {
 		if($writeLog) {
 			$token = self::_createToken($userId);
 			
-			$idd = Util::getNextRunningNumber('login');
+			$idd = \Ig\Db::getNextRunningNumber('login');
 			$time = Util::getDatetime();
 			$tmp = array(
 					'id' => $idd,
@@ -157,7 +157,7 @@ class LoginUtil {
 	}
 	
 	public static function logoutUser($userId = null, $remarks = null) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$x = null;
 		
 		if(empty($userId)) {
@@ -193,7 +193,7 @@ class LoginUtil {
 	
 	public static function getCurrentUser() { //!!! get current user by id
 		$sessionId = self::_getTokenValue();
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 	
 		$row = $db->login()
 			->where('session_id', $sessionId)
@@ -211,7 +211,7 @@ class LoginUtil {
 	}
 	
 	private static function _getFormat($row) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$userId = empty($row['id'])? self::_getAnonymousId() : $row['user_id'];
 		
 		$account = $db->account[$userId];

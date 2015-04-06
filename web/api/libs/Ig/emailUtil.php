@@ -117,9 +117,9 @@ public static function sendEmail($tos, $ccs, $bccs, $subject, $message, $attachm
  * @param array $attachments
  */
 public static function queueEmail($tos, $ccs, $bccs, $subject, $message, $attachments) {
-	$db = Util::getDb();
+	$db = \Ig\Db::getDb();
 
-	$idd = Util::getNextRunningNumber('email_queue');
+	$idd = \Ig\Db::getNextRunningNumber('email_queue');
 	$item = array(
 		'id' => $idd,
 		'tos' => serialize($tos),
@@ -140,9 +140,9 @@ public static function queueEmail($tos, $ccs, $bccs, $subject, $message, $attach
  * Send first matching email queue record
  */
 public static function runQueue() {
-	$db = Util::getDb();
+	$db = \Ig\Db::getDb();
 
-	$maxAttempt = Util::getKeyValue('email-max-attempt', 3);
+	$maxAttempt = \Ig\Db::getKeyValue('email-max-attempt', 3);
 
 	$raw = $db->email_queue()
 		->where('status != ?', 2)

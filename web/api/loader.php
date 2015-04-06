@@ -78,9 +78,11 @@ define('SERVER_ADM_URL', SERVER_URL . '/adm');
 IgConfigLoader::configure(API_DIR . DS . 'config.php');
 $setting = IgConfig::getProfile();
 
-Util::configure(
+\Ig\Db::configure(
 	$setting->dsm, $setting->dbUsr, $setting->dbPwd,
-	$setting->dbInitial, $setting->dbLen,
+	$setting->dbInitial, $setting->dbLen);
+
+Util::configure(
 	$setting->absUploadPath, $setting->absTemporaryPath, $setting->absTemplatePath);
 
 EmailUtil::configure(

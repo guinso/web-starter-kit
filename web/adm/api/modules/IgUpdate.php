@@ -47,7 +47,7 @@ class IgModUpdate {
 	}
 
 	public static function getAvailableUpdate() {
-		$version = Util::getKeyValue('update-ver', 0);
+		$version = \Ig\Db::getKeyValue('update-ver', 0);
 		$revisions = self::getRevision();
 		
 		$result = array();
@@ -65,7 +65,7 @@ class IgModUpdate {
 	 * @param number $maxRev
 	 */
 	public static function executeUpdate($maxRev = 0) {
-		$version = Util::getKeyValue('update-ver', 0);
+		$version = \Ig\Db::getKeyValue('update-ver', 0);
 		$updates = self::getAvailableUpdate();
 		
 		foreach($updates as $update) {
@@ -74,7 +74,7 @@ class IgModUpdate {
 				
 				try {
 					$className::runScript();
-					Util::setKeyValue('update-ver', $update['revision']);
+					\Ig\Db::setKeyValue('update-ver', $update['revision']);
 				} catch(Exception $ex) {
 					Util::sendErrorResponse(-3, "Update process fail: " . $ex->getMessage());
 					break;
@@ -82,7 +82,7 @@ class IgModUpdate {
 			}
 		}
 		
-		return array('version' => Util::getKeyValue('update-ver', 0));
+		return array('version' => \Ig\Db::getKeyValue('update-ver', 0));
 	}
  }
 ?>

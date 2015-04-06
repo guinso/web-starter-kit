@@ -6,7 +6,7 @@ class Schedule {
 					'You are not authorized to view schedule.', 401);
 		}
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 
 		$raw = $db->schedule();
 		
@@ -23,7 +23,7 @@ class Schedule {
 					'You are not authorized to view schedule.', 401);
 		}
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		$raw = $db->schedule[$id];
 		
@@ -36,7 +36,7 @@ class Schedule {
 					'You are not authorized to update schedule.', 401);
 		}
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$data = Util::getInputData();
 		
 		$ids = array();
@@ -56,7 +56,7 @@ class Schedule {
 			);
 			
 			if(empty($item['id'])) {
-				$tmp['id'] = Util::getNextRunningNumber('schedule');
+				$tmp['id'] = \Ig\Db::getNextRunningNumber('schedule');
 				$db->schedule->insert($tmp);
 				
 				$ids[] = $tmp['id'];
@@ -82,11 +82,11 @@ class Schedule {
 	
 /*
 	public static function post() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$pdo = Util::getPdo();
 		
 		$data = Util::getInputData();
-		$idd = Util::getNextRunningNumber('schedule');
+		$idd = \Ig\Db::getNextRunningNumber('schedule');
 		
 		//TODO define columns
 		$item = array(
@@ -110,7 +110,7 @@ class Schedule {
 	}
 	
 	public static function put($id) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$data = Util::getInputData();
 		
 		$schedule = $db->schedule[$id];
@@ -140,7 +140,7 @@ class Schedule {
 */
 	/*
 	public static function cancel($id) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		$schedule = $db->schedule[$id];
 		

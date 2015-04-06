@@ -1,5 +1,12 @@
 <?php 
-class LogUtil {
+namespace Ig\Db;
+
+/**
+ * Database log utility class
+ * @author chingchetsiang
+ *
+ */
+class Log {
 	/**
 	 * General Write xxx_log record from xxx datatable record
 	 * @param String $id			targeted <xxx.id>
@@ -13,22 +20,22 @@ class LogUtil {
 			$log = '', $datetime = NULL, $userId = NULL,
 			$db = null, $pdo = null, $dbLen = null, $dbInitial = null) {
 		if(empty($pdo))
-			$pdo = Util::getPDO();
-		
+			$pdo = \Ig\Db::getPDO();
+	
 		if(empty($db))
-			$db = Util::getDb();
-		
+			$db = \Ig\Db::getDb();
+	
 		if(empty($dbLen))
-			$dbLen = Util::getDbLen();
-		
+			$dbLen = \Ig\Db::getDbLen();
+	
 		if(empty($dbInitial))
-			$dbInitial = Util::getDbInitial();
-
+			$dbInitial = \Ig\Db::getDbInitial();
+	
 		$dbTableLog = $dbTable . '_log';
 	
 		$data = $db->{$dbTable}[$id];
 		if(empty($data))
-			Util::sendErrorResponse(-1, "Write Log: $dbTable $id not found in database.");
+			Throw new \Exception("IgDbLog:- $dbTable $id not found in database.");
 	
 		if(empty($userId)) {
 			$user = LoginUtil::getCurrentUser();
@@ -37,23 +44,23 @@ class LogUtil {
 	
 		if(empty($datetime))
 			$datetime = Util::getDateTime();
-		
+	
 		/*
-		//skip if no changes
-		$cols = self::checkDifference($dbTable, $id);
-		if(count($cols) < 1)
-			return;
+			//skip if no changes
+			$cols = self::checkDifference($dbTable, $id);
+			if(count($cols) < 1)
+				return;
 		*/
-		
+	
 		//prepare common log info
-		$idd = Util::getNextRunningNumber($dbTableLog, $dbInitial, $dbLen, $db);
+		$idd = \Ig\Db::getNextRunningNumber($dbTableLog, $dbInitial, $dbLen, $db);
 		$item = array(
-			'id' => $idd,
-			'created' => $datetime,
-			'author' => $userId,
-			'referred' => $id,
-			'crud' => $crud,
-			'log' => $log,
+				'id' => $idd,
+				'created' => $datetime,
+				'author' => $userId,
+				'referred' => $id,
+				'crud' => $crud,
+				'log' => $log,
 		);
 	
 		//get datatable metadata
@@ -82,13 +89,13 @@ class LogUtil {
 	 */
 	public static function getlastLog($tableName, $id, $db = null) {
 		if(empty($db))
-			$db = Util::getDb();
-		
+			$db = \Ig\Db::getDb();
+	
 		$logTableName = $tableName . '_log';
-		
+	
 		$lastRecord = $db->{$logTableName};
 		$lastRecord = $lastRecord->where('referred', $id)->order('created DESC')->fetch();
-		
+	
 		if(empty($lastRecord['id']))
 			return null;
 		else
@@ -103,23 +110,23 @@ class LogUtil {
 	 */
 	public static function checkDifference($tableName, $id, $db = null, $pdo = null) {
 		if(empty($pdo))
-			$pdo = Util::getPDO();
-		
+			$pdo = \Ig\Db::getPDO();
+	
 		if(empty($db))
-			$db = Util::getDb();
-		
+			$db = \Ig\Db::getDb();
+	
 		$logTableName = $tableName . '_log';
 		$diffCols = array();
-		
+	
 		$newRecord = $db->{$tableName}[$id];
 		//check record exist or not
 		if(empty($newRecord['id']))
 			return false;
-		
+	
 		$lastRecord = $db->{$logTableName};
 		$lastRecord = $lastRecord->where('referred', $id)->order('created DESC')->fetch();
 		$getAll = empty($lastRecord['id']);
-		
+	
 		$sql = str_replace("'", "", "DESCRIBE $tableName");
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
@@ -128,21 +135,21 @@ class LogUtil {
 			$type = $meta['Type'];
 			$oldValue = self::getDataValue($lastRecord[$field], $type);
 			$newValue = self::getDataValue($newRecord[$field], $type);
-
+	
 			//check and get column which is diff value
 			if($getAll || $lastRecord[$field] != $newRecord[$field])
 				$diffCols[$field] = array(
-					'oldValue' => $oldValue,
-					'newValue' => $newValue
+						'oldValue' => $oldValue,
+						'newValue' => $newValue
 				);
 		}
-		
+	
 		return $diffCols;
 	}
 	
 	private static function getDataValue($value, $type) {
 		$result = null;
-		
+	
 		if(preg_match('/^int/', $type) == 1) {
 			//for int
 			$result = intVal($value);
@@ -156,7 +163,7 @@ class LogUtil {
 			//for general
 			$result = $value;
 		}
-		
+	
 		return $result;
 	}
 }

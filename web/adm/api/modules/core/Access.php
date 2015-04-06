@@ -15,7 +15,7 @@ class Access {
 			Util::sendErrorResponse(-1, 'You are not authorized to view authorization.', null, 401);
 		}
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		$raw = $db->function_group->order('weight asc');
 		
@@ -34,8 +34,8 @@ class Access {
 	}
 	
 	private static function getMatrixByGroupId($groupId) {
-		$db = Util::getDb();
-		$pdo = Util::getPDO();
+		$db = \Ig\Db::getDb();
+		$pdo = \Ig\Db::getPDO();
 	
 		$result = array();
 	
@@ -75,7 +75,7 @@ class Access {
 			Util::sendErrorResponse(-1, 'You are not authorized.', null, 401);
 		}
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$pdo = Util::getPdo();
 		
 		$data = Util::getInputData();
@@ -104,7 +104,7 @@ class Access {
 	}
 	
 	public static function _constructAccessMatrix() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		
 		$functions = $db->function();
@@ -121,7 +121,7 @@ class Access {
 				
 				if($cnt == 0) {
 					//create access
-					$id = Util::getNextRunningNumber('access');
+					$id = \Ig\Db::getNextRunningNumber('access');
 					$item = array(
 						'id' => $id,
 						'function_id' => $function['id'],

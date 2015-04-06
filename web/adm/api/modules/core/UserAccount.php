@@ -2,7 +2,7 @@
 
 class UserAccount {
 	public static function get() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		$users = $db->account();
 		$pgIndex = 0;
@@ -29,7 +29,7 @@ class UserAccount {
 	}
 	
 	public static function getCount() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 	
 		$users = $db->account();
 
@@ -62,7 +62,7 @@ class UserAccount {
 			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$user = $db->account[$id];
 		
 		return self::_getFormat($user);
@@ -70,7 +70,7 @@ class UserAccount {
 	
 	//Log record
 	public static function getLog() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 	
 		$users = $db->account_log()->order('created DESC');
 		$pgIndex = 0;
@@ -101,7 +101,7 @@ class UserAccount {
 	}
 	
 	public static function getLogCount() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 	
 		$users = $db->account_log();
 	
@@ -115,7 +115,7 @@ class UserAccount {
 	}
 
 	public static function downloadFile($guid) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 	
 		$usr = LoginUtil::getCurrentUser();
 		$userId = $usr['userId'];
@@ -152,7 +152,7 @@ class UserAccount {
 			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$data = Util::getInputData();
 		
 		//check username uniqueness
@@ -169,7 +169,7 @@ class UserAccount {
 			Util::sendErrorResponse(-2, "Selected name " .
 					"$name already used by other user.");
 		
-		$id = Util::getNextRunningNumber('account');
+		$id = \Ig\Db::getNextRunningNumber('account');
 		
 		$item = array(
 			'id' => $id,
@@ -183,14 +183,14 @@ class UserAccount {
 		
 		$db->transaction = 'BEGIN';
 		$result = $db->account()->insert($item);
-		LogUtil::writeLog($id, 'account', 'c');
+		\Ig\Db\Log::writeLog($id, 'account', 'c');
 		$db->transaction = 'COMMIT';
 		
 		return self::getById($id);
 	}
 	
 	public static function changePwd() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$data = Util::getInputData();
 		
 		$userId = $data['userId'];
@@ -212,7 +212,7 @@ class UserAccount {
 		$db->transaction = 'BEGIN';
 		$item = array('password' => $pwd);
 		$account->update($item);
-		LogUtil::writeLog($userId, 'account', 'u', 'change pwd');
+		\Ig\Db\Log::writeLog($userId, 'account', 'u', 'change pwd');
 		
 		$db->transaction = 'COMMIT';
 		
@@ -224,7 +224,7 @@ class UserAccount {
 			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$data = Util::getInputData();
 		
 		//check username uniqueness
@@ -259,7 +259,7 @@ class UserAccount {
 		$db->transaction = 'BEGIN';
 		$account = $db->account[$id];
 		$account->update($item);
-		LogUtil::writeLog($id, 'account', 'u');
+		\Ig\Db\Log::writeLog($id, 'account', 'u');
 		$db->transaction = 'COMMIT';
 		
 		return self::getById($id);
@@ -270,7 +270,7 @@ class UserAccount {
 			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		$account = $db->account[$id];
 		
@@ -283,7 +283,7 @@ class UserAccount {
 	}
 	*/
 	private static function _getFormat($row) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$data = Util::getInputData();
 		
 		$role = $db->role[$row['role_id']];

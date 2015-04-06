@@ -1,7 +1,7 @@
 <?php 
 class Role {
 	public static function get() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 
 		$raw = $db->role()->order('weight');
 		
@@ -20,13 +20,13 @@ class Role {
 			Util::sendErrorResponse(-1, 'You are not authorized to update role.', 401);
 		}
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$data = Util::getInputData();
 		
 		$db->transaction = 'BEGIN';
 		foreach ($data as $item) {
 			if(empty($item['id'])) {
-				$idd = Util::getNextRunningNumber('role');
+				$idd = \Ig\Db::getNextRunningNumber('role');
 				$tmp = array(
 					'id' => $idd,
 					'name' => $item['name'],
@@ -50,7 +50,7 @@ class Role {
 	}
 
 	private static function _getFormat($row) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		//define columns
 		return array(

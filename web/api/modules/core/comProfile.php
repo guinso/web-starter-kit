@@ -28,7 +28,7 @@ class ComProfileRest {
 
 class ComProfile {
 	public static function get() {
-		$result = Util::getKeyValue('com-profile', array(
+		$result = \Ig\Db::getKeyValue('com-profile', array(
 			'name' => '', //display name on system
 			'comName' => '', //company name which register on SSM
 			'addr' => '',
@@ -47,7 +47,7 @@ class ComProfile {
 	}
 	
 	public static function update($param) {
-		Util::setKeyValue('com-profile', array(
+		\Ig\Db::setKeyValue('com-profile', array(
 			'name' => $param['name'], 
 			'comName' => $param['comName'], 
 			'addr' => $param['addr'],

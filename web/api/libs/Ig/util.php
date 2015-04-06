@@ -1,28 +1,12 @@
 <?php
 class Util {
-
-	private static $db;
-	private static $pdo;
-	
-	private static $dsm, $dbUsr, $dbPwd;
-	private static $dbIdInitial, $dbIdLen;
 	private static $uploadPath;
 	private static $tempPath;
 	private static $tplPath;
 	
 public static function configure(
-		$dsm, $dbUsr, $dbPwd, 
-		$dbIdInitial, $dbIdLen, 
 		$uploadPath, $tempPath, $tplPath) {
-	
-	//TODO check database is connectable
-	self::$dsm = $dsm;
-	self::$dbUsr = $dbUsr;
-	self::$dbPwd = $dbPwd;
-	
-	self::$dbIdInitial = $dbIdInitial;
-	self::$dbIdLen = $dbIdLen;
-	
+
 	//check directory exists and accessable
 	self::$uploadPath = $uploadPath;
 	self::$tempPath = $tempPath;
@@ -193,184 +177,6 @@ private static function recurArrayTrimString(array &$arr) {
 			self::recurArrayTrimString($arr[$k]);
 		}
 	}
-}
-
-/**
- * 
- * @param string $key
- * @param mix $value
- */
-public static function setKeyValue($key, $value){
-	$db = Util::getDb();
-		
-	$row = $db->key_value[$key];
-	
-	$serialize = serialize($value);
-	
-	if(empty($row))
-	{
-		$item = array(
-			'id' => $key,
-			'value' => $serialize,	
-		);
-		
-		$db->key_value->insert($item);
-	}
-	else 
-	{
-		$item = array(
-				'value' => $serialize,
-		);
-		$row->update($item);
-	}
-}
-
-public static function getKeyValue($key, $defaultValue = NULL){
-	$db = Util::getDb();
-		
-	$row = $db->key_value[$key];
-	
-	if(empty($row))
-	{
-		self::setKeyValue($key, $defaultValue);
-		
-		return $defaultValue;
-	}
-	else
-	{
-		$unserialize = unserialize($row['value']);
-		return $unserialize;
-	}
-}
-
-public static function getPDO() {
-	if(empty(self::$pdo)) {
-		self::$pdo = new PDO(self::$dsm, self::$dbUsr, self::$dbPwd);
-		self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		self::$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-	}
-	
-	return self::$pdo;
-}
-
-/**
- * Get defaut database handler 
- * @return NotORM
- */
-public static function getDb() {
-	if(empty(self::$db)) {
-		$pdo = self::getPDO();
-		
-		self::$db = new NotORM($pdo);
-	}
-	
-	return self::$db;
-}
-
-public static function preparePDO($dsm, $username, $password) {
-	$pdo = new PDO($dsm, $username, $password);
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-	
-	return $pdo;
-}
-
-public static function prepareDb($pdo) {
-	return new NotORM($pdo);
-}
-
-/**
- * Execute PDO based on SQL statement with additional parameters
- * @param string $sql
- * @param array $whrs	indexed based string array
- * @param array $params	associate array
- */
-public static function executePdo($sql, $whrs, $params, $pagination = null, $pdo = null) {
-	if(empty($pdo))
-		$pdo = self::getPDO();
-	
-	if(count($whrs) > 0) {
-		$x = '';
-		for($i = 0; $i < count($whrs); $i++) {
-			$x .= ($i == 0? ' ' : ' AND ') . $whrs[$i];
-		}
-		
-		$sql .= ' WHERE ' . $x;
-	}
-	
-	if(!empty($pagination)) {
-		$index = $pagination['pgIndex'];
-		$size = $pagination['pgSize'];
-		$offset = $index * $size;
-		
-		$sql .= " LIMIT $size OFFSET $offset";
-	}
-	
-	$raw = $pdo->prepare($sql);
-	$raw->execute($params);
-	
-	return $raw;
-}
-
-public static function getNextJobId($tableName, $columnName, $initial, $db = null) {
-	if(empty($db))
-		$db = self::getDb();
-	
-	$date = date('Ym');
-	
-	$item = $db->$tableName
-		->where("$columnName REGEXP ?", '^' . $initial . $date . '-[0-9]{3}$')
-		->order("$columnName desc")
-		->fetch();
-	
-	$runningNo = 1;
-	if(!empty($item)) {
-		$tmp = $item[$columnName];
-		$len = strlen($tmp);
-		$subNo = intval(substr($tmp, $len - 3, 3));
-		
-		$runningNo = $subNo + 1;
-	}
-	
-	return $initial . $date . '-' . str_pad($runningNo, 3, '0', STR_PAD_LEFT);
-}
-
-/**
- * Get next running number from data table based on string pattern
- * @param String $dbTableName	targeted data table name
- * @param String $pattern	regular expression 
- */
-public static function getNextRunningNumber($dbTableName, $initial = NULL, $length = NULL, 
-	$db = null) {
-	
-	if(empty($initial)) {
-		$initial = self::$dbIdInitial;
-	}
-
-	if(empty($length)) {
-		$length = self::$dbIdLen;
-	}
-	
-	if(empty($db))
-		$db = self::getDb();
-
-	$id = '';
-
-	$item = $db->$dbTableName
-		->where('id REGEXP ?', '^' . $initial . '[0-9]{'.$length.'}')
-		->order('id desc')
-		->fetch();
-
-	$id = $item['id'];
-
-	if(empty($id)) {
-		$number = str_pad(1, $length, '0', STR_PAD_LEFT);
-	} else {
-		$n = intval(substr($id, 1)) + 1;
-		$number = str_pad($n, $length, '0', STR_PAD_LEFT);
-	}
-
-	return $initial . $number;
 }
 
 /**
@@ -594,28 +400,6 @@ public static function getTemporaryDirectory() {
  */
 public static function getTemplateDirectory() {
 	return self::$tplPath;
-}
-
-/**
- * Execute sql file into targeted database
- * @param string $sqlFilePath	targeted sql script file path
- * @param PDO $pdo				targeted database gateway
- */
-public static function runSqlScript($sqlFilePath, $pdo = null) {
-	$sql = file_get_contents($sqlFilePath);
-
-	if(empty($pdo))
-		$pdo = self::getPDO();
-	
-	$pdo->exec($sql);
-}
-
-public static function getDbLen() {
-	return self::$dbIdLen;
-}
-
-public static function getDbInitial() {
-	return self::$dbIdInitial;
 }
 
 /**

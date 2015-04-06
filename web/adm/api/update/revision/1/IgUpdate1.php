@@ -14,11 +14,11 @@ class IgUpdate1 implements IgUpdate {
 		$dir = dirname(__FILE__);
 		
 		//get web delpoy setting 
-		$db = Util::getDb();
-		$pdo = Util::getPDO();
+		$db = \Ig\Db::getDb();
+		$pdo = \Ig\Db::getPDO();
 		
 		//sample running multiple files using web deploy databse gateway
-		Util::runSqlScript($dir . DIRECTORY_SEPARATOR . 'sample.sql', $pdo);
+		\Ig\Db::runSqlScript($dir . DIRECTORY_SEPARATOR . 'sample.sql', $pdo);
 	}
 }
 ?>

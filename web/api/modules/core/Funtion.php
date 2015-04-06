@@ -1,7 +1,7 @@
 <?php
 class Func {
 	public static function get() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 
 		$raw = $db->function();
 		
@@ -13,7 +13,7 @@ class Func {
 	}
 	
 	public static function getCount() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 
 		$raw = $db->function();
 		
@@ -23,7 +23,7 @@ class Func {
 	}
 	
 	public static function getById($id) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		$raw = $db->function[$id];
 		
@@ -31,11 +31,11 @@ class Func {
 	}
 
 	public static function post() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$pdo = Util::getPdo();
 		
 		$data = Util::getInputData();
-		$idd = Util::getNextRunningNumber('function');
+		$idd = \Ig\Db::getNextRunningNumber('function');
 		
 		//TODO define columns
 		$item = array(
@@ -51,7 +51,7 @@ class Func {
 	}
 	
 	public static function put($id) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$pdo = Util::getPdo();
 		
 		$data = Util::getInputData();
@@ -73,7 +73,7 @@ class Func {
 	}
 	/*
 	public static function cancel($id) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		$function = $db->function[$id];
 		
@@ -88,7 +88,7 @@ class Func {
 	}
 	*/
 	private static function _getFormat($row) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		//define columns
 		return array(

@@ -6,7 +6,7 @@ class LanUtility {
 	public static function getLanCode() {
 		$serverId = Util::getServerUUID();
 	
-		return Util::getKeyValue('lan_code_' . $serverId, 'en');
+		return \Ig\Db::getKeyValue('lan_code_' . $serverId, 'en');
 	}
 	
 	/**
@@ -17,12 +17,12 @@ class LanUtility {
 		$serverId = Util::getServerUUID();
 	
 		//check database exist or not
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$cnt = $db->lan_code()->where('code = ?', $lanCode)->count('*');
 		if($cnt == 0) {
 			Util::sendErrorResponse(406, -1, "There is no such language code in database <" . $lanCode . ">");
 		} else {
-			Util::setKeyValue('lan_code_' . $serverId, $lanCode);
+			\Ig\Db::setKeyValue('lan_code_' . $serverId, $lanCode);
 		}
 	}
 	

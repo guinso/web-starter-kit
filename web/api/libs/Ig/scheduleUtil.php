@@ -18,7 +18,7 @@ class ScheduleUtil {
 		//mark fail to timeout tasks
 		self::_checkTimeout();
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$raw = $db->schedule()->where('status', 1);
 		
 		$x = array();
@@ -34,8 +34,8 @@ class ScheduleUtil {
 	 * @param String $id
 	 */
 	public static function execute($id) {
-		$db = Util::getDb();
-		$pdo = Util::getPDO();
+		$db = \Ig\Db::getDb();
+		$pdo = \Ig\Db::getPDO();
 		
 		$month = intval(date('m'));
 		$weekday = intval(date('w'));
@@ -70,7 +70,7 @@ class ScheduleUtil {
 			$recordOpt = intval($sch['record_opt']);
 			
 			if($recordOpt == 1 || $recordOpt == 2) {
-				$idd = Util::getNextRunningNumber('log_schedule');
+				$idd = \Ig\Db::getNextRunningNumber('log_schedule');
 				$item = array(
 						'id' => $idd,
 						'func' => $func,
@@ -117,7 +117,7 @@ class ScheduleUtil {
 	}
 	
 	private static function _checkTimeout() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		$raw = $db->log_schedule()->where('status', 1);
 		foreach($raw as $row) {

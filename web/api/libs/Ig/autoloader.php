@@ -10,7 +10,6 @@ require_once $igDir . DIRECTORY_SEPARATOR . 'emailUtil.php';
 require_once $igDir . DIRECTORY_SEPARATOR . 'excelUtil.php';
 require_once $igDir . DIRECTORY_SEPARATOR . 'lanUtil.php';
 require_once $igDir . DIRECTORY_SEPARATOR . 'scheduleUtil.php';
-require_once $igDir . DIRECTORY_SEPARATOR . 'logUtil.php';
 require_once $igDir . DIRECTORY_SEPARATOR . 'fileUtil.php';
 
 require_once $igDir . DIRECTORY_SEPARATOR . 'igConfig.php';

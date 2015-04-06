@@ -21,7 +21,7 @@ public static function getDirectory() {
  * @param string $columnName	targeted data column name
  */
 public static function isWithinRecord($dbTableName, $guid, $columnName = 'attachment_id') {
-	$pdo = Util::getPDO();
+	$pdo = \Ig\Db::getPDO();
 	
 	$sql = "SELECT a.* FROM $dbTableName a 
 			JOIN attachment b ON a.$columnName = b.id 
@@ -36,7 +36,7 @@ public static function isWithinRecord($dbTableName, $guid, $columnName = 'attach
 }
 
 public static function getById($id) {
-	$db = Util::getDb();
+	$db = \Ig\Db::getDb();
 	
 	$row = $db->attachment[$id];
 	
@@ -47,7 +47,7 @@ public static function getById($id) {
 }
 
 public static function getByGuid($guid) {
-	$db = Util::getDb();
+	$db = \Ig\Db::getDb();
 
 	$row = $db->attachment->where('guid', $guid)->fetch();
 
@@ -87,8 +87,8 @@ public static function uploadFile() {
 		Util::sendErrorResponse(-1, 
 			'Internal move file failed. Please check directory permission.');
 
-	$db = Util::getDb();
-	$id = Util::getNextRunningNumber('attachment');
+	$db = \Ig\Db::getDb();
+	$id = \Ig\Db::getNextRunningNumber('attachment');
 	$db->attachment->insert(array(
 		'id' => $id,
 		'filename' => $_FILES["file"]["name"],
@@ -104,7 +104,7 @@ public static function uploadFile() {
  * @param string $fileGuid
  */
 public static function downloadFile($fileGuid) {
-	$db = Util::getDb();
+	$db = \Ig\Db::getDb();
 	
 	$attachment = $db->attachment->where('guid', $fileGuid)->fetch();
 	

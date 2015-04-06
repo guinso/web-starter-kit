@@ -29,8 +29,8 @@ class AuthorizeUtil {
 	}
 	
 	private static function _isAuthorizeByUser($userId, $functionNames) {
-		$db = Util::getDb();
-		$pdo = Util::getPDO();
+		$db = \Ig\Db::getDb();
+		$pdo = \Ig\Db::getPDO();
 		$result = false;
 
 		$params = array();
@@ -80,7 +80,7 @@ class AuthorizeUtil {
 	}
 	
 	private static function _getAuthorizeUser($functionNames) {
-		$pdo = Util::getPDO();
+		$pdo = \Ig\Db::getPDO();
 		
 		$params = array();
 		$cnt = 0;

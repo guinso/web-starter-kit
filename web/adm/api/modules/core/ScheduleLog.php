@@ -6,7 +6,7 @@ class ScheduleLog {
 				'You are not authorized to view schedule.', 401);
 		}
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$pgIndex = 0;
 		$pgSize = 15;
 		
@@ -32,7 +32,7 @@ class ScheduleLog {
 					'You are not authorized to view schedule.', 401);
 		}
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 
 		$raw = $db->log_schedule();
 		
@@ -47,7 +47,7 @@ class ScheduleLog {
 					'You are not authorized to view schedule.', 401);
 		}
 		
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		$raw = $db->log_schedule[$id];
 		
@@ -55,11 +55,11 @@ class ScheduleLog {
 	}
 /*
 	public static function post() {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$pdo = Util::getPdo();
 		
 		$data = Util::getInputData();
-		$idd = Util::getNextRunningNumber('log_schedule');
+		$idd = \Ig\Db::getNextRunningNumber('log_schedule');
 		
 		//TODO define columns
 		$item = array(
@@ -74,7 +74,7 @@ class ScheduleLog {
 	}
 	
 	public static function put($id) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		$pdo = Util::getPdo();
 		
 		$data = Util::getInputData();
@@ -96,7 +96,7 @@ class ScheduleLog {
 	}
 	
 	public static function cancel($id) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		$schLog = $db->log_schedule[$id];
 		
@@ -111,7 +111,7 @@ class ScheduleLog {
 	}
 */
 	private static function _getFormat($row) {
-		$db = Util::getDb();
+		$db = \Ig\Db::getDb();
 		
 		//define columns
 		return array(
