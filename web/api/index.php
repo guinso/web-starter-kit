@@ -31,10 +31,10 @@ function home() {
 /********************* Execute *************************************/
 
 //disable service if maintenance is on
-if(IgConfig::getConfig('maintenance'))
+if(\Ig\Config::getConfig('maintenance'))
 	Util::sendErrorResponse(0, "Site under maintenance", null, 503);
 
-$profile = IgConfig::getProfile();
+$profile = \Ig\Config::getProfile();
 
 //Ping current login user to keep alive
 \Ig\Login::ping();

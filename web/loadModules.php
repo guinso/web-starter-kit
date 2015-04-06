@@ -1,6 +1,6 @@
 <?php 
 
-if(IgConfig::getConfig('deploy')) {
+if(\Ig\Config::getConfig('deploy')) {
 ?>
 	<script src='deploy/app.min.js'></script>
 <?php

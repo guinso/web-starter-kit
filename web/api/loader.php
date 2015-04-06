@@ -75,8 +75,8 @@ define('SERVER_URL', substr(Util::getServerUrl(), 0, -4)); //to remove '/api'
 define('SERVER_ADM_URL', SERVER_URL . '/adm');
 
 /*************** CORE AND CONFIGURATION ****************/
-IgConfigLoader::configure(API_DIR . DS . 'config.php');
-$setting = IgConfig::getProfile();
+\Ig\Config\Loader::configure(API_DIR . DS . 'config.php');
+$setting = \Ig\Config::getProfile();
 
 \Ig\Db::configure(
 	$setting->dsm, $setting->dbUsr, $setting->dbPwd,
@@ -91,8 +91,8 @@ Util::configure(
 	$setting->smtpUsr, $setting->smtpPwd,
 	$setting->smtpSecure, $setting->smtpPort);
 
-if(IgConfig::getConfig('debugEmail')) {
-	\Ig\Email::setDebug(true, IgConfig::getConfig('debugEmailAddress'));
+if(\Ig\Config::getConfig('debugEmail')) {
+	\Ig\Email::setDebug(true, \Ig\Config::getConfig('debugEmailAddress'));
 }
 
 \Ig\File\Attachment::configure($setting->absUploadPath);
@@ -103,8 +103,8 @@ date_default_timezone_set($setting->timeZone);
 //template engine
 $config = array(
 	"tpl_ext"	=> 'tpl',
-	"tpl_dir"	=> IgConfig::getProfile()->absTemplatePath . DS,
-	"cache_dir"	=> IgConfig::getProfile()->absTemporaryPath . DS,
+	"tpl_dir"	=> \Ig\Config::getProfile()->absTemplatePath . DS,
+	"cache_dir"	=> \Ig\Config::getProfile()->absTemporaryPath . DS,
 	"debug"		=> false, // set to false to improve the speed
 );
 \Rain\Tpl::configure( $config );

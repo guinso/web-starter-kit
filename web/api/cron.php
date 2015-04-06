@@ -15,7 +15,7 @@ Util::recursiveDir(
 /********************* Execute *************************************/
 
 //disable service if maintenance is on
-if(IgConfig::getConfig('maintenance'))
+if(\Ig\Config::getConfig('maintenance'))
 	Util::sendErrorResponse(0, "Site under maintenance", null, 503);
 
 //run schedule

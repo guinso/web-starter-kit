@@ -26,14 +26,14 @@ class SysProfileRest {
 
 class SysProfile {
 	public static function get() {
-		$keys = IgConfig::getProfileKeys();
+		$keys = \Ig\Config::getProfileKeys();
 		$result = array();
 		
 		foreach($keys as $key) {
-			$result[$key] = IgConfig::getProfile($key)->get();
+			$result[$key] = \Ig\Config::getProfile($key)->get();
 		}
 		
-		$defaultKey = IgConfig::getDefaultProfileKey();
+		$defaultKey = \Ig\Config\getDefaultProfileKey();
 		
 		return array(
 			'items' => $result,
@@ -43,7 +43,7 @@ class SysProfile {
 	
 	public static function update($input) {
 		foreach($input['items'] as $k => $v) {
-			$recipe = new IgConfigRecipe(
+			$recipe = new \Ig\Config\Recipe(
 				$v['dbName'], $v['dbHost'], $v['dbUsr'], $v['dbPwd'], 
 				$v['dbLen'], $v['dbInitial'], 
 				$v['uploadPath'], $v['templatePath'], $v['temporaryPath'], 
@@ -52,11 +52,11 @@ class SysProfile {
 				$v['smtpEmail'], $v['smtpName'], 
 				$v['smtpSecure'], $v['smtpPort']);
 			
-			IgConfig::set($k, $recipe);
+			\Ig\Config::set($k, $recipe);
 		}
 		
 		//check profile key exists or not
-		$keys = IgConfig::getProfileKeys();
+		$keys = \Ig\Config::getProfileKeys();
 		$keyExists = false;
 		$k = $input['defaultKey'];
 		foreach($keys as $key) {
@@ -65,8 +65,8 @@ class SysProfile {
 		}
 		
 		if($keyExists) {
-			IgConfig::setDefaultProfileKey($k);
-			IgConfigLoader::updateSetting();
+			\Ig\Config::setDefaultProfileKey($k);
+			\Ig\Config\Loader::updateSetting();
 		}
 		else
 			Throw new Exception("Update fault profile key to fail, " . 

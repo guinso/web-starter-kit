@@ -3,10 +3,6 @@ $igDir = dirname(__FILE__);
 
 require_once $igDir . DIRECTORY_SEPARATOR . 'util.php';
 
-require_once $igDir . DIRECTORY_SEPARATOR . 'igConfig.php';
-require_once $igDir . DIRECTORY_SEPARATOR . 'igConfigLoader.php';
-
-
 //implement PSR-4 autoloading
 function IgAutoload($className)
 {

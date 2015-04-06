@@ -1,5 +1,5 @@
 <?php
-	$profile = IgConfig::getProfile();
+	$profile = \Ig\Config::getProfile();
 	$db = $profile->dbName; //database name
 	$user = $profile->dbUsr; //database username
 	$pass = $profile->dbPwd; //database password

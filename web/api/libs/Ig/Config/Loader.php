@@ -1,6 +1,8 @@
 <?php 
+namespace Ig\Config;
+
 /** Manage configuration file in php format **/
-Class IgConfigLoader {
+Class Loader {
 	
 private static $_filepath;
 private static $_defaultConfig;
@@ -12,7 +14,7 @@ public static function configure($filepath) {
 	self::$_defaultConfig = '';
 	
 	if(!file_exists($filepath))
-		throw new Exception("Configuration file not found in server");
+		throw new \Exception("Configuration file not found in server");
 	else {
 		self::$_filepath = $filepath;
 		
@@ -23,7 +25,7 @@ public static function configure($filepath) {
 public static function updateSetting() {
 	$cache = '';
 	if(!is_writable(self::$_filepath))
-		throw new Exception("Configuration file is not writtable");
+		throw new \Exception("Configuration file is not writtable");
 	else {
 		//backup configuration file
 		$cache = file_get_contents(self::$_filepath);
@@ -32,29 +34,29 @@ public static function updateSetting() {
 	$output = '';
 
 	//write login information
-	$username = IgConfig::getUsr();
-	$password = IgConfig::getPwd();
-	$output .= "IgConfig::setLogin('$username','$password');\n\n";
+	$username = \Ig\Config::getUsr();
+	$password = \Ig\Config::getPwd();
+	$output .= "\\Ig\\Config::setLogin('$username','$password');\n\n";
 	
 	//write guid
-	$guid = IgConfig::getGuid();
-	$output .= "IgConfig::setGuid('$guid');\n\n";
+	$guid = \Ig\Config::getGuid();
+	$output .= "\\Ig\\Config::setGuid('$guid');\n\n";
 	
 	//write general configuration
-	$keys = IgConfig::getConfigKeys();
+	$keys = \Ig\Config::getConfigKeys();
 	foreach($keys as $key) {
-		$v = IgConfig::getConfig($key);
+		$v = \Ig\Config::getConfig($key);
 		$x = self::dumpVar($v);
-		$output .= "IgConfig::setConfig('$key', $x);\n";
+		$output .= "\\Ig\\Config::setConfig('$key', $x);\n";
 	}
 	$output .= "\n";
 	
 	//write IgConfig settings
-	$igConfigKeys = IgConfig::getProfileKeys();
+	$igConfigKeys = \Ig\Config::getProfileKeys();
 	foreach($igConfigKeys as $k) {
-		$tmp = IgConfig::getProfile($k);
+		$tmp = \Ig\Config::getProfile($k);
 		
-		$output .= "IgConfig::set('$k', new IgConfigRecipe('" .
+		$output .= "\\Ig\\Config::set('$k', new \\Ig\\Config\\Recipe('" .
 			$tmp->dbName . "','" . $tmp->dbHost . "','" . $tmp->dbUsr . "','" . $tmp->dbPwd . "'," .
 			$tmp->dbLen . ",'" . $tmp->dbInitial . "','" . 
 			$tmp->uploadPath . "','" . $tmp->templatePath . "','" . $tmp->temporaryPath . "','" . 
@@ -66,9 +68,9 @@ public static function updateSetting() {
 	}
 	
 	//Set default profile if available
-	$defaultKey = IgConfig::getDefaultProfileKey();
+	$defaultKey = \Ig\Config::getDefaultProfileKey();
 	if(!empty($defaultKey))
-		$output .= "IgConfig::setDefaultProfilekey('$defaultKey');\n\n";
+		$output .= "\\Ig\\Config::setDefaultProfilekey('$defaultKey');\n\n";
 
 	$result = file_put_contents(self::$_filepath, "<?php\n" . $output . "?>");
 	
@@ -76,7 +78,7 @@ public static function updateSetting() {
 		//restore configuration file
 		file_put_contents($cache);
 		
-		throw new Exception("Fail to update configuration file.");
+		throw new \Exception("Fail to update configuration file.");
 	}
 }
 
@@ -97,7 +99,7 @@ private static function dumpVar($var) {
 	} else if(is_null($var)) {
 		return 'null';
 	} else {
-		throw new Exception("ConfigUtil not support dump non-scala value.");
+		throw new \Exception("ConfigUtil not support dump non-scala value.");
 	}
 }
 

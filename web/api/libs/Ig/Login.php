@@ -235,7 +235,7 @@ class Login {
 	}
 	
 	private static function _getAnonymousId() {
-		$profile = \IgConfig::getProfile();
+		$profile = \Ig\Config::getProfile();
 		
 		$len = '';
 		for($i =0; $i < $profile->dbLen - 1; $i++)
@@ -246,7 +246,7 @@ class Login {
 	}
 	
 	private static function _getAdminId() {
-		$profile = \IgConfig::getProfile();
+		$profile = \Ig\Config::getProfile();
 	
 		$len = '';
 		for($i =0; $i < $profile->dbLen - 1; $i++)
@@ -260,7 +260,7 @@ class Login {
 	 * Get token key based on server GUID
 	 */
 	private static function _getTokenKey() {
-		return 'ig-token-' . \IgConfig::getGuid();
+		return 'ig-token-' . \Ig\Config::getGuid();
 	}
 	
 	/**
@@ -269,7 +269,7 @@ class Login {
 	private static function _createToken($username) {
 		$tokenKey = self::_getTokenKey();
 		
-		$raw = $username . \IgConfig::getGuid() . session_id() . time();
+		$raw = $username . \Ig\Config::getGuid() . session_id() . time();
 		
 		$hash = md5($raw);
 		

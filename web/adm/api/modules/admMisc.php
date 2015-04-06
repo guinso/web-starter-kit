@@ -74,11 +74,11 @@ class AdmMisc {
 	 * @param unknown $data
 	 */
 	public static function get() {
-		$keys = IgConfig::getConfigKeys();
+		$keys = \Ig\Config::getConfigKeys();
 		$result = array();
 		
 		foreach($keys as $key) {
-			$result[$key] = IgConfig::getConfig($key);
+			$result[$key] = \Ig\Config::getConfig($key);
 		}
 		
 		return $result;
@@ -86,28 +86,28 @@ class AdmMisc {
 	
 	public static function set($input) {
 		foreach($input as $k => $v) {
-			IgConfig::setConfig($k, $v);
+			\Ig\Config::setConfig($k, $v);
 		}
 
-		IgConfig::setConfig('deploy', $input['deploy']);
+		\Ig\Config::setConfig('deploy', $input['deploy']);
 		
-		if(IgConfig::getConfig('deploy'))
+		if(\Ig\Config::getConfig('deploy'))
 			JsCompact::minimizeJs();
 		
-		IgConfigLoader::updateSetting();
+		\Ig\Config\Loader::updateSetting();
 	}
 /*	
 	public static function setMaintenance($isMaintenance) {
-		IgConfig::setConfig('maintenance', $isMaintenance);
-		IgConfigLoader::updateSetting();
+		\Ig\Config::setConfig('maintenance', $isMaintenance);
+		\Ig\Config\Loader::updateSetting();
 	}
 	
 	public static function setDeploy($isDeploy) {
 		if($isDeploy)
 			JsCompact::minimizeJs();
 		
-		IgConfig::setConfig('deploy', $isDeploy);
-		IgConfigLoader::updateSetting();
+		\Ig\Config::setConfig('deploy', $isDeploy);
+		\Ig\Config\Loader::updateSetting();
 	}
 */
 }

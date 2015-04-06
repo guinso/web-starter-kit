@@ -54,9 +54,9 @@ class AdmLoginREST {
 
 class AdmLogin {
 	public static function login($username, $password) {
-		$guid = IgConfig::getGuid();
+		$guid = \Ig\Config::getGuid();
 		
-		$_SESSION[$guid . '-log'] = IgConfig::isLoginMatch($username, $password);
+		$_SESSION[$guid . '-log'] = \Ig\Config::isLoginMatch($username, $password);
 		
 		try {
 			//add login session into database
@@ -69,7 +69,7 @@ class AdmLogin {
 	}
 	
 	public static function logout() {
-		$guid = IgConfig::getGuid();
+		$guid = \Ig\Config::getGuid();
 		
 		try {
 			//add logout session into database
@@ -83,20 +83,20 @@ class AdmLogin {
 	}
 	
 	public static function isLogin() {
-		$guid = IgConfig::getGuid();
+		$guid = \Ig\Config::getGuid();
 		
 		return isset($_SESSION[$guid . '-log']) && $_SESSION[$guid . '-log'];
 	}
 	
 	public static function getStatus() {
-		$guid = IgConfig::getGuid();
+		$guid = \Ig\Config::getGuid();
 		
 		$isLogin = $_SESSION[$guid . '-log'];
 		
 		if($isLogin) {
 			return array(
-				'name' => IgConfig::getUsr(),
-				'username' => IgConfig::getUsr(),
+				'name' => \Ig\Config::getUsr(),
+				'username' => \Ig\Config::getUsr(),
 				'login' => true
 			);
 		} else {
@@ -109,8 +109,8 @@ class AdmLogin {
 	}
 	
 	public static function updateAccount($username, $newPassword) {
-		IgConfig::setLogin($username, $newPassword);
-		IgConfigLoader::updateSetting();
+		\Ig\Config::setLogin($username, $newPassword);
+		\Ig\Config\Loader::updateSetting();
 	}
 }
 ?>
