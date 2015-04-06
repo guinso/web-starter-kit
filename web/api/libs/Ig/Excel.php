@@ -1,17 +1,18 @@
 <?php 
+namespace Ig;
 
-class ExcelUtil{
+class Excel {
 	public static function loadExcel($excel_name) {
 		
-		$objPHPExcel = PHPExcel_IOFactory::load($excel_name);
+		$objPHPExcel = \PHPExcel_IOFactory::load($excel_name);
 		
 		return $objPHPExcel;
 	}
 	
-	public static function exportXLSX(PHPExcel $phpExcelObj, $filename){
+	public static function exportXLSX(\PHPExcel $phpExcelObj, $filename){
 		$mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 	
-		$writer = PHPExcel_IOFactory::createWriter(
+		$writer = \PHPExcel_IOFactory::createWriter(
 				$phpExcelObj, 'Excel2007');
 	
 		header('Content-Type: '.$mime);
@@ -22,8 +23,8 @@ class ExcelUtil{
 		exit;
 	}
 	
-	public static function saveXLSX(PHPExcel $phpExcelObj, $filepath) {
-		$writer = PHPExcel_IOFactory::createWriter(
+	public static function saveXLSX(\PHPExcel $phpExcelObj, $filepath) {
+		$writer = \PHPExcel_IOFactory::createWriter(
 			$phpExcelObj, 'Excel2007');
 		
 		$result = false;
@@ -43,9 +44,9 @@ class ExcelUtil{
 		$format = $phpExcelworkSheet->getStyle($col.$row)->getNumberFormat()->getFormatCode();
 		$value = $cell->getValue();
 
-		if(PHPExcel_Shared_Date::isDateTimeFormatCode($format) && is_numeric($value)) {
+		if(\PHPExcel_Shared_Date::isDateTimeFormatCode($format) && is_numeric($value)) {
 			$timestamp = intVal($cell->getValue());
-			$invDate = date($dateFormat, PHPExcel_Shared_Date::ExcelToPHP($cell->getValue()));
+			$invDate = date($dateFormat, \PHPExcel_Shared_Date::ExcelToPHP($cell->getValue()));
 		}
 
 		return $invDate;
