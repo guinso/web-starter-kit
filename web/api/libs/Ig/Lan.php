@@ -1,5 +1,6 @@
 <?php 
-class LanUtility {	
+namespace Ig;
+class Lan {	
 	/**
 	 * Get server's web language code
 	 */
