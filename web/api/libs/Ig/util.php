@@ -179,55 +179,6 @@ private static function recurArrayTrimString(array &$arr) {
 	}
 }
 
-/**
- * Author: Ricky Siow
- * Upload file to server
- * @param String $directory
- * @return Array
- */
-public static function uploadFile($directory = NULL) {
-	if(empty($directory)) {
-		$directory = self::$uploadPath;
-	}
-
-	if ($_FILES["file"]["error"] > 0) {
-		$var = array(
-			'code' => -1,
-			'msg' =>'Return Code:'. $_FILES["file"]["error"]
-		);
-
-		util::sendResponse(406,json_encode($var));
-	}
-	
-	//check directory exist of not
-	if(!is_dir($directory)) {
-		$err = array(
-			'code' => -1,
-			'msg' => "Directory $directory not found in server."
-		);
-			
-		Util::sendResponse(403, json_encode($err));
-	}
-	
-	$uniqueFile = uniqid() . '-' . $_FILES["file"]["name"];
-	$var = move_uploaded_file($_FILES["file"]["tmp_name"], 
-		$directory .'/'. $uniqueFile);
-
-	if($var == false) {
-		$err = array(
-			'code' => -1,
-			'msg' => 'Internal move file failed.'
-		);
-
-		util::sendResponse(406,json_encode($err));
-	}
-
-	return array(
-		'fileName'=> $_FILES["file"]["name"],
-		'filePath'=> $directory .'/'. $uniqueFile
-	);
-}
-
 public static function getServerUUID() {
 	return self::getKeyValue('server_id', uniqid());
 }

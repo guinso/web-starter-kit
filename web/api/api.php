@@ -34,8 +34,8 @@ getApi()->post('/change-pwd', array('UserAccount', 'changePwd'), EpiApi::externa
 getApi()->get('/function', array('Func', 'get'), EpiApi::external);
 
 //language
-getApi()->get('/lan-code', array('Lan', 'get'), EpiApi::external);
-getApi()->post('/lan-code', array('Lan', 'post'), EpiApi::external);
+getApi()->get('/lan-code', array('\Ig\Lan', 'get'), EpiApi::external);
+getApi()->post('/lan-code', array('\Ig\Lan', 'post'), EpiApi::external);
 
 //scheduler Task
 getApi()->get('/sch', array('Schedule', 'get'), EpiApi::external);
@@ -48,12 +48,9 @@ getApi()->get('/sch-run/(\w+)', array('Schedule', 'runById'), EpiApi::external);
 getApi()->get('/sch-log', array('ScheduleLog', 'get'), EpiApi::external);
 getApi()->get('/sch-log-cnt', array('ScheduleLog', 'getCount'), EpiApi::external);
 
-//upload
-getApi()->post('/upload-file', array('Util', 'uploadFile'), EpiApi::external);
-
 //new file upload-download
 getApi()->post('/file-upload', array('\Ig\File\Attachment', 'uploadFile'), EpiApi::external);
-getApi()->get('/file-download/(\w+)', array('\Ig\File\Attachment', 'downloadFile'), EpiApi::external);
+//x getApi()->get('/file-download/(\w+)', array('\Ig\File\Attachment', 'downloadFile'), EpiApi::external);
 
 //**************************** END CORE API *************************************
 ?>
