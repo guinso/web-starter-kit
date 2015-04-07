@@ -14,7 +14,8 @@ class Rebuild {
 	 * @param string $dbInitial
 	 * @param integer $dbLen
 	 */
-	public static function rebuild() {
+	public static function rebuild() 
+	{
 		self::clearDatabase();
 		
 		$dir = dirname(__FILE__);
@@ -46,7 +47,8 @@ class Rebuild {
 		self::insertSchedule('LoginUtil', 'checkogin', 'check user login activitiy', '*', '*', '*', '*', '*', 2, 1);
 	}
 	
-	private static function insertRole($name, $status, $weight) {
+	private static function insertRole($name, $status, $weight) 
+	{
 		$db = \Ig\Db::getDb();
 		
 		$id = \Ig\Db::getNextRunningNumber('role');
@@ -58,7 +60,8 @@ class Rebuild {
 		));
 	}
 	
-	private static function insertAccount($name, $status, $role, $username, $password) {
+	private static function insertAccount($name, $status, $role, $username, $password) 
+	{
 		$db = \Ig\Db::getDb();
 		
 		$roleId = self::getRoleId($role);
@@ -74,34 +77,39 @@ class Rebuild {
 		));
 	}
 	
-	private static function insertFuncGroup($name, $weight) {
+	private static function insertFuncGroup($name, $weight) 
+	{
 		$db = \Ig\Db::getDb();
 		
 		$id = \Ig\Db::getNextRunningNumber('function_group');
 		$db->function_group->insert(array(
-				'id' => $id,
-				'name' => $name,
-				'weight' => $weight
+			'id' => $id,
+			'name' => $name,
+			'weight' => $weight
 		));
 	}
 	
-	private static function insertFunction($name, $group, $weight) {
+	private static function insertFunction($name, $group, $weight) 
+	{
 		$db = \Ig\Db::getDb();
 		
 		$groupId = self::getFuncGroup($group);
 		
 		$id = \Ig\Db::getNextRunningNumber('function');
 		$db->function->insert(array(
-				'id' => $id,
-				'name' => $name,
-				'group_id' => $groupId,
-				'weight' => $weight
+			'id' => $id,
+			'name' => $name,
+			'group_id' => $groupId,
+			'weight' => $weight
 		));
 	}
 	
 	private static function insertSchedule(
-			$className, $functionName, $description, 
-			$weekDay, $month, $day, $hour, $minute, $status, $opt) {
+			$className, $functionName, 
+			$description, 
+			$weekDay, $month, $day, $hour, $minute, 
+			$status, $opt
+	) {
 		$db = \Ig\Db::getDb();
 		
 		$id = \Ig\Db::getNextRunningNumber('schedule');
@@ -120,43 +128,49 @@ class Rebuild {
 		));
 	}
 	
-	private static function getRoleId($name) {
+	private static function getRoleId($name) 
+	{
 		$db = \Ig\Db::getDb();
 		
 		$x = $db->role->where('name', $name)->fetch();
 		
-		if(empty($x['id']))
+		if (empty($x['id'])) {
 			Throw new \Exception("Ig::Db:- cant found role <$name>");
-		else 
+		} else { 
 			return $x['id'];
+		}
 	}
 	
-	private static function getFuncGroup($name) {
+	private static function getFuncGroup($name) 
+	{
 		$db = \Ig\Db::getDb();
 		
 		$x = $db->function_group->where('name', $name)->fetch();
 		
-		if(empty($x['id']))
+		if (empty($x['id'])) {
 			Throw new \Exception("IgDbRebuild:- cant found function group <$name>");
-		else
+		} else {
 			return $x['id'];
+		}
 	}
 	
 	/**
 	 * Delete all datatable and dataview from targeted database
 	 */
-	private static function clearDatabase() {
+	private static function clearDatabase() 
+	{
 		$pdo = \Ig\Db::getPDO();
 		
 		$stmt = $pdo->prepare("SHOW TABLES");
 		$stmt->execute();
 		$tt = '';
 		$i = 0;
-		foreach($stmt as $tb) {
-			if($i > 0)
+		foreach ($stmt as $tb) {
+			if ($i > 0) {
 				$tt .= ',`' . $tb[0] . '`';
-			else 
+			} else {
 				$tt = '`' . $tb[0] . '`';
+			}
 			
 			$i++;
 		}

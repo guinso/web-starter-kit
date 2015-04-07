@@ -10,34 +10,37 @@ namespace Ig;
 class Login {
 	private static $maxLife = 1800; // half an hour, in seconds
 	
-	public static function getLog() {
+	public static function getLog() 
+	{
 		$db = \Ig\Db::getDb();
 		$pgIndex = 0;
 		$pgSize = 15;
 		
-		if(!empty($_GET['pgIndex']))
+		if (!empty($_GET['pgIndex']))
 			$pgIndex = intval($_GET['pgIndex']);
-		if(!empty($_GET['pgSize']))
+		if (!empty($_GET['pgSize']))
 			$pgSize = intval($_GET['pgSize']);
 		
 		$raw = $db->login()->order('login DESC');
 		$raw = $raw->limit($pgSize, $pgIndex * $pgSize);
 		
 		$result = array();
-		foreach($raw as $row) {
+		foreach ($raw as $row) {
 			$result[] = self::_getFormat($row);
 		}
 	
 		return $result;
 	}
 	
-	public static function getLogCount() {
+	public static function getLogCount() 
+	{
 		$db = \Ig\Db::getDb();
 
 		$cnt = $db->login()->count('*');
 	
 		return array('count' => $cnt);
 	}
+	
 	/*
 	public static function configure($maxLoginTime) {
 		self::$maxLife = intval($maxLoginTime);
@@ -47,10 +50,11 @@ class Login {
 	/**
 	 * Ping curent login user to keep active in login records
 	 */
-	public static function ping() {
+	public static function ping() 
+	{
 		$login = self::getCurrentUser();
 		
-		if($login['userId'] != self::_getAnonymousId()) {
+		if ($login['userId'] != self::_getAnonymousId()) {
 			$db = \Ig\Db::getDb();
 			
 			//update last access time to keep alive
@@ -62,13 +66,15 @@ class Login {
 	/**
 	 * Check all login records, force logout if timeout from allowed threshold
 	 */
-	public static function checkLogin() {
+	public static function checkLogin() 
+	{
 		$now = strtotime(\Ig\Date::getDatetime());
 		$db = \Ig\Db::getDb();
 		
 		$raw = $db->login->where('logout IS NULL');
 		$db->transaction = 'BEGIN';
-		foreach($raw as $row) {
+		
+		foreach ($raw as $row) {
 			$time = strtotime($row['last_access']);
 			$diff = $now - $time;
 			
@@ -78,11 +84,12 @@ class Login {
 					'remarks' => 'timeout'));
 			}
 		}
+		
 		$db->transaction = 'COMMIT';
 	}
 	
-	public static function loginUser() {
-		
+	public static function loginUser() 
+	{
 		$db = \Ig\Db::getDb();
 	 
 		$data = \Ig\Web::getInputData();
@@ -95,13 +102,13 @@ class Login {
 			->where('username = ?', $username) //matched username
 			->fetch();
 	
-		if(empty($user['id'])) {
+		if (empty($user['id'])) {
 			\Ig\Web::sendErrorResponse(-1,
 				"Login fail, please check username or password",
 				null, 406);
 		}
 		
-		if($password != $user['password']) {
+		if ($password != $user['password']) {
 			\Ig\Web::sendErrorResponse(-1,
 				"Login fail, please check username or password",
 				null, 406);
@@ -112,13 +119,15 @@ class Login {
 		return self::getCurrentUser();
 	}
 	
-	public static function forceLoginAdmin() {
+	public static function forceLoginAdmin() 
+	{
 		self::_writeLogin(self::_getAdminId());
 	
 		return self::getCurrentUser();
 	}
 
-	private static function _writeLogin($userId, $rememberMe = false) {
+	private static function _writeLogin($userId, $rememberMe = false) 
+	{
 		$db = \Ig\Db::getDb();
 		
 		//check current login status
@@ -129,10 +138,10 @@ class Login {
 		self::logoutUser($user['id'],
 				'force logout due to new client login with this username');
 			
-		if($x['userId'] == self::_getAnonymousId()) {
+		if ($x['userId'] == self::_getAnonymousId()) {
 			//anonymous user
 			$writeLog = true;
-		} else if($x['userId'] != $userId){
+		} else if($x['userId'] != $userId) {
 			//authenticated login user, logout if login already
 			self::logoutUser($x['userId'],
 					'Force logout due to user log with other username');
@@ -140,7 +149,7 @@ class Login {
 		}
 			
 		//register login
-		if($writeLog) {
+		if ($writeLog) {
 			$token = self::_createToken($userId);
 			
 			$idd = \Ig\Db::getNextRunningNumber('login');
@@ -157,11 +166,12 @@ class Login {
 		}
 	}
 	
-	public static function logoutUser($userId = null, $remarks = null) {
+	public static function logoutUser($userId = null, $remarks = null) 
+	{
 		$db = \Ig\Db::getDb();
 		$x = null;
 		
-		if(empty($userId)) {
+		if (empty($userId)) {
 			$sessionId = self::_getTokenValue();
 			
 			//logout based on session ID
@@ -170,7 +180,7 @@ class Login {
 				->where('logout IS NULL')
 				->order('login DESC');
 			
-		} else if($userId != self::_getAnonymousId()) {
+		} elseif ($userId != self::_getAnonymousId()) {
 			//logout based on userId
 			$x = $db->login()
 				->where('user_id', $userId)
@@ -179,7 +189,7 @@ class Login {
 		}
 		
 		//logout record
-		foreach($x as $xx) {
+		foreach ($x as $xx) {
 			$tmp = array(
 				'logout' => \Ig\Date::getDatetime(),
 				'remarks' => $remarks
@@ -192,7 +202,8 @@ class Login {
 		self::_deleteToken();
 	}
 	
-	public static function getCurrentUser() { //!!! get current user by id
+	public static function getCurrentUser() 
+	{
 		$sessionId = self::_getTokenValue();
 		$db = \Ig\Db::getDb();
 	
@@ -202,7 +213,7 @@ class Login {
 			->order('login DESC')
 			->fetch();
 	
-		if(!empty($row['id'])) {
+		if (!empty($row['id'])) {
 			//still active and login
 			return self::_getFormat($row);
 		} else {
@@ -211,7 +222,8 @@ class Login {
 		}
 	}
 	
-	private static function _getFormat($row) {
+	private static function _getFormat($row) 
+	{
 		$db = \Ig\Db::getDb();
 		$userId = empty($row['id'])? self::_getAnonymousId() : $row['user_id'];
 		
@@ -234,7 +246,8 @@ class Login {
 		);
 	}
 	
-	private static function _getAnonymousId() {
+	private static function _getAnonymousId() 
+	{
 		$profile = \Ig\Config::getProfile();
 		
 		$len = '';
@@ -245,7 +258,8 @@ class Login {
 		return $id;
 	}
 	
-	private static function _getAdminId() {
+	private static function _getAdminId() 
+	{
 		$profile = \Ig\Config::getProfile();
 	
 		$len = '';
@@ -259,14 +273,16 @@ class Login {
 	/**
 	 * Get token key based on server GUID
 	 */
-	private static function _getTokenKey() {
+	private static function _getTokenKey() 
+	{
 		return 'ig-token-' . \Ig\Config::getGuid();
 	}
 	
 	/**
 	 * Dynamic create token value using MD5 hashing
 	 */
-	private static function _createToken($username) {
+	private static function _createToken($username) 
+	{
 		$tokenKey = self::_getTokenKey();
 		
 		$raw = $username . \Ig\Config::getGuid() . session_id() . time();
@@ -287,7 +303,8 @@ class Login {
 	/**
 	 * Delete current login user's token
 	 */
-	private static function _deleteToken() {
+	private static function _deleteToken() 
+	{
 		$tokenKey = self::_getTokenKey();
 		
 		setcookie($tokenKey, '', time() - 3600); // 1 hour ealier
@@ -296,7 +313,8 @@ class Login {
 	/**
 	 * Retrieve client token value from cookie
 	 */
-	private static function _getTokenValue() {
+	private static function _getTokenValue() 
+	{
 		$tokenKey = self::_getTokenKey();
 		
 		return $_COOKIE[$tokenKey];

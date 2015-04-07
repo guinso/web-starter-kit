@@ -13,7 +13,8 @@ class Config {
 	 * Get admin username
 	 * @return string
 	 */
-	public static function getUsr() {
+	public static function getUsr() 
+	{
 		return self::$_usr;
 	}
 
@@ -21,7 +22,8 @@ class Config {
 	 * Get admin password
 	 * @return string
 	 */
-	public static function getPwd() {
+	public static function getPwd() 
+	{
 		return self::$_pwd;
 	}
 	
@@ -30,7 +32,8 @@ class Config {
 	 * @param string $username
 	 * @param string $password
 	 */
-	public static function setLogin($username, $password) {
+	public static function setLogin($username, $password) 
+	{
 		self::$_usr = $username;
 		self::$_pwd = $password;
 	}
@@ -41,11 +44,13 @@ class Config {
 	 * @param string $password
 	 * @return boolean
 	 */
-	public static function isLoginMatch($username, $password) {
+	public static function isLoginMatch($username, $password) 
+	{
 		return self::$_usr == $username && self::$_pwd == $password;
 	}
 	
-	public static function getGuid() {
+	public static function getGuid() 
+	{
 		/*
 		if(empty(self::$_guid))
 			self::$_guid = uniqid();
@@ -53,14 +58,16 @@ class Config {
 		return self::$_guid;
 	}
 	
-	public static function setGuid($guid) {
+	public static function setGuid($guid) 
+	{
 		self::$_guid = $guid;
 	}
 	
 	/**
 	 * Get general configuration information
 	 */
-	public static function getConfig($name) {
+	public static function getConfig($name) 
+	{
 		return self::$_config[$name];
 	}
 	
@@ -70,14 +77,16 @@ class Config {
 	 * @param mixed $value
 	 * @throws Exception
 	 */
-	public static function setConfig($name, $value) {
+	public static function setConfig($name, $value) 
+	{
 		self::$_config[$name] = $value;
 	} 
 	
 	/**
 	 * Get configuration key
 	 */
-	public static function getConfigKeys() {
+	public static function getConfigKeys() 
+	{
 		return array_keys(self::$_config);
 	}
 
@@ -86,15 +95,18 @@ class Config {
 	 * @param string $name
 	 * @return \Ig\Config\Recipe
 	 */
-	public static function getProfile($name = null) {
+	public static function getProfile($name = null) 
+	{
 		$name = empty($name)? self::$_defaultKey : $name;
 		
 		$tmp = self::$recipes[$name];
 		
-		if(empty($tmp))
+		if (empty($tmp)) {
 			throw new \Exception("key <$name> not found in IgConfig profile");
-		else
+		}
+		else {
 			return $tmp;
+		}
 	}
 	
 	/**
@@ -102,18 +114,22 @@ class Config {
 	 * @param unknown $name
 	 * @throws Exception
 	 */
-	public static function setDefaultProfileKey($name) {
-		if(!array_key_exists($name, self::$recipes))
+	public static function setDefaultProfileKey($name) 
+	{
+		if (!array_key_exists($name, self::$recipes)) {
 			throw new \Exception("Set default profile rejected, key <$name> not found in IgConfig profile.");
-		else
+		}
+		else {
 			self::$_defaultKey = $name;
+		}
 	}
 	
 	/**
 	 * Get default profile key
 	 * @return string
 	 */
-	public static function getDefaultProfileKey() {
+	public static function getDefaultProfileKey() 
+	{
 		return self::$_defaultKey;
 	}
 	
@@ -122,10 +138,11 @@ class Config {
 	 * @param string $name
 	 * @param \Ig\Config\Recipe $value
 	 */
-	public static function set($name, \Ig\Config\Recipe $value) {
+	public static function set($name, \Ig\Config\Recipe $value) 
+	{
 		self::$recipes[$name] = $value;
 		
-		if(count(self::$recipes) == 1)
+		if (count(self::$recipes) == 1)
 			self::$_defaultKey = $name;
 	}
 	
@@ -133,7 +150,8 @@ class Config {
 	 * Get profile keys
 	 *  @return array
 	 */
-	public static function getProfileKeys() {
+	public static function getProfileKeys() 
+	{
 		return array_keys(self::$recipes);
 	}
 }

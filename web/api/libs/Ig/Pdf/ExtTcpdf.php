@@ -1,5 +1,6 @@
 <?php
 namespace Ig\Pdf;
+
 //Extended Tcpdf class
 /**
  * Extened TCPDF class
@@ -11,15 +12,24 @@ namespace Ig\Pdf;
  *
  */
 class ExtTcpdf extends \TCPDF {
-	var $igHeaderPdmObj;
-	var $igFooterPdmObj;
-	var $igPageCount;
+	private $igHeaderPdmObj;
+	private $igFooterPdmObj;
+	private $igPageCount;
 	
-	var $igStackStyle;
-	var $igStyle;
+	private $igStackStyle;
+	private $igStyle;
 	
-	function __construct($orientation='P', $unit='mm', $format='A4', $unicode=true, $encoding='UTF-8', $diskcache=false, $pdfa=false) {
-		parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
+	function __construct(
+		$orientation='P', 
+		$unit='mm', 
+		$format='A4', 
+		$unicode=true, $encoding='UTF-8', 
+		$diskcache=false, $pdfa=false
+	) {
+		parent::__construct(
+			$orientation, $unit, $format, 
+			$unicode, $encoding, 
+			$diskcache, $pdfa);
 	
 		$this->igPageCount = 0;
 		
@@ -28,16 +38,18 @@ class ExtTcpdf extends \TCPDF {
 		$this->setCellStyle(self::getDefaultStyle());
 	}
 	
-	public function resetStyle() {
+	public function resetStyle() 
+	{
 		$this->igStackStyle = array();
 		
 		$this->pushStyle();
 	}
 	
-	public function pushStyle($useDefaultSetting = false) {
-		if($useDefaultSetting)
+	public function pushStyle($useDefaultSetting = false) 
+	{
+		if ($useDefaultSetting) {
 			$x = self::getDefaultStyle();
-		else if(COUNT($this->igStackStyle) == 0) {
+		} elseif (COUNT($this->igStackStyle) == 0) {
 			$x = self::getDefaultStyle();
 		} else {
 			$x = $this->getStyleSet();
@@ -46,7 +58,8 @@ class ExtTcpdf extends \TCPDF {
 		array_push($this->igStackStyle, $x);
 	}
 	
-	public function popStyle() {
+	public function popStyle() 
+	{
 		array_pop($this->igStackStyle);
 	}
 	
@@ -61,67 +74,79 @@ class ExtTcpdf extends \TCPDF {
 	}
 	*/
 	
-	public function getStyleSet() {
+	public function getStyleSet() 
+	{
 		$x = end($this->igStackStyle);
 		$key = key($this->igStackStyle);
 		
 		return $this->igStackStyle[$key];
 	}	
 		
-	public function getStyle($name) {
+	public function getStyle($name) 
+	{
 		$x = end($this->igStackStyle);
 		$key = key($this->igStackStyle);
 		
-		if(!empty($name) && array_key_exists($name, $this->igStackStyle[$key]))
+		if (!empty($name) && array_key_exists($name, $this->igStackStyle[$key])) {
 			return $this->igStackStyle[$key][$name];
-		else 
+		} else {
 			return null;
+		}
 	}
 	
-	public function setStyle($name, $value) {
+	public function setStyle($name, $value) 
+	{
 		$x = end($this->igStackStyle);
 		$key = key($this->igStackStyle);
 		
 		$this->igStackStyle[$key][$name] = $value;
 	}
 	
-	public function setPageCount($pgCnt) {
+	public function setPageCount($pgCnt) 
+	{
 		$this->igPageCount = $pgCnt;
 	}
 	
-	public function getPageCount() {
+	public function getPageCount() 
+	{
 		return $this->igPageCount;
 	}
 
-	public function setPdmHeader($igHeaderPdmObj) {
+	public function setPdmHeader($igHeaderPdmObj) 
+	{
 		$this->igHeaderPdmObj = $igHeaderPdmObj;
 	}
 	
-	public function setPdmFooter($igFooterPdmObj) {
+	public function setPdmFooter($igFooterPdmObj) 
+	{
 		$this->igFooterPdmObj = $igFooterPdmObj;
 	}
 	
 	//override parent function - header
-	public function Header() {
-		if(!empty($this->igHeaderPdmObj)) {
+	public function Header() 
+	{
+		if (!empty($this->igHeaderPdmObj)) {
 			$tag = $this->igHeaderPdmObj->getName();
 
-			if($tag == 'header')
+			if ($tag == 'header') {
 				\Ig\Pdf\PdmTagHandler::handleTag($this, $tag, $this->igHeaderPdmObj);
-			else
+			} else {
 				Throw new \Exception("IgPdfTagHeader:- Draw header rejected, you must pass <header> tag.");
+			}
 		}
 	}
 	
 	//override parent fucntion - footer
-	public function Footer() {
-		if(!empty($this->igFooterPdmObj)) {
+	public function Footer() 
+	{
+		if (!empty($this->igFooterPdmObj)) {
 			$tag = $this->igFooterPdmObj->getName();
 		
-			if($tag == 'footer')
+			if($tag == 'footer') {
 				\Ig\Pdf\PdmTagHandler::handleTag($this, $tag, $this->igFooterPdmObj);
-			else
+			} else {
 				Throw new \Exception("IgPdfTagHeader:- Draw header rejected, you must pass <footer> tag.");
+			}
 		}
 	}
 	
@@ -130,11 +155,11 @@ class ExtTcpdf extends \TCPDF {
 	 * @param array $param
 	 * @return ExtTcpdf
 	 */
-	public function setCellStyle($param) {
+	public function setCellStyle($param) 
+	{
 		$textColor = self::hex2rgb($param['text-color']);
 		$lineColor = self::hex2rgb($param['line-color']);
 		$bgColor = self::hex2rgb($param['background-color']);
-		
 		$fontStyle = self::convertFontStyle($param['font-style']);
 		
 		// set font
@@ -196,7 +221,8 @@ class ExtTcpdf extends \TCPDF {
 	 * Get default non-style setting
 	 * @return multitype:string number multitype:number
 	 */
-	public static function getDefaultStyle() {
+	public static function getDefaultStyle() 
+	{
 		return array(
 			//general style parameter
 			'font-family' => 'arial',
@@ -240,8 +266,8 @@ class ExtTcpdf extends \TCPDF {
 		);
 	}
 
-	public function drawText($text) {
-		
+	public function drawText($text) 
+	{
 		$style = $this->getStyleSet();
 		$this->setCellStyle($style);
 		
@@ -274,7 +300,8 @@ class ExtTcpdf extends \TCPDF {
 		return $this;
 	}
 	
-	public function calTextHeight($text) {
+	public function calTextHeight($text) 
+	{
 		$this->pushStyle();
 		$style = $this->getStyleSet();
 		$this->setCellStyle($style);
@@ -286,12 +313,13 @@ class ExtTcpdf extends \TCPDF {
 			$style['padding-left'] + $style['padding-right'], 
 			$style['border']);
 
-		
 		$this->popStyle();
+		
 		return $h;
 	}
 	
-	public function calTextWidth($text) {
+	public function calTextWidth($text) 
+	{
 		$style = $this->getStyleSet();
 		$this->pushStyle();
 		$this->setCellStyle($this->getStyleSet());
@@ -299,13 +327,15 @@ class ExtTcpdf extends \TCPDF {
 		
 		$w = $this->GetStringWidth($text, $style['font-family'], $fontStyle, $style['text-size']);
 		$this->popStyle();
+		
 		return $w;
 	}
 	
 	/**
 	 * Draw Horizontal Line
 	 */
-	public function drawHr() {
+	public function drawHr() 
+	{
 		$style = $this->getStyleSet();
 		
 		$width = $style['width'];
@@ -331,7 +361,8 @@ class ExtTcpdf extends \TCPDF {
 	 * @param boolean $addLineBreak
 	 * @return ExtTcpdf
 	 */
-	public function drawLineBreak($lineStyle = array()) {
+	public function drawLineBreak($lineStyle = array()) 
+	{
 		$this->Ln();
 		
 		$pageWidth    = $this->getPageWidth();   // Get total page width, without margins
@@ -348,18 +379,21 @@ class ExtTcpdf extends \TCPDF {
 		return $this;
 	}
 	
-	public function drawImage($src) {
-		if(!is_readable($src))
+	public function drawImage($src) 
+	{
+		if(!is_readable($src)) {
 			Throw new \Exception("Image file $src not found.");
+		}
 		
 		$type = '';
 		$imgType = exif_imagetype($src);
-		if($imgType == IMAGETYPE_JPEG)
+		if($imgType == IMAGETYPE_JPEG) {
 			$type = 'JPEG';
-		else if($imgType == IMAGETYPE_PNG)
+		} else if($imgType == IMAGETYPE_PNG) {
 			$type = 'PNG';
-		else 
+		} else {
 			Throw new \Exception("Image type other than JPEG and PNG are not supported, period.");
+		}
 		
 		$style = $this->getStyleSet();
 		$dpi = 72; //default image quality
@@ -386,7 +420,8 @@ class ExtTcpdf extends \TCPDF {
 		);
 	}
 	
-	public function drawRectangle() {
+	public function drawRectangle() 
+	{
 		$style = $this->getStyleSet();
 		
 		$border = self::convertBorderStyle($style);
@@ -403,10 +438,12 @@ class ExtTcpdf extends \TCPDF {
 			$bgColor);
 	}
 	
-	public static function convertFontStyle($fontStyle) {
+	public static function convertFontStyle($fontStyle) 
+	{
 		$fontStyle = strtolower($fontStyle);
 		$result = '';
 		$xx = explode(' ', $fontStyle);
+		
 		foreach ($xx as $x) {
 			if($x == 'bold')
 				$result .= 'B';
@@ -427,43 +464,54 @@ class ExtTcpdf extends \TCPDF {
 		return $result;
 	}
 	
-	public static function convertBorderStyle($style) {
+	public static function convertBorderStyle($style) 
+	{
 		$result = array();
 		
-		if(!empty($style['border'])) {
+		if (!empty($style['border'])) {
 			$x = self::convertBorderLineStyle($style['border']);
-			if(!empty($x)) {
+			
+			if (!empty($x)) {
 				$result['L'] = $x;
 				$result['R'] = $x;
 				$result['T'] = $x;
 				$result['B'] = $x;
 			}
 		}
-		if(!empty($style['border-top'])) {
+		
+		if (!empty($style['border-top'])) {
 			$x = self::convertBorderLineStyle($style['border-top']);
+			
 			if(!empty($x))
 				$result['T'] = $x;
 		}
-		if(!empty($style['border-bottom'])) {
+		
+		if (!empty($style['border-bottom'])) {
 			$x = self::convertBorderLineStyle($style['border-bottom']);
-			if(!empty($x))
+			
+			if (!empty($x))
 				$result['B'] = $x;
 		}
-		if(!empty($style['border-left'])) {
+		
+		if (!empty($style['border-left'])) {
 			$x = self::convertBorderLineStyle($style['border-left']);
-			if(!empty($x))
+			
+			if (!empty($x))
 				$result['L'] = $x;
 		}
-		if(!empty($style['border-right'])) {
+		
+		if (!empty($style['border-right'])) {
 			$x = self::convertBorderLineStyle($style['border-right']);
-			if(!empty($x))
+			
+			if (!empty($x))
 				$result['R'] = $x;
 		}
 		
 		return $result;
 	}
 	
-	public static function convertBorderLineStyle($lineStyle) {
+	public static function convertBorderLineStyle($lineStyle) 
+	{
 		$result = array();
 		
 		$xx = explode(' ', $lineStyle);
@@ -474,13 +522,14 @@ class ExtTcpdf extends \TCPDF {
 		
 		$needToDraw = false;
 		$dash = 0;
-		if($style == 'solid') {
+		
+		if ($style == 'solid') {
 			$needToDraw = true;
-		} else if($style == 'dash') {
+		} elseif ($style == 'dash') {
 			$dash = '2 1';
 		}
 		
-		if($needToDraw) {
+		if ($needToDraw) {
 			$result = array(
 				'width' => $width,
 				'cap' => 'square', //end line shape
@@ -495,47 +544,52 @@ class ExtTcpdf extends \TCPDF {
 		return $result;
 	}
 	
-	public static function convertVAlign($vAlign) {
+	public static function convertVAlign($vAlign) 
+	{
 		$result = '';
 		$vAlign = strtolower($vAlign);
 		
-		if($vAlign == 'top')
+		if($vAlign == 'top') {
 			$result = 'T';
-		else if($vAlign == 'middle')
+		} elseif($vAlign == 'middle') {
 			$result = 'M';
-		else if($vAlign == 'bottom')
+		} elseif ($vAlign == 'bottom') {
 			$result = 'B';
-		else 
+		} else {
 			$result = 'T';
+		}
 		
 		return $result;
 	}
 	
-	public static function convertTextAlign($tAlign) {
+	public static function convertTextAlign($tAlign) 
+	{
 		$result = '';
 		$tAlign = strtolower($tAlign);
 	
-		if($tAlign == 'left')
+		if ($tAlign == 'left') {
 			$result = 'L';
-		else if($tAlign == 'center')
+		} elseif ($tAlign == 'center') {
 			$result = 'C';
-		else if($tAlign == 'right')
+		} elseif ($tAlign == 'right') {
 			$result = 'R';
-		else
+		} else {
 			$result = 'L';
-	
+		}
+		
 		return $result;
 	}
 	
-	public static function hex2rgb($hex) {
+	public static function hex2rgb($hex) 
+	{
 		$hex = str_replace("#", "", $hex);
 	
-		if(strlen($hex) == 3) {
+		if (strlen($hex) == 3) {
 			$r = hexdec(substr($hex,0,1).substr($hex,0,1));
 			$g = hexdec(substr($hex,1,1).substr($hex,1,1));
 			$b = hexdec(substr($hex,2,1).substr($hex,2,1));
 			$rgb = array($r, $g, $b);
-		} else if(strlen($hex) == 6) {
+		} elseif (strlen($hex) == 6) {
 			$r = hexdec(substr($hex,0,2));
 			$g = hexdec(substr($hex,2,2));
 			$b = hexdec(substr($hex,4,2));
@@ -543,6 +597,7 @@ class ExtTcpdf extends \TCPDF {
 		} else {
 			$rgb = array(0,0,0);
 		}
+		
 		//return implode(",", $rgb); // returns the rgb values separated by commas
 		return $rgb; // returns an array with the rgb values
 	}

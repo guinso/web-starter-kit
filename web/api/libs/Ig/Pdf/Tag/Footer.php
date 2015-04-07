@@ -2,7 +2,9 @@
 namespace Ig\Pdf\Tag;
 
 class Footer implements \Ig\Pdf\IPdmTag {
-	public static function run(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) {
+	
+	public static function run(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) 
+	{
 		$pdf->setStyle('footer', true);
 		//set width to page width
 		
@@ -21,8 +23,8 @@ class Footer implements \Ig\Pdf\IPdmTag {
 		$pdf->setStyle('y', $y);
 		$pdf->SetXY($margin['left'], $y);
 		
-		foreach($xmlObj->attributes() as $k => $v) {
-			if($v == (string)(double)$v)
+		foreach ($xmlObj->attributes() as $k => $v) {
+			if ($v == (string)(double)$v)
 				$v = doubleval($v);
 		
 			$pdf->setStyle($k, $v);
@@ -30,13 +32,14 @@ class Footer implements \Ig\Pdf\IPdmTag {
 		
 		//only process child tag of <row>
 		$rows = $xmlObj->children();
-		foreach($rows as $row) {
+		foreach ($rows as $row) {
 			\Ig\Pdf\PdmTagHandler::handleTag($pdf, $row->getName(), $row);
 		}
 		$pdf->popStyle();
 	}
 	
-	public static function simulate(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) {
+	public static function simulate(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) 
+	{
 		$pdf->pushStyle();
 		self::setDefaultStyle($pdf);
 		
@@ -49,8 +52,8 @@ class Footer implements \Ig\Pdf\IPdmTag {
 		$pdf->setStyle('y', $margin['top']);
 		$pdf->SetXY($margin['left'], $margin['top']);
 		
-		foreach($xmlObj->attributes() as $k => $v) {
-			if($v == (string)(double)$v)
+		foreach ($xmlObj->attributes() as $k => $v) {
+			if ($v == (string)(double)$v)
 				$v = doubleval($v);
 		
 			$pdf->setStyle($k, $v);
@@ -58,7 +61,7 @@ class Footer implements \Ig\Pdf\IPdmTag {
 		$effectiveHeight = \Ig\Pdf\PdmTagHandler::calHeightOffset($pdf);
 		
 		$rows = $xmlObj->children();
-		foreach($rows as $row) {
+		foreach ($rows as $row) {
 			$x = \Ig\Pdf\PdmTagHandler::calDimension($pdf, $row->getName(), $row);
 			$effectiveHeight += $x['height'];
 		}
@@ -70,7 +73,8 @@ class Footer implements \Ig\Pdf\IPdmTag {
 		);
 	}
 	
-	private static function setDefaultStyle(\Ig\Pdf\ExtTcpdf $pdf) {
+	private static function setDefaultStyle(\Ig\Pdf\ExtTcpdf $pdf) 
+	{
 		$pdf->setStyle('padding-top', 0);
 		$pdf->setStyle('padding-left', 0);
 		$pdf->setStyle('padding-bottom', 0);

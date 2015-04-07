@@ -2,14 +2,17 @@
 namespace Ig\Pdf\Tag;
 
 use Ig\Pdf\PdmTagHandler;
+
 class Col implements \Ig\Pdf\IPdmTag {
+	
 	private static $allowTags = array('Row', 'Span', 'Img', 'Hr');
 	
-	public static function run(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) {
+	public static function run(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) 
+	{
 		self::setDefaultStyle($pdf);
 
-		foreach($xmlObj->attributes() as $k => $v) {
-			if($v == (string)(double)$v)
+		foreach ($xmlObj->attributes() as $k => $v) {
+			if ($v == (string)(double)$v)
 				$v = doubleval($v);
 			
 			$pdf->setStyle($k, $v);
@@ -21,10 +24,10 @@ class Col implements \Ig\Pdf\IPdmTag {
 		$size = self::simulate($pdf, $xmlObj);
 		$children = $xmlObj->children();
 		
-		foreach($children as $child) {
+		foreach ($children as $child) {
 			$tag = $child->getName();
 			
-			if(array_search($tag, self::$allowTags) >= 0) {
+			if (array_search($tag, self::$allowTags) >= 0) {
 				//prevent column cell width exceed
 				//$width = doubleval($child['width']);
 				//if($width > $colWidth)
@@ -36,7 +39,7 @@ class Col implements \Ig\Pdf\IPdmTag {
 		
 		$pdf->popStyle();
 		$ww = 0;
-		if(isset($xmlObj['width'])) {
+		if (isset($xmlObj['width'])) {
 			//always use hard defined width
 			$ww = doubleval($xmlObj['width']);
 		} else {
@@ -49,12 +52,13 @@ class Col implements \Ig\Pdf\IPdmTag {
 		$pdf->setStyle('y', $y);
 	}
 	
-	public static function simulate(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) {
+	public static function simulate(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) 
+	{
 		$pdf->pushStyle();
 		self::setDefaultStyle($pdf);
 		
-		foreach($xmlObj->attributes() as $k => $v) {
-			if($v == (string)(double)$v)
+		foreach ($xmlObj->attributes() as $k => $v) {
+			if ($v == (string)(double)$v)
 				$v = doubleval($v);
 			
 			$pdf->setStyle($k, $v);
@@ -70,10 +74,10 @@ class Col implements \Ig\Pdf\IPdmTag {
 		
 		//allow multiple tags render ()
 		$children = $xmlObj->children();
-		foreach($children as $child) {
+		foreach ($children as $child) {
 			$tag = $child->getName();
 			
-			if(array_search($tag, self::$allowTags) >= 0) {
+			if (array_search($tag, self::$allowTags) >= 0) {
 				//$width = $child['width'];
 				//if(empty($width) || $width > $pdf->getStyle('width'))
 				//	$child['width'] = $pdf->getStyle('width');
@@ -90,7 +94,7 @@ class Col implements \Ig\Pdf\IPdmTag {
 				$y += $size['height'];
 				$x = $colX + $size['width'];
 				
-				if($x > $maxX)
+				if ($x > $maxX)
 					$maxX = $x;
 			}
 		}
@@ -99,7 +103,8 @@ class Col implements \Ig\Pdf\IPdmTag {
 		return array('width' => $width + $maxX - $colX, 'height' => $height + $y - $colY);
 	}
 	
-	private static function setDefaultStyle(\Ig\Pdf\ExtTcpdf $pdf) {
+	private static function setDefaultStyle(\Ig\Pdf\ExtTcpdf $pdf) 
+	{
 		$pdf->setStyle('padding-top', 0);
 		$pdf->setStyle('padding-left', 0);
 		$pdf->setStyle('padding-bottom', 0);

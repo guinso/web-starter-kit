@@ -8,14 +8,16 @@ namespace Ig;
 class Scheduler {
 	private static $timeoutBuffer = 3600; // 1 hour
 	
-	public static function configure($maxTimeout) {
+	public static function configure($maxTimeout) 
+	{
 		self::$timeoutBuffer = $maxTimeout;	
 	}
 	
 	/**
 	 * Cron run to get list of matching items
 	 */
-	public static function run() {
+	public static function run() 
+	{
 		//mark fail to timeout tasks
 		self::_checkTimeout();
 		
@@ -23,7 +25,7 @@ class Scheduler {
 		$raw = $db->schedule()->where('status', 1);
 		
 		$x = array();
-		foreach($raw as $row) {
+		foreach ($raw as $row) {
 			$x[] = self::execute($row['id']);
 		}
 		
@@ -34,7 +36,8 @@ class Scheduler {
 	 * Run a task
 	 * @param String $id
 	 */
-	public static function execute($id) {
+	public static function execute($id) 
+	{
 		$db = \Ig\Db::getDb();
 		$pdo = \Ig\Db::getPDO();
 		
@@ -47,8 +50,10 @@ class Scheduler {
 		$msg = '';
 		
 		$sch = $db->schedule[$id];
-		if(empty($sch['id']))
+		if (empty($sch['id'])) {
 			return;
+		}
+		
 		/*
 		\Ig\Web::sendErrorResponse(1, 'Dump evaluate', array(
 			'month' => self::_dumpEvaluate($month, $sch['month']),
@@ -58,19 +63,20 @@ class Scheduler {
 				'minute' => self::_dumpEvaluate($minute, $sch['miinute']),
 		));
 		*/
+		
 		$run = self::_evaluate($month, $sch['month']) && 
 			self::_evaluate($weekday, $sch['weekday']) &&
 			self::_evaluate($day, $sch['day']) &&
 			self::_evaluate($hour, $sch['hour']) &&
 			self::_evaluate($minute, $sch['minute']);
 
-		if($run) {
+		if ($run) {
 			$func = (empty($sch['class_name']) ? 
 				$sch['function_name'] : 
 				$sch['class_name'] . '::' . $sch['function_name']) . '();';
 			$recordOpt = intval($sch['record_opt']);
 			
-			if($recordOpt == 1 || $recordOpt == 2) {
+			if ($recordOpt == 1 || $recordOpt == 2) {
 				$idd = \Ig\Db::getNextRunningNumber('log_schedule');
 				$item = array(
 						'id' => $idd,
@@ -88,7 +94,7 @@ class Scheduler {
 			try {
 				eval($func);
 				$success = true;
-			} catch(Exception $ex) {
+			} catch (Exception $ex) {
 				$success = false;
 				$msg = $ex->getMessage();
 				
@@ -97,8 +103,8 @@ class Scheduler {
 			}
 
 			//Update run record
-			if($recordOpt == 1 || $recordOpt == 2) {
-				if($success && $recordOpt == 1) {
+			if ($recordOpt == 1 || $recordOpt == 2) {
+				if ($success && $recordOpt == 1) {
 					//delete record if record option is 'log fail only'
 					$db->log_schedule[$idd]->delete();
 				} else {
@@ -117,15 +123,16 @@ class Scheduler {
 		return $msg;
 	}
 	
-	private static function _checkTimeout() {
+	private static function _checkTimeout() 
+	{
 		$db = \Ig\Db::getDb();
 		
 		$raw = $db->log_schedule()->where('status', 1);
-		foreach($raw as $row) {
+		foreach ($raw as $row) {
 			$now = time();
 			$startTime = strtotime($row['start']);
 			
-			if($now - $startTime > self::$timeoutBuffer) {
+			if ($now - $startTime > self::$timeoutBuffer) {
 				$row->update(array(
 					'end' =>  \Ig\Date::getDatetime(),
 					'status' => 3,
@@ -135,17 +142,21 @@ class Scheduler {
 		}
 	}
 	
-	private static function _evaluate($value, $expression) {
+	private static function _evaluate($value, $expression) 
+	{
 		$hasWildCard = strpos($expression, '*') !== false;
 		$x = str_replace('*', $value, $expression);
 		$y = eval('return doubleval(' . $x . ');');
-		if(empty($y))
+		
+		if (empty($y)) {
 			$y = 0;
+		}
 		
 		return $value == $y || ($hasWildCard && ($y * 1000 % 1000) == 0);
 	}
 	
-	private static function _dumpEvaluate($value, $expression) {
+	private static function _dumpEvaluate($value, $expression) 
+	{
 		$x = str_replace('*', $value, $expression);
 		$y = eval('return doubleval(' . $x . ');');
 		if(empty($y))

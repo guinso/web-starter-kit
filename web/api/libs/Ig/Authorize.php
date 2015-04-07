@@ -1,5 +1,6 @@
 <?php 
 namespace Ig;
+
 /**
  * Authorization Utility
  * @author chingchetsiang
@@ -12,24 +13,28 @@ class Authorize {
 	 * @param array $functioNames
 	 * @return boolean
 	 */
-	public static function isAuthorize2($functionNames) {
+	public static function isAuthorize2($functionNames) 
+	{
 		$user = \Ig\Login::getCurrentUser();
 		
 		return self::_isAuthorizeByUser($user['userId'], $functionNames);
 	}
 	
-	public static function isAuthorize() {
+	public static function isAuthorize() 
+	{
 		$functionNames = func_get_args();
 		$user = \Ig\Login::getCurrentUser();
 		
 		return self::_isAuthorizeByUser($user['userId'], $functionNames);
 	}
 	
-	public static function isAuthorizeByUser($userId, $functionNames) {
+	public static function isAuthorizeByUser($userId, $functionNames) 
+	{
 		return self::_isAuthorizeByUser($userId, $functionNames);
 	}
 	
-	private static function _isAuthorizeByUser($userId, $functionNames) {
+	private static function _isAuthorizeByUser($userId, $functionNames) 
+	{
 		$db = \Ig\Db::getDb();
 		$pdo = \Ig\Db::getPDO();
 		$result = false;
@@ -38,13 +43,13 @@ class Authorize {
 		$cnt = 0;
 		$x = array();
 
-		foreach($functionNames as $fn) {
+		foreach ($functionNames as $fn) {
 			$x[] = ':f' . $cnt;
 			$params[':f' . $cnt] = $fn;
 			$cnt++;
 		}
 
-		if($cnt > 0) {
+		if ($cnt > 0) {
 			$user = $db->account[$userId];
 			$role = $db->role[$user['role_id']];
 	
@@ -66,7 +71,8 @@ class Authorize {
 		return $result;
 	}
 	
-	public static function getAuthorizeUser2($functionNames) {
+	public static function getAuthorizeUser2($functionNames) 
+	{
 		return self::_getAuthorizeUser($functionNames);
 	}
 	
@@ -74,20 +80,22 @@ class Authorize {
 	 * Get list of user(s) who eligible to such access title(s)
 	 * @param	functionNames	list of function names
 	 */
-	public static function getAuthorizeUser() {
+	public static function getAuthorizeUser() 
+	{
 		$functionNames = func_get_args();
 		
 		return self::_getAuthorizeUser($functionNames);
 	}
 	
-	private static function _getAuthorizeUser($functionNames) {
+	private static function _getAuthorizeUser($functionNames) 
+	{
 		$pdo = \Ig\Db::getPDO();
 		
 		$params = array();
 		$cnt = 0;
 		$x = array();
 		
-		foreach($functionNames as $fn) {
+		foreach ($functionNames as $fn) {
 			$x[] = ':f' . $cnt;
 			$params[':f' . $cnt] = $fn;
 			$cnt++;
@@ -104,14 +112,15 @@ class Authorize {
 		$stmt->execute($params);
 		
 		$result = array();
-		foreach($stmt as $row) {
+		foreach ($stmt as $row) {
 			$result[] = self::_getUserFormat($row);
 		}
 		
 		return $result;
 	}
 	
-	private static function _getUserFormat($row) {
+	private static function _getUserFormat($row) 
+	{
 		return array(
 			'id' => $row['id'],
 			'name' => $row['name'],

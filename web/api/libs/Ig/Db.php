@@ -10,8 +10,8 @@ class Db {
 	
 	public static function configure(
 			$dsm, $dbUsr, $dbPwd,
-			$dbIdInitial, $dbIdLen) {
-	
+			$dbIdInitial, $dbIdLen
+	) {
 		//TODO check database is accessible
 		self::$dsm = $dsm;
 		self::$dbUsr = $dbUsr;
@@ -19,15 +19,15 @@ class Db {
 	
 		self::$dbIdInitial = $dbIdInitial;
 		self::$dbIdLen = $dbIdLen;
-	
 	}
 	
 	/**
 	 * Get PDO handler
 	 * @return \PDO
 	 */
-	public static function getPDO() {
-		if(empty(self::$pdo)) {
+	public static function getPDO() 
+	{
+		if (empty(self::$pdo)) {
 			self::$pdo = new \PDO(self::$dsm, self::$dbUsr, self::$dbPwd);
 			self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 			self::$pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
@@ -40,10 +40,10 @@ class Db {
 	 * Get defaut database handler
 	 * @return NotORM not orm handler
 	 */
-	public static function getDb() {
-		if(empty(self::$db)) {
+	public static function getDb() 
+	{
+		if (empty(self::$db)) {
 			$pdo = self::getPDO();
-	
 			self::$db = new \NotORM($pdo);
 		}
 	
@@ -57,7 +57,8 @@ class Db {
 	 * @param string $password
 	 * @return \PDO
 	 */
-	public static function preparePDO($dsm, $username, $password) {
+	public static function preparePDO($dsm, $username, $password) 
+	{
 		$pdo = new \PDO($dsm, $username, $password);
 		$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 		$pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
@@ -70,7 +71,8 @@ class Db {
 	 * @param \PDO $pdo
 	 * @return \NotORM
 	 */
-	public static function prepareDb($pdo) {
+	public static function prepareDb($pdo) 
+	{
 		return new NotORM($pdo);
 	}
 
@@ -82,8 +84,9 @@ class Db {
 	 * @param \NotORM $db
 	 * @return string
 	 */
-	public static function getNextJobId($tableName, $columnName, $initial, $db = null) {
-		if(empty($db))
+	public static function getNextJobId($tableName, $columnName, $initial, $db = null) 
+	{
+		if (empty($db))
 			$db = self::getDb();
 	
 		$date = date('Ym');
@@ -94,7 +97,7 @@ class Db {
 			->fetch();
 	
 		$runningNo = 1;
-		if(!empty($item)) {
+		if (!empty($item)) {
 			$tmp = $item[$columnName];
 			$len = strlen($tmp);
 			$subNo = intval(substr($tmp, $len - 3, 3));
@@ -110,22 +113,25 @@ class Db {
 	 * @param String $dbTableName	targeted data table name
 	 * @param String $pattern	regular expression
 	 */
-	public static function getNextRunningNumber($dbTableName, $initial = NULL, $length = NULL,
-			$db = null) {
-	
-		if(empty($initial)) {
+	public static function getNextRunningNumber(
+		$dbTableName,
+		$initial = NULL, 
+		$length = NULL,
+		$db = null
+	) {
+		if (empty($initial)) {
 			$initial = self::$dbIdInitial;
 		}
 	
-		if(empty($length)) {
+		if (empty($length)) {
 			$length = self::$dbIdLen;
 		}
 	
-		if(empty($db))
+		if (empty($db)) {
 			$db = self::getDb();
-	
+		}
+		
 		$id = '';
-	
 		$item = $db->$dbTableName
 			->where('id REGEXP ?', '^' . $initial . '[0-9]{'.$length.'}')
 			->order('id desc')
@@ -133,7 +139,7 @@ class Db {
 	
 		$id = $item['id'];
 	
-		if(empty($id)) {
+		if (empty($id)) {
 			$number = str_pad(1, $length, '0', STR_PAD_LEFT);
 		} else {
 			$n = intval(substr($id, 1)) + 1;
@@ -143,11 +149,13 @@ class Db {
 		return $initial . $number;
 	}
 
-	public static function getDbLen() {
+	public static function getDbLen() 
+	{
 		return self::$dbIdLen;
 	}
 	
-	public static function getDbInitial() {
+	public static function getDbInitial() 
+	{
 		return self::$dbIdInitial;
 	}
 	
@@ -157,7 +165,8 @@ class Db {
 	 * @param string $sqlFilePath	targeted sql script file path
 	 * @param PDO $pdo				targeted database gateway
 	 */
-	public static function runSqlScript($sqlFilePath, $pdo = null) {
+	public static function runSqlScript($sqlFilePath, $pdo = null) 
+	{
 		$sql = file_get_contents($sqlFilePath);
 	
 		if(empty($pdo))
@@ -174,15 +183,15 @@ class Db {
 	 * @param string $key
 	 * @param mixed $value
 	 */
-	public static function setKeyValue($key, $value){
+	public static function setKeyValue($key, $value)
+	{
 		$db = self::getDb();
 	
 		$row = $db->key_value[$key];
 	
 		$serialize = serialize($value);
 	
-		if(empty($row))
-		{
+		if (empty($row)) {
 			$item = array(
 				'id' => $key,
 				'value' => $serialize,
@@ -190,8 +199,7 @@ class Db {
 	
 			$db->key_value->insert($item);
 		}
-		else
-		{
+		else {
 			$item = array(
 				'value' => $serialize,
 			);
@@ -205,20 +213,20 @@ class Db {
 	 * @param mixed $defaultValue
 	 * @return mixed
 	 */
-	public static function getKeyValue($key, $defaultValue = NULL){
+	public static function getKeyValue($key, $defaultValue = NULL)
+	{
 		$db = self::getDb();
 	
 		$row = $db->key_value[$key];
 	
-		if(empty($row))
-		{
+		if (empty($row)) {
 			self::setKeyValue($key, $defaultValue);
 	
 			return $defaultValue;
 		}
-		else
-		{
+		else {
 			$unserialize = unserialize($row['value']);
+			
 			return $unserialize;
 		}
 	}

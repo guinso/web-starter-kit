@@ -36,8 +36,8 @@ class Recipe {
 			$uploadPath, $templatePath, $temporaryPath,
 			$timeZone,
 			$smtpHost, $smtpUsr, $smtpPwd, $smtpEmail, $smtpName,
-			$smtpSecure, $smtpPort) {
-
+			$smtpSecure, $smtpPort
+	) {
 		$this->dbName = $dbName;
 		$this->dbHost = $dbHost;
 
@@ -67,37 +67,39 @@ class Recipe {
 		$this->absTemporaryPath = self::_getAbsPath($this->temporaryPath);
 	}
 
-	public function get() {
+	public function get() 
+	{
 		return array(
-				'dsm' => $this->dsm,
-				'dbName' => $this->dbName,
-				'dbHost' => $this->dbHost,
-				'dbUsr' => $this->dbUsr,
-				'dbPwd' => $this->dbPwd,
-				'dbLen' => intval($this->dbLen),
-				'dbInitial' => $this->dbInitial,
-				'uploadPath' => $this->uploadPath,
-				'temporaryPath' => $this->temporaryPath,
-				'templatePath' => $this->templatePath,
-				'timeZone' => $this->timeZone,
-				'smtpHost' => $this->smtpHost,
-				'smtpUsr' => $this->smtpUsr,
-				'smtpPwd' => $this->smtpPwd,
-				'smtpEmail' => $this->smtpEmail,
-				'smtpName' => $this->smtpName,
-				'smtpPort' => $this->smtpPort,
-				'smtpSecure' => $this->smtpSecure,
+			'dsm' => $this->dsm,
+			'dbName' => $this->dbName,
+			'dbHost' => $this->dbHost,
+			'dbUsr' => $this->dbUsr,
+			'dbPwd' => $this->dbPwd,
+			'dbLen' => intval($this->dbLen),
+			'dbInitial' => $this->dbInitial,
+			'uploadPath' => $this->uploadPath,
+			'temporaryPath' => $this->temporaryPath,
+			'templatePath' => $this->templatePath,
+			'timeZone' => $this->timeZone,
+			'smtpHost' => $this->smtpHost,
+			'smtpUsr' => $this->smtpUsr,
+			'smtpPwd' => $this->smtpPwd,
+			'smtpEmail' => $this->smtpEmail,
+			'smtpName' => $this->smtpName,
+			'smtpPort' => $this->smtpPort,
+			'smtpSecure' => $this->smtpSecure,
 
-				'absUploadPath' => $this->absUploadPath,
-				'absTemporaryPath' => $this->absTemporaryPath,
-				'absTemplatePath' => $this->absTemplatePath
+			'absUploadPath' => $this->absUploadPath,
+			'absTemporaryPath' => $this->absTemporaryPath,
+			'absTemplatePath' => $this->absTemplatePath
 		);
 	}
 
-	private static function _getAbsPath($relativePath) {
+	private static function _getAbsPath($relativePath) 
+	{
 		$abs = '';
 		$x = $relativePath[0];
-		if($x == '@') {
+		if ($x == '@') {
 			$abs = ROOT_DIR . DS . substr($relativePath, 1);
 		} else {
 			$sbs = $relativePath;

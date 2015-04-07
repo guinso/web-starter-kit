@@ -2,23 +2,25 @@
 namespace Ig\Pdf\Tag;
 
 class Img implements \Ig\Pdf\IPdmTag {
-	public static function run(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) {
-		foreach($xmlObj->attributes() as $k => $v) {
-			if($v == (string)(double)$v)
+	
+	public static function run(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) 
+	{
+		foreach ($xmlObj->attributes() as $k => $v) {
+			if ($v == (string)(double)$v)
 				$v = doubleval($v);
 			
 			$pdf->setStyle($k, $v);
 		}
 		
 		//set height to width value if not define by user
-		if(empty($xmlObj['height'])) {
+		if (empty($xmlObj['height'])) {
 			$xmlObj['height'] = 		$pdf->getStyle('width');
 			$pdf->setStyle('height', 	$pdf->getStyle('width'));
 		}
 		
 		$src = $xmlObj['src'];
 		
-		if(substr($src, 0, 1) == '@')
+		if (substr($src, 0, 1) == '@')
 			$src = ROOT_DIR . DS . substr($src, 1);
 		
 		$pdf->drawImage($src);
@@ -29,17 +31,18 @@ class Img implements \Ig\Pdf\IPdmTag {
 		$pdf->SetXY($x, $y);
 	}
 	
-	public static function simulate(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) {
+	public static function simulate(\Ig\Pdf\ExtTcpdf $pdf, $xmlObj) 
+	{
 		$pdf->pushStyle();
-		foreach($xmlObj->attributes() as $k => $v) {
-			if($v == (string)(double)$v)
+		foreach ($xmlObj->attributes() as $k => $v) {
+			if ($v == (string)(double)$v)
 				$v = doubleval($v);
 				
 			$pdf->setStyle($k, $v);
 		}
 		
 		//set height to width value if not define by user
-		if(empty($xmlObj['height'])) {
+		if (empty($xmlObj['height'])) {
 			$xmlObj['height'] = 		$pdf->getStyle('width');
 			$pdf->setStyle('height', 	$pdf->getStyle('width'));
 		}

@@ -2,29 +2,34 @@
 namespace Ig\Pdf;
 
 class PdmTagHandler {
-	public static function handleTag(ExtTcpdf $pdf, $tag, $xmlObj) {
+	public static function handleTag(ExtTcpdf $pdf, $tag, $xmlObj) 
+	{
 		$tagHanlderClass = "\\Ig\\Pdf\\Tag\\" . ucwords(strtolower($tag));
 		
 		//check class exists or not
-		if(!class_exists($tagHanlderClass))
+		if (!class_exists($tagHanlderClass)) {
 			Throw new \Exception("Ig::PdmTagHandler - Unspecified tag <$tag> detected.");
+		}
 		
 		//run handler
 		$tagHanlderClass::run($pdf, $xmlObj);
 	}
 	
-	public static function calDimension(ExtTcpdf $pdf, $tag, $xmlObj) {
+	public static function calDimension(ExtTcpdf $pdf, $tag, $xmlObj) 
+	{
 		$tagHanlderClass = "\\Ig\\Pdf\\Tag\\" . ucwords(strtolower($tag));
 		
 		//check class exists or not
-		if(!class_exists($tagHanlderClass))
+		if(!class_exists($tagHanlderClass)) {
 			Throw new \Exception("Ig::report::PdmTagHandler - Unspecify tag <$tag> $tagHanlderClass detected.");
+		}
 		
 		//run handler
 		return $tagHanlderClass::simulate($pdf, $xmlObj);
 	}
 	
-	public static function calHeightOffset(ExtTcpdf $pdf) {
+	public static function calHeightOffset(ExtTcpdf $pdf) 
+	{
 		$style = $pdf->getStyleSet();
 		$border = $pdf->convertBorderStyle($style);
 		
@@ -38,7 +43,8 @@ class PdmTagHandler {
 			$borderTop + $borderBottom + $paddingBottom + $paddingTop;
 	}
 
-	public static function calWidthOffset(ExtTcpdf $pdf) {
+	public static function calWidthOffset(ExtTcpdf $pdf) 
+	{
 		$style = $pdf->getStyleSet();
 		$border = $pdf->convertBorderStyle($style);
 		

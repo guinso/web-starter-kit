@@ -16,33 +16,39 @@ class Log {
 	 * @param datetime $datetime	time of record being created
 	 * @param String $userId		targeted user who created the record, <account.id>
 	 */
-	public static function writeLog($id, $dbTable, $crud,
-			$log = '', $datetime = NULL, $userId = NULL,
-			$db = null, $pdo = null, $dbLen = null, $dbInitial = null) {
-		if(empty($pdo))
+	public static function writeLog(
+		$id, $dbTable, $crud,
+		$log = '', $datetime = NULL, $userId = NULL,
+		$db = null, $pdo = null, $dbLen = null, $dbInitial = null
+	) {
+		if (empty($pdo)) {
 			$pdo = \Ig\Db::getPDO();
+		}
 	
-		if(empty($db))
+		if (empty($db)) {
 			$db = \Ig\Db::getDb();
+		}
 	
-		if(empty($dbLen))
+		if (empty($dbLen)) {
 			$dbLen = \Ig\Db::getDbLen();
+		}
 	
-		if(empty($dbInitial))
+		if (empty($dbInitial)) {
 			$dbInitial = \Ig\Db::getDbInitial();
+		}
 	
 		$dbTableLog = $dbTable . '_log';
 	
 		$data = $db->{$dbTable}[$id];
-		if(empty($data))
+		if (empty($data))
 			Throw new \Exception("IgDbLog:- $dbTable $id not found in database.");
 	
-		if(empty($userId)) {
+		if (empty($userId)) {
 			$user = \Ig\Login::getCurrentUser();
 			$userId = $user['userId'];
 		}
 	
-		if(empty($datetime))
+		if (empty($datetime))
 			$datetime = \Ig\Date::getDatetime();
 	
 		/*
@@ -55,12 +61,12 @@ class Log {
 		//prepare common log info
 		$idd = \Ig\Db::getNextRunningNumber($dbTableLog, $dbInitial, $dbLen, $db);
 		$item = array(
-				'id' => $idd,
-				'created' => $datetime,
-				'author' => $userId,
-				'referred' => $id,
-				'crud' => $crud,
-				'log' => $log,
+			'id' => $idd,
+			'created' => $datetime,
+			'author' => $userId,
+			'referred' => $id,
+			'crud' => $crud,
+			'log' => $log,
 		);
 	
 		//get datatable metadata
@@ -69,11 +75,11 @@ class Log {
 		$sql = str_replace("'", "", "DESCRIBE $dbTable");
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
-		foreach($stmt as $meta) {
+		foreach ($stmt as $meta) {
 			$field = $meta['Field'];
 			$type = $meta['Type'];
 			//skip 'id' as it is prmary key for volatile datatable , not for log table in stead
-			if($meta['Field'] != 'id') {
+			if ($meta['Field'] != 'id') {
 				$item[$field] = self::getDataValue($data[$field], $type);
 			}
 		}
@@ -87,9 +93,11 @@ class Log {
 	 * @param 	string $id		primary key value, cloumn name must be 'id'
 	 * @return	NOTORM-record
 	 */
-	public static function getlastLog($tableName, $id, $db = null) {
-		if(empty($db))
+	public static function getlastLog($tableName, $id, $db = null) 
+	{
+		if (empty($db)) {
 			$db = \Ig\Db::getDb();
+		}
 	
 		$logTableName = $tableName . '_log';
 	
@@ -108,20 +116,24 @@ class Log {
 	 * @param string $id		primary key value, cloumn name must be 'id'
 	 * @return array if record are valid, otherwise, will return false
 	 */
-	public static function checkDifference($tableName, $id, $db = null, $pdo = null) {
-		if(empty($pdo))
+	public static function checkDifference($tableName, $id, $db = null, $pdo = null) 
+	{
+		if (empty($pdo)) {
 			$pdo = \Ig\Db::getPDO();
+		}
 	
-		if(empty($db))
+		if (empty($db)) {
 			$db = \Ig\Db::getDb();
+		}
 	
 		$logTableName = $tableName . '_log';
 		$diffCols = array();
 	
 		$newRecord = $db->{$tableName}[$id];
 		//check record exist or not
-		if(empty($newRecord['id']))
+		if (empty($newRecord['id'])) {
 			return false;
+		}
 	
 		$lastRecord = $db->{$logTableName};
 		$lastRecord = $lastRecord->where('referred', $id)->order('created DESC')->fetch();
@@ -130,33 +142,35 @@ class Log {
 		$sql = str_replace("'", "", "DESCRIBE $tableName");
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
-		foreach($stmt as $meta) {
+		foreach ($stmt as $meta) {
 			$field = $meta['Field'];
 			$type = $meta['Type'];
 			$oldValue = self::getDataValue($lastRecord[$field], $type);
 			$newValue = self::getDataValue($newRecord[$field], $type);
 	
 			//check and get column which is diff value
-			if($getAll || $lastRecord[$field] != $newRecord[$field])
+			if($getAll || $lastRecord[$field] != $newRecord[$field]) {
 				$diffCols[$field] = array(
 						'oldValue' => $oldValue,
 						'newValue' => $newValue
 				);
+			}
 		}
 	
 		return $diffCols;
 	}
 	
-	private static function getDataValue($value, $type) {
+	private static function getDataValue($value, $type) 
+	{
 		$result = null;
 	
-		if(preg_match('/^int/', $type) == 1) {
+		if (preg_match('/^int/', $type) == 1) {
 			//for int
 			$result = intVal($value);
-		} else if(preg_match('/^float$/', $type) == 1) {
+		} elseif (preg_match('/^float$/', $type) == 1) {
 			//for float
 			$result = doubleVal($value);
-		} else if(preg_match('/^double$/', $type) == 1) {
+		} elseif (preg_match('/^double$/', $type) == 1) {
 			//for double
 			$result = doubleVal($value);
 		} else {

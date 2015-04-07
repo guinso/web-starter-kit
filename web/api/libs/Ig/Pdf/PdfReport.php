@@ -8,11 +8,13 @@ namespace Ig\Pdf;
  *
  */
 class PdfReport {
+	
 	const OUTPUT_OPEN = 1;
 	const OUTPUT_DOWNLOAD = 2;
 	const OUTPUT_PRINT = 3;
 
-	private static function _getDefaultDocParam() {
+	private static function _getDefaultDocParam() 
+	{
 		return array(
 			'orientation' => 'P',
 			'unit' => 'mm',
@@ -39,18 +41,19 @@ class PdfReport {
 	 * In future will support custom parameter
 	 * @return ExtTcpdf
 	 */
-	private static function _preparePdf($param) {
+	private static function _preparePdf($param) 
+	{
 		//get company porfile
 		$comProfile = \ComProfile::get();
 
 		//prepare pdf
 		$pdf = new ExtTcpdf(
-				$param['orientation'], 	//potrait
-				$param['unit'], 		//mm
-				$param['format'],
-				true, 					//support unicode
-				$param['encoding'],
-				false);					//enable disk cache
+			$param['orientation'], 	//potrait
+			$param['unit'], 		//mm
+			$param['format'],
+			true, 					//support unicode
+			$param['encoding'],
+			false);					//enable disk cache
 
 		/**************** set document metadata ****************/
 		$pdf->SetCreator(PDF_CREATOR);
@@ -127,7 +130,8 @@ class PdfReport {
 	 * @param string $template		template file path
 	 * @param string $outputMode	1 is open, 2 is download, 3 is print
 	 */
-	public static function generatePdf($pdm, $title, $outputMode = self::OUTPUT_OPEN) {
+	public static function generatePdf($pdm, $title, $outputMode = self::OUTPUT_OPEN) 
+	{
 		//generate IG Pdf Document Markup
 		//x $pdm = self::_generatePdm($data, $template);
 
@@ -139,7 +143,7 @@ class PdfReport {
 		//TODO generate PDF by travesing XML
 		//1.  prepare pdf by refering XML->docroot attributes
 		$docParam = self::_getDefaultDocParam();
-		foreach($xml->attributes() as $key => $value) {
+		foreach ($xml->attributes() as $key => $value) {
 			//overwrite setting
 			$docParam[$key] = $value;
 		}
@@ -149,12 +153,12 @@ class PdfReport {
 		
 		//2.  prepare header by referring XML->header tag
 		$header = $xml->header;
-		if(!empty($header))
+		if (!empty($header))
 			$pdf->setPdmHeader($header);
 		
 		//3.  prepare footer by referring XML->footer tag
 		$footer = $xml->footer;
-		if(!empty($footer))
+		if (!empty($footer))
 			$pdf->setPdmFooter($footer);
 		
 		//3.1 calculate total rendered pages
@@ -164,7 +168,7 @@ class PdfReport {
 		$pdf->setHeaderMargin($headerSize['height']);
 		$pdf->setFooterMargin($footSize['height']);
 		$h = 0;
-		foreach($xml->page as $pg) {
+		foreach ($xml->page as $pg) {
 			$sizeeez = \Ig\pdf\PdmTagHandler::calDimension($pdf, 'page', $pg);
 			$h += $sizeeez['height'];
 		}
@@ -177,13 +181,13 @@ class PdfReport {
 		$pdf->setStyle('y', $pdf->GetY());
 		//4.  loop each <page> tags
 		$pages = $xml->page;
-		foreach($pages as $page) {
+		foreach ($pages as $page) {
 			PdmTagHandler::handleTag($pdf, 'page', $page);
 		}
 		
 		//5.  output buffer
 		$out = '';
-		switch($outputMode) {
+		switch ($outputMode) {
 			case 1: 
 				$out = 'I';
 				break;
@@ -198,6 +202,7 @@ class PdfReport {
 				$out = 'I';
 				break;
 		}
+		
 		$pdf->Output($title . '.pdf', $out);
 	}
 
@@ -206,7 +211,8 @@ class PdfReport {
 	 * @param array $data		mix associate array
 	 * @param string $template	template file path
 	 */
-	public static function generatePdm($data, $template) {
+	public static function generatePdm($data, $template) 
+	{
 		//create the Tpl object
 		$tpl = new \Rain\Tpl();
 

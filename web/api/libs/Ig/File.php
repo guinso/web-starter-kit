@@ -9,13 +9,14 @@ class File {
 	 * @param boolean $create	set to true if want to create if not found
 	 * @return boolean
 	 */
-	public static function checkDirectory($directory, $create = true) {
+	public static function checkDirectory($directory, $create = true) 
+	{
 		$found = false;
 		
-		if(file_exists($directory)) {
+		if (file_exists($directory)) {
 			$found = true;
 		}
-		else if(!file_exists($directory) && $create) {
+		elseif (!file_exists($directory) && $create) {
 			mkdir($directory, 0775, true);
 			$found = true;
 		}
@@ -29,7 +30,8 @@ class File {
 	 * @param String $filename	return file name
 	 * @param Boolean $compress	compress file before download flag
 	 */
-	public static function getFile($filepath, $filename, $compress = false) {
+	public static function getFile($filepath, $filename, $compress = false) 
+	{
 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
 		$finfo_mime = finfo_file($finfo, $filepath);
 	
@@ -50,11 +52,13 @@ class File {
 	 * Remove file or directory recursively
 	 * @param string $dir	directory path OR file path
 	 */
-	public static function removeFile($dir) {
-		if(is_file($dir))
+	public static function removeFile($dir) 
+	{
+		if (is_file($dir)) {
 			unlink($dir);
-		else if(is_dir($dir)) {
-			foreach(glob($dir . '/*') as $file)
+		}
+		elseif (is_dir($dir)) {
+			foreach (glob($dir . '/*') as $file)
 				self::removeFile($file);
 				
 			rmdir($dir);
