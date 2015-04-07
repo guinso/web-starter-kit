@@ -78,8 +78,9 @@ $setting = \Ig\Config::getProfile();
 	$setting->dsm, $setting->dbUsr, $setting->dbPwd,
 	$setting->dbInitial, $setting->dbLen);
 
-Util::configure(
-	$setting->absUploadPath, $setting->absTemporaryPath, $setting->absTemplatePath);
+\Ig\File::checkDirectory($setting->absUploadPath, true);
+\Ig\File::checkDirectory($setting->temporaryPath, true);
+\Ig\File::checkDirectory($setting->uploadPath, true);
 
 \Ig\Email::configure(
 	$setting->smtpHost,

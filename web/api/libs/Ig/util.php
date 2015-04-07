@@ -1,26 +1,5 @@
 <?php
 class Util {
-	private static $uploadPath;
-	private static $tempPath;
-	private static $tplPath;
-	
-public static function configure(
-		$uploadPath, $tempPath, $tplPath) {
-
-	//check directory exists and accessable
-	self::$uploadPath = $uploadPath;
-	self::$tempPath = $tempPath;
-	self::$tplPath = $tplPath;
-	
-	if(!file_exists(self::$uploadPath))
-		mkdir(self::$uploadPath, 0775, true);
-	
-	if(!file_exists(self::$tempPath))
-		mkdir(self::$tempPath, 0775, true);
-	
-	if(!file_exists(self::$tplPath))
-		mkdir(self::$tplPath, 0775, true);
-}
 	
 /**
  * Send whole HTTP response to client and exit script execution

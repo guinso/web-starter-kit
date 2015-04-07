@@ -2,7 +2,27 @@
 namespace Ig;
 
 class File {
+	
+	/**
+	 * Check provided directory exists or not, create if allowed
+	 * @param string $directory
+	 * @param boolean $create	set to true if want to create if not found
+	 * @return boolean
+	 */
+	public static function checkDirectory($directory, $create = true) {
+		$found = false;
 		
+		if(file_exists($directory)) {
+			$found = true;
+		}
+		else if(!file_exists($directory) && $create) {
+			mkdir($directory, 0775, true);
+			$found = true;
+		}
+		
+		return $found;
+	}
+	
 	/**
 	 * Send file to client for downloading purposes
 	 * @param String $filepath	absolute file path
