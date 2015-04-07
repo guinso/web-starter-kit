@@ -11,52 +11,52 @@ class AdmMiscREST {
 	 */
 	public static function get() {
 		if(!AdmLogin::isLogin())
-			Util::sendErrorResponse(-1, "You are not authorize to view system admin setting.");
+			\Ig\Web::sendErrorResponse(-1, "You are not authorize to view system admin setting.");
 		
 		try {
 			return AdmMisc::get();
 		} catch(Exception $ex) {
-			Util::sendErrorResponse(-1, $ex->getMessage());
+			\Ig\Web::sendErrorResponse(-1, $ex->getMessage());
 		}
 	}
 	
 	public static function post() {
 		if(!AdmLogin::isLogin())
-			Util::sendErrorResponse(-1, "You are not authorize to update system admin setting.");
+			\Ig\Web::sendErrorResponse(-1, "You are not authorize to update system admin setting.");
 		
 		try {
-			$data = Util::getInputData();
+			$data = \Ig\Web::getInputData();
 			AdmMisc::set($data);
 		} catch(Exception $ex) {
-			Util::sendErrorResponse(-1, $ex->getMessage());
+			\Ig\Web::sendErrorResponse(-1, $ex->getMessage());
 		}
 	}
 /*	
 	public static function postMaintenance() {
 		if(!AdmLogin::isLogin())
-			Util::sendErrorResponse(-1, "You are not authorize to update system admin setting");
+			\Ig\Web::sendErrorResponse(-1, "You are not authorize to update system admin setting");
 		
 		try {
-			$data = Util::getInputData();
+			$data = \Ig\Web::getInputData();
 			AdmMisc::setMaintenance($data['maintenance']);
 			
 			return AdmMisc::get();
 		} catch(Exception $ex) {
-			Util::sendErrorResponse(-1, $ex->getMessage());
+			\Ig\Web::sendErrorResponse(-1, $ex->getMessage());
 		}
 	}
 	
 	public static function postDeploy() {
 		if(!AdmLogin::isLogin())
-			Util::sendErrorResponse(-1, "You are not authorize to update system admin setting");
+			\Ig\Web::sendErrorResponse(-1, "You are not authorize to update system admin setting");
 	
 		try {
-			$data = Util::getInputData();
+			$data = \Ig\Web::getInputData();
 			AdmMisc::setDeploy($data['deploy']);
 				
 			return AdmMisc::get();
 		} catch(Exception $ex) {
-			Util::sendErrorResponse(-1, $ex->getMessage());
+			\Ig\Web::sendErrorResponse(-1, $ex->getMessage());
 		}
 	}
 */

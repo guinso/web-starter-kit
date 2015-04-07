@@ -10,7 +10,7 @@ class Common {
 		if($fileWithIn && $authorize)
 			\Ig\File\Attachment::downloadFile($guid);
 		else
-			Util::sendErrorResponse(-1,
+			\Ig\Web::sendErrorResponse(-1,
 					"Request rejected, you have no rights to download file", null, 401);
 	}
 }

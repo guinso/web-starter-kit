@@ -21,7 +21,7 @@ class Lan {
 		$db = \Ig\Db::getDb();
 		$cnt = $db->lan_code()->where('code = ?', $lanCode)->count('*');
 		if($cnt == 0) {
-			Util::sendErrorResponse(406, -1, "There is no such language code in database <" . $lanCode . ">");
+			\Ig\Web::sendErrorResponse(406, -1, "There is no such language code in database <" . $lanCode . ">");
 		} else {
 			\Ig\Db::setKeyValue('lan_code_' . $serverId, $lanCode);
 		}
@@ -36,7 +36,7 @@ class Lan {
 	}
 	
 	public static function post() {
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		$lanCode = $data['lanCode'];
 		
 		self::setLanCode($lanCode);

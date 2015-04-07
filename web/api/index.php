@@ -32,7 +32,7 @@ function home() {
 
 //disable service if maintenance is on
 if(\Ig\Config::getConfig('maintenance'))
-	Util::sendErrorResponse(0, "Site under maintenance", null, 503);
+	\Ig\Web::sendErrorResponse(0, "Site under maintenance", null, 503);
 
 $profile = \Ig\Config::getProfile();
 

@@ -43,7 +43,7 @@ class UserAccount {
 	
 	public static function getActivityLog() {
 		if(!AdmLogin::isLogin()) {
-			Util::sendErrorResponse(-1, 'You are not authorized to view login activity.');
+			\Ig\Web::sendErrorResponse(-1, 'You are not authorized to view login activity.');
 		}
 		
 		return \Ig\Login::getLog();
@@ -51,7 +51,7 @@ class UserAccount {
 	
 	public static function getActivityLogCount() {
 		if(!AdmLogin::isLogin()) {
-			Util::sendErrorResponse(-1, 'You are not authorized to view login activity.');
+			\Ig\Web::sendErrorResponse(-1, 'You are not authorized to view login activity.');
 		}
 		
 		return \Ig\Login::getLogCount();
@@ -59,7 +59,7 @@ class UserAccount {
 	
 	public static function getById($id) {
 		if(!AdmLogin::isLogin()) {
-			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
+			\Ig\Web::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		
 		$db = \Ig\Db::getDb();
@@ -77,7 +77,7 @@ class UserAccount {
 		$pgSize = 15;
 	
 		if(!AdmLogin::isLogin()) {
-			Util::sendErrorResponse(-1, 'You are not authorize to view account log.');
+			\Ig\Web::sendErrorResponse(-1, 'You are not authorize to view account log.');
 		}
 	
 		if(!empty($_GET['pgIndex']))
@@ -106,7 +106,7 @@ class UserAccount {
 		$users = $db->account_log();
 	
 		if(!AdmLogin::isLogin()) {
-			Util::sendErrorResponse(-1, 'You are not authorize to view account log.');
+			\Ig\Web::sendErrorResponse(-1, 'You are not authorize to view account log.');
 		}
 		
 		$cnt = $users->count('*');
@@ -124,19 +124,19 @@ class UserAccount {
 		$x = \Ig\File\Attachment::getByGuid($guid);
 	
 		if(empty($x['id']))
-			Util::sendErrorResponse(-1, "targeted GUID is not a valid ID.");
+			\Ig\Web::sendErrorResponse(-1, "targeted GUID is not a valid ID.");
 	
 		$attachmentId = $x['id'];
 		$m = $db->account->where('attachment_id', $attachmentId)->fetch();
 		if(empty($m['id']))
-			Util::sendErrorResponse(-1, "targeted GUID not found in account record");
+			\Ig\Web::sendErrorResponse(-1, "targeted GUID not found in account record");
 	
 		$authorize = \Ig\Authorize::isAuthorize('view user') || $userId == $m['id'];
 	
 		if($authorize) {
 			\Ig\File\Attachment::downloadFile($guid);
 		} else {
-			Util::sendErrorResponse(-1, "You have no rights to download file");
+			\Ig\Web::sendErrorResponse(-1, "You have no rights to download file");
 		}
 	}
 	
@@ -149,24 +149,24 @@ class UserAccount {
 	
 	public static function post() {
 		if(!AdmLogin::isLogin()) {
-			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
+			\Ig\Web::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		
 		$db = \Ig\Db::getDb();
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		
 		//check username uniqueness
 		$username = $data['username'];
 		$cnt = $db->account()->where('username', $username)->count('*');
 		if($cnt > 0)
-			Util::sendErrorResponse(-2, "Selected Username " . 
+			\Ig\Web::sendErrorResponse(-2, "Selected Username " . 
 				"$username already used by other user.");
 		
 		//check name uniqueness
 		$name = $data['name'];
 		$cnt = $db->account()->where('name', $username)->count('*');
 		if($cnt > 0)
-			Util::sendErrorResponse(-2, "Selected name " .
+			\Ig\Web::sendErrorResponse(-2, "Selected name " .
 					"$name already used by other user.");
 		
 		$id = \Ig\Db::getNextRunningNumber('account');
@@ -191,7 +191,7 @@ class UserAccount {
 	
 	public static function changePwd() {
 		$db = \Ig\Db::getDb();
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		
 		$userId = $data['userId'];
 		$pwd = $data['pwd'];
@@ -199,14 +199,14 @@ class UserAccount {
 		$user = \Ig\Login::getCurrentUser();
 
 		if(!AdmLogin::isLogin()) {
-			Util::sendErrorResponse(-1, "You are not authorized to change password.");
+			\Ig\Web::sendErrorResponse(-1, "You are not authorized to change password.");
 		}
 		
 		
 		$account = $db->account[$userId];
 		
 		if(empty($account)) {
-			Util::sendErrorResponse('Request rejected. You are passing invalid user ID: ' . $userId);
+			\Ig\Web::sendErrorResponse('Request rejected. You are passing invalid user ID: ' . $userId);
 		}
 		
 		$db->transaction = 'BEGIN';
@@ -221,11 +221,11 @@ class UserAccount {
 	
 	public static function put($id) {
 		if(!AdmLogin::isLogin()) {
-			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
+			\Ig\Web::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		
 		$db = \Ig\Db::getDb();
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		
 		//check username uniqueness
 		$username = $data['username'];
@@ -234,7 +234,7 @@ class UserAccount {
 			->where('id <> ?', $id)
 			->count('*');
 		if($cnt > 0)
-			Util::sendErrorResponse(-2, "Selected Username " .
+			\Ig\Web::sendErrorResponse(-2, "Selected Username " .
 					"$username already used by other user.");
 		
 		//check name uniqueness
@@ -244,7 +244,7 @@ class UserAccount {
 			->where('id <> ?', $id)
 			->count('*');
 		if($cnt > 0)
-			Util::sendErrorResponse(-2, "Selected name " .
+			\Ig\Web::sendErrorResponse(-2, "Selected name " .
 					"$name already used by other user.");
 					
 		$item = array(
@@ -267,7 +267,7 @@ class UserAccount {
 	/*
 	public static function delete($id) {
 		if(!Login::isAuthorize('Manage User Access')) {
-			Util::sendErrorResponse(-1, 'You are not authorized.', 401);
+			\Ig\Web::sendErrorResponse(-1, 'You are not authorized.', 401);
 		}
 		
 		$db = \Ig\Db::getDb();
@@ -278,13 +278,13 @@ class UserAccount {
 			return array('code'=> 1, 'msg'=>'ID: ' . $id . ' delete sucessfully.');
 		} else {
 			$err = array('code'=> -1, 'msg'=> 'ID: ' . $id . ' not found');
-			Util::sendResponse(400, json_encode($err));
+			\Ig\Web::sendResponse(400, json_encode($err));
 		}
 	}
 	*/
 	private static function _getFormat($row) {
 		$db = \Ig\Db::getDb();
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		
 		$role = $db->role[$row['role_id']];
 		$attachment = \Ig\File\Attachment::getById($row['attachment_id']);

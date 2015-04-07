@@ -2,7 +2,7 @@
 class Schedule {
 	public static function get() {
 		if(!\Ig\Authorize::isAuthorize('view schedule')) {
-			Util::sendErrorResponse(-1,
+			\Ig\Web::sendErrorResponse(-1,
 					'You are not authorized to view schedule.', 401);
 		}
 		
@@ -19,7 +19,7 @@ class Schedule {
 	
 	public static function getById($id) {
 		if(!\Ig\Authorize::isAuthorize('view schedule')) {
-			Util::sendErrorResponse(-1,
+			\Ig\Web::sendErrorResponse(-1,
 					'You are not authorized to view schedule.', 401);
 		}
 		
@@ -32,12 +32,12 @@ class Schedule {
 	
 	public static function updateBulk() {
 		if(!\Ig\Authorize::isAuthorize('update schedule')) {
-			Util::sendErrorResponse(-1,
+			\Ig\Web::sendErrorResponse(-1,
 					'You are not authorized to update schedule.', 401);
 		}
 		
 		$db = \Ig\Db::getDb();
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		
 		$ids = array();
 		$db->transaction = 'BEGIN';
@@ -85,7 +85,7 @@ class Schedule {
 		$db = \Ig\Db::getDb();
 		$pdo = Util::getPdo();
 		
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		$idd = \Ig\Db::getNextRunningNumber('schedule');
 		
 		//TODO define columns
@@ -111,11 +111,11 @@ class Schedule {
 	
 	public static function put($id) {
 		$db = \Ig\Db::getDb();
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		
 		$schedule = $db->schedule[$id];
 		if(empty($schedule)) {
-			Util::sendErrorResponse(-1, 'Update request rejected. " .
+			\Ig\Web::sendErrorResponse(-1, 'Update request rejected. " .
 				"There is no such record found.');
 		}
 		

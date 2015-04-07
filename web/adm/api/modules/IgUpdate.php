@@ -76,7 +76,7 @@ class IgModUpdate {
 					$className::runScript();
 					\Ig\Db::setKeyValue('update-ver', $update['revision']);
 				} catch(Exception $ex) {
-					Util::sendErrorResponse(-3, "Update process fail: " . $ex->getMessage());
+					\Ig\Web::sendErrorResponse(-3, "Update process fail: " . $ex->getMessage());
 					break;
 				}
 			}

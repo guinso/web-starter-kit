@@ -10,22 +10,22 @@ class AdmLoginREST {
 		try {
 			return AdmLogin::getStatus();
 		} catch(Exception $ex) {
-			Util::sendErrorResponse(-1, $ex->getMessage());
+			\Ig\Web::sendErrorResponse(-1, $ex->getMessage());
 		}
 	}
 	
 	public static function postLogin() {
 		try {
-			$data = Util::getInputData();
+			$data = \Ig\Web::getInputData();
 			$result = AdmLogin::login($data['username'], $data['pwd']);
 			
 			if(!$result)
-				Util::sendErrorResponse(-1, "Login fail, username or password not match.");
+				\Ig\Web::sendErrorResponse(-1, "Login fail, username or password not match.");
 			else 
 				return AdmLogin::getStatus();
 			
 		} catch (Exception $ex) {
-			Util::sendErrorResponse(-1, $ex->getMessage());
+			\Ig\Web::sendErrorResponse(-1, $ex->getMessage());
 		}
 	}
 	
@@ -35,19 +35,19 @@ class AdmLoginREST {
 
 			return AdmLogin::getStatus();
 		} catch (Exception $ex) {
-			Util::sendErrorResponse(-1, $ex->getMessage());
+			\Ig\Web::sendErrorResponse(-1, $ex->getMessage());
 		}
 	}
 	
 	public static function postAccount() {
 		if(!AdmLogin::isLogin())
-			Util::sendErrorResponse(-1, "You are not authorize to update admin account.");
+			\Ig\Web::sendErrorResponse(-1, "You are not authorize to update admin account.");
 		
 		try {
-			$data = Util::getInputData();
+			$data = \Ig\Web::getInputData();
 			AdmLogin::updateAccount($data['username'], $data['newPassword']);
 		} catch(Exception $ex) {
-			Util::sendErrorResponse(-1, $ex->getMessage());
+			\Ig\Web::sendErrorResponse(-1, $ex->getMessage());
 		}
 	}
 }

@@ -26,7 +26,7 @@ class Access {
 	
 	public static function getMatrix() {
 		if(!\Ig\Authorize::isAuthorize('view user')) {
-			Util::sendErrorResponse(-1, 'You are not authorized to view authorization.', null, 401);
+			\Ig\Web::sendErrorResponse(-1, 'You are not authorized to view authorization.', null, 401);
 		}
 		
 		$db = \Ig\Db::getDb();
@@ -86,13 +86,13 @@ class Access {
 
 	public static function updateMatrixGroup($groupId) {
 		if(!\Ig\Authorize::isAuthorize('update user')) {
-			Util::sendErrorResponse(-1, 'You are not authorized.', null, 401);
+			\Ig\Web::sendErrorResponse(-1, 'You are not authorized.', null, 401);
 		}
 		
 		$db = \Ig\Db::getDb();
 		$pdo = Util::getPdo();
 		
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		
 		$functions = $data['functions'];
 		

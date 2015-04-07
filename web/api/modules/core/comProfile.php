@@ -2,26 +2,26 @@
 class ComProfileRest {
 	public static function get() {
 		if(!AdmLogin::isLogin())
-			Util::sendErrorResponse(-1, "You are not authorize to view company profile.");
+			\Ig\Web::sendErrorResponse(-1, "You are not authorize to view company profile.");
 		
 		try {
 			return ComProfile::get();
 		} catch(Exception $ex) {
-			Util::sendErrorResponse(-1, $ex->getMessage());
+			\Ig\Web::sendErrorResponse(-1, $ex->getMessage());
 		}
 	}
 	
 	public static function post() {
 		if(!AdmLogin::isLogin())
-			Util::sendErrorResponse(-1, "You are not authorize to update company profile.");
+			\Ig\Web::sendErrorResponse(-1, "You are not authorize to update company profile.");
 
 		try {
-			$data = Util::getInputData();
+			$data = \Ig\Web::getInputData();
 			ComProfile::update($data);
 			
 			return ComProfile::get();
 		} catch(Exception $ex) {
-			Util::sendErrorResponse(-1, $ex->getMessage());
+			\Ig\Web::sendErrorResponse(-1, $ex->getMessage());
 		}
 	}
 }

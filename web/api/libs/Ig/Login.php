@@ -85,7 +85,7 @@ class Login {
 		
 		$db = \Ig\Db::getDb();
 	 
-		$data = \Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		$username = $data['username'];
 		$password = $data['pwd'];
 		$rememberMe = $data['rememberMe'];
@@ -96,13 +96,13 @@ class Login {
 			->fetch();
 	
 		if(empty($user['id'])) {
-			\Util::sendErrorResponse(-1,
+			\Ig\Web::sendErrorResponse(-1,
 				"Login fail, please check username or password",
 				null, 406);
 		}
 		
 		if($password != $user['password']) {
-			\Util::sendErrorResponse(-1,
+			\Ig\Web::sendErrorResponse(-1,
 				"Login fail, please check username or password",
 				null, 406);
 		}

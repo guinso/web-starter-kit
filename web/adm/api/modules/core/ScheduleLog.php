@@ -2,7 +2,7 @@
 class ScheduleLog {
 	public static function get() {
 		if(!AdmLogin::isLogin()) {
-			Util::sendErrorResponse(-1, 
+			\Ig\Web::sendErrorResponse(-1, 
 				'You are not authorized to view schedule.', 401);
 		}
 		
@@ -28,7 +28,7 @@ class ScheduleLog {
 	
 	public static function getCount() {
 		if(!AdmLogin::isLogin()) {
-			Util::sendErrorResponse(-1,
+			\Ig\Web::sendErrorResponse(-1,
 					'You are not authorized to view schedule.', 401);
 		}
 		
@@ -43,7 +43,7 @@ class ScheduleLog {
 	
 	public static function getById($id) {
 		if(!AdmLogin::isLogin()) {
-			Util::sendErrorResponse(-1,
+			\Ig\Web::sendErrorResponse(-1,
 					'You are not authorized to view schedule.', 401);
 		}
 		
@@ -58,7 +58,7 @@ class ScheduleLog {
 		$db = \Ig\Db::getDb();
 		$pdo = Util::getPdo();
 		
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		$idd = \Ig\Db::getNextRunningNumber('log_schedule');
 		
 		//TODO define columns
@@ -77,11 +77,11 @@ class ScheduleLog {
 		$db = \Ig\Db::getDb();
 		$pdo = Util::getPdo();
 		
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		$schLog = $db->log_schedule[$id];
 
 		if(empty($schLog))
-			Util::sendErrorResponse(-1, "Schedule Log $id not found in record.");
+			\Ig\Web::sendErrorResponse(-1, "Schedule Log $id not found in record.");
 
 		//TODO define columns
 		$item = array(

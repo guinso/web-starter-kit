@@ -34,7 +34,7 @@ class Func {
 		$db = \Ig\Db::getDb();
 		$pdo = Util::getPdo();
 		
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		$idd = \Ig\Db::getNextRunningNumber('function');
 		
 		//TODO define columns
@@ -54,11 +54,11 @@ class Func {
 		$db = \Ig\Db::getDb();
 		$pdo = Util::getPdo();
 		
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		$function = $db->function[$id];
 
 		if(empty($function))
-			Util::sendErrorResponse(-1, "Function $id not found in record.");
+			\Ig\Web::sendErrorResponse(-1, "Function $id not found in record.");
 
 		//define columns
 		$item = array(

@@ -50,7 +50,7 @@ class Scheduler {
 		if(empty($sch['id']))
 			return;
 		/*
-		Util::sendErrorResponse(1, 'Dump evaluate', array(
+		\Ig\Web::sendErrorResponse(1, 'Dump evaluate', array(
 			'month' => self::_dumpEvaluate($month, $sch['month']),
 			'weekday' => self::_dumpEvaluate($weekday, $sch['weekday']),
 				'day' => self::_dumpEvaluate($day, $sch['day']),

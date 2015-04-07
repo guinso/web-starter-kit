@@ -17,11 +17,11 @@ class Role {
 
 	public static function putBulk() {
 		if(!AdmLogin::isLogin()) {
-			Util::sendErrorResponse(-1, 'You are not authorized to update role.', 401);
+			\Ig\Web::sendErrorResponse(-1, 'You are not authorized to update role.', 401);
 		}
 		
 		$db = \Ig\Db::getDb();
-		$data = Util::getInputData();
+		$data = \Ig\Web::getInputData();
 		
 		$db->transaction = 'BEGIN';
 		foreach ($data as $item) {

@@ -2,24 +2,24 @@
 class SysProfileRest {
 	public static function get() {
 		if(!AdmLogin::isLogin())
-			Util::sendErrorResponse(-1, "You are not authorize to view system profile.");
+			\Ig\Web::sendErrorResponse(-1, "You are not authorize to view system profile.");
 		
 		try {
 			return SysProfile::get();
 		} catch(Exception $ex) {
-			Util::sendErrorResponse(-1, $ex->getMessage());
+			\Ig\Web::sendErrorResponse(-1, $ex->getMessage());
 		}
 	}
 	
 	public static function post() {
 		if(!AdmLogin::isLogin())
-			Util::sendErrorResponse(-1, "You are not authorize to update system profile.");
+			\Ig\Web::sendErrorResponse(-1, "You are not authorize to update system profile.");
 		
 		try {
-			$data = Util::getInputData();
+			$data = \Ig\Web::getInputData();
 			SysProfile::update($data);
 		} catch(Exception $ex) {
-			Util::sendErrorResponse(-1, $ex->getMessage());
+			\Ig\Web::sendErrorResponse(-1, $ex->getMessage());
 		}
 	}
 }
