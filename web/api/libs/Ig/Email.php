@@ -130,7 +130,7 @@ public static function queueEmail($tos, $ccs, $bccs, $subject, $message, $attach
 		'subject' => $subject,
 		'msg' => $message,
 		'attchs' => serialize($attachments),
-		'last_update' => \\Ig\Date::getDatetime(),
+		'last_update' => \Ig\Date::getDatetime(),
 		'status' => 1, //not start yet
 		'attempt' => 0
 	);
@@ -182,13 +182,13 @@ public static function runQueue() {
 	$attempt = intVal($raw['attempt']) + 1;
 	if($result['success']) {
 		$raw->update(array(
-			'last_update' => \\Ig\Date::getDatetime(),
+			'last_update' => \Ig\Date::getDatetime(),
 			'status' => 2, //success
 			'attempt' => $attempt
 		));
 	} else {
 		$raw->update(array(
-			'last_update' => \\Ig\Date::getDatetime(),
+			'last_update' => \Ig\Date::getDatetime(),
 			'status' => 3, //fail
 			'attempt' => $attempt,
 			'error_msg' => $result['error']

@@ -75,7 +75,7 @@ class Scheduler {
 				$item = array(
 						'id' => $idd,
 						'func' => $func,
-						'start' => \Ig\Date::getDatetime(),
+						'start' =>  \Ig\Date::getDatetime(),
 						'status' => 1
 				);
 				$db->log_schedule()->insert($item);
@@ -103,7 +103,7 @@ class Scheduler {
 					$db->log_schedule[$idd]->delete();
 				} else {
 					$x = array(
-						'end' => \Ig\Date::getDatetime(),
+						'end' =>  \Ig\Date::getDatetime(),
 						'status' => $success? 2 : 3,
 						'fail_msg' => $msg
 					);
@@ -127,7 +127,7 @@ class Scheduler {
 			
 			if($now - $startTime > self::$timeoutBuffer) {
 				$row->update(array(
-					'end' => \Ig\Date::getDatetime(),
+					'end' =>  \Ig\Date::getDatetime(),
 					'status' => 3,
 					'fail_msg' => 'Consider failed due to timeout.'
 				));

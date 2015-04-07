@@ -55,7 +55,7 @@ class Login {
 			
 			//update last access time to keep alive
 			$x = $db->login[$login['id']];
-			$x->update(array('last_access' => \\Ig\Date::getDatetime()));
+			$x->update(array('last_access' => \Ig\Date::getDatetime()));
 		}
 	}
 	
@@ -63,7 +63,7 @@ class Login {
 	 * Check all login records, force logout if timeout from allowed threshold
 	 */
 	public static function checkLogin() {
-		$now = strtotime(\\Ig\Date::getDatetime());
+		$now = strtotime(\Ig\Date::getDatetime());
 		$db = \Ig\Db::getDb();
 		
 		$raw = $db->login->where('logout IS NULL');
@@ -74,7 +74,7 @@ class Login {
 			
 			if($diff > self::$maxLife) {
 				$row->update(array(
-					'logout' => \\Ig\Date::getDatetime(), 
+					'logout' => \Ig\Date::getDatetime(), 
 					'remarks' => 'timeout'));
 			}
 		}
@@ -144,7 +144,7 @@ class Login {
 			$token = self::_createToken($userId);
 			
 			$idd = \Ig\Db::getNextRunningNumber('login');
-			$time = \\Ig\Date::getDatetime();
+			$time = \Ig\Date::getDatetime();
 			$tmp = array(
 					'id' => $idd,
 					'user_id' => $userId,
@@ -181,7 +181,7 @@ class Login {
 		//logout record
 		foreach($x as $xx) {
 			$tmp = array(
-				'logout' => \\Ig\Date::getDatetime(),
+				'logout' => \Ig\Date::getDatetime(),
 				'remarks' => $remarks
 			);
 			
