@@ -22,7 +22,7 @@ require_once ADM_API_DIR . '/api.php';
 
 function home() {
 	echo 'Web Admin.<br/>';
-	echo Util::getDate() . "<br/>";
+	echo \Ig\Date::getDate() . "<br/>";
 }
 
 /********************* Execute ***********************/

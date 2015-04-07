@@ -43,7 +43,7 @@ class Log {
 		}
 	
 		if(empty($datetime))
-			$datetime = \Util::getDateTime();
+			$datetime = \\Ig\Date::getDatetime();
 	
 		/*
 			//skip if no changes
