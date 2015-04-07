@@ -27,7 +27,7 @@ class Date {
 	
 		$y = floor($weekSpan / 52);
 	
-		$date = new DateTime();
+		$date = new \DateTime();
 		$date->setISODate($y, $w);
 		return $date->format('Y-m-d');
 	}
@@ -50,24 +50,24 @@ class Date {
 	 * @param String $date
 	 */
 	public static function offsetToMonday($date, $dateformat = 'Y-m-d') {
-		$datetime = new DateTime($date);
+		$datetime = new \DateTime($date);
 		$diff = date('N', strtotime($date)) - 1;
 	
-		$dateInterval = new DateInterval("P".$diff."D");
+		$dateInterval = new \DateInterval("P".$diff."D");
 		$datetime->sub($dateInterval);
 	
 		return $datetime->format($dateformat);
 	}
 	
 	public static function offsetDate($date, $diff, $dateformat = 'Y-m-d') {
-		$datetime = new DateTime($date);
+		$datetime = new \DateTime($date);
 	
 		if($diff < 0) {
 			$diff *= -1;
-			$dateInterval = new DateInterval("P".$diff."D");
+			$dateInterval = new \DateInterval("P".$diff."D");
 			$datetime->sub($dateInterval);
 		} else {
-			$dateInterval = new DateInterval("P".$diff."D");
+			$dateInterval = new \DateInterval("P".$diff."D");
 			$datetime->add($dateInterval);
 		}
 	
