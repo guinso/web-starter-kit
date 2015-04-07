@@ -8,6 +8,9 @@ namespace Ig\Pdf;
  *
  */
 class PdfReport {
+	const OUTPUT_OPEN = 1;
+	const OUTPUT_DOWNLOAD = 2;
+	const OUTPUT_PRINT = 3;
 
 	private static function _getDefaultDocParam() {
 		return array(
@@ -122,9 +125,9 @@ class PdfReport {
 	 * Generate PDF based on template file and array data
 	 * @param array $data			mix associate array
 	 * @param string $template		template file path
-	 * @param string $outputMode	TCPDF output mode: I, O
+	 * @param string $outputMode	1 is open, 2 is download, 3 is print
 	 */
-	public static function generatePdf($pdm, $title, $outputMode = 'I') {
+	public static function generatePdf($pdm, $title, $outputMode = self::OUTPUT_OPEN) {
 		//generate IG Pdf Document Markup
 		//x $pdm = self::_generatePdm($data, $template);
 
@@ -179,7 +182,23 @@ class PdfReport {
 		}
 		
 		//5.  output buffer
-		$pdf->Output($title . '.pdf', $outputMode);
+		$out = '';
+		switch($outputMode) {
+			case 1: 
+				$out = 'I';
+				break;
+			case 2: 
+				$out = 'D';
+				break;
+			case 3: 
+				$out = 'I';
+				$pdf->IncludeJS("print();");
+				break;
+			default: 
+				$out = 'I';
+				break;
+		}
+		$pdf->Output($title . '.pdf', $out);
 	}
 
 	/**
