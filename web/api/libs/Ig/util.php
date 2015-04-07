@@ -226,24 +226,6 @@ public static function recursiveDir(
 	}
 }
 
-
-
-/**
- * Get predefined temporary directory
- * NOTE: make sure the directory is readable and writable to Apache web-server (www-data)
- */
-public static function getTemporaryDirectory() {
-	return self::$tempPath;
-}
-
-/**
- * Get predefined template directory
- * NOTE: make sure the directory is readable to Apache web-server (www-data)
- */
-public static function getTemplateDirectory() {
-	return self::$tplPath;
-}
-
 /**
  * Get server host name with support reverse proxy request as well
  * @return string
