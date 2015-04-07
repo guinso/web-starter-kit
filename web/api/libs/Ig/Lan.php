@@ -1,13 +1,12 @@
 <?php 
 namespace Ig;
+
 class Lan {	
 	/**
 	 * Get server's web language code
 	 */
 	public static function getLanCode() {
-		$serverId = Util::getServerUUID();
-	
-		return \Ig\Db::getKeyValue('lan_code_' . $serverId, 'en');
+		return \Ig\Db::getKeyValue('lan_code', 'en');
 	}
 	
 	/**
@@ -15,15 +14,13 @@ class Lan {
 	 * @param String $lanCode
 	 */
 	public static function setLanCode($lanCode = 'en') {
-		$serverId = Util::getServerUUID();
-	
 		//check database exist or not
 		$db = \Ig\Db::getDb();
 		$cnt = $db->lan_code()->where('code = ?', $lanCode)->count('*');
 		if($cnt == 0) {
 			\Ig\Web::sendErrorResponse(406, -1, "There is no such language code in database <" . $lanCode . ">");
 		} else {
-			\Ig\Db::setKeyValue('lan_code_' . $serverId, $lanCode);
+			\Ig\Db::setKeyValue('lan_code', $lanCode);
 		}
 	}
 	

@@ -14,7 +14,7 @@ class JsCompact {
 		if(!$append)
 			file_put_contents($destFile, '');
 		
-		Util::recursiveDir(
+		\Ig\Util::recursiveDir(
 			$directory,
 			function($filePath) use($destFile){
 				if($filePath != $destFile) {

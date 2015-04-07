@@ -1,9 +1,7 @@
 <?php
-class Util {
+namespace Ig;
 
-public static function getServerUUID() {
-	return self::getKeyValue('server_id', uniqid());
-}
+class Util {
 
 /**
  * Recursive a directory and excecute anonymous function once file name matched regular expression

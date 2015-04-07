@@ -9,7 +9,7 @@ include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'loader.php';
 /********************** Load Modules ********************************/
 
 //load all module files
-Util::recursiveDir(
+\Ig\Util::recursiveDir(
 		API_DIR . '/modules',
 		function($filePath){
 	include_once $filePath;

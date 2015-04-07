@@ -102,7 +102,7 @@ if ((\Ig\Config::getConfig('serverurl'))) {
 	$serverHostUrl = \Ig\Config::getConfig('serverurl');
 }
 else {
-	$serverHostUrl = substr(\Util::getServerUrl(), 0, -4);
+	$serverHostUrl = substr(\Ig\Util::getServerUrl(), 0, -4);
 }
 define('SERVER_URL', $serverHostUrl); //to remove '/api'
 define('SERVER_ADM_URL', SERVER_URL . '/adm');

@@ -10,7 +10,7 @@ include $dir . DIRECTORY_SEPARATOR . 'api' . DIRECTORY_SEPARATOR . 'loader.php';
 /********************** Modules ***********************/
 
 //automatic load all module files
-Util::recursiveDir(
+\Ig\Util::recursiveDir(
 	ADM_API_DIR . '/modules',
 	function($filePath){
 		include_once $filePath;
