@@ -43,6 +43,14 @@
 	<h4>Site</h4>
 	<form class='form-horizontal' role='form' name='maintenanceForm' ng-submit='misc.saveMisc()'>
 		<div class='form-group'>
+			<label class='col-md-4 control-label'>Server URL</label>
+			<div class='col-md-4' ng-class="{'has-error' : maintenanceForm.serUrl.$invalid}">
+			    <input 	class='form-control' 
+			            type='text' name='serUrl'
+						ng-model='misc.item.serverurl'>
+			</div>
+		</div>
+		<div class='form-group'>
 			<label class='col-md-4 control-label'>Put site to maintenance</label>
 			<div class='checkbox col-md-8' ng-class="{'has-error' : maintenanceForm.maintenance.$invalid}">
 			    <input 	

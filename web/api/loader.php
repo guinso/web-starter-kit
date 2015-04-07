@@ -70,10 +70,6 @@ Epi::setPath('base', API_DIR . DS . 'libs' . DS . 'epiphany');
 Epi::init('api');
 Epi::setSetting('exceptions', true);
 
-/**************** Server URL ****************************/
-define('SERVER_URL', substr(Util::getServerUrl(), 0, -4)); //to remove '/api'
-define('SERVER_ADM_URL', SERVER_URL . '/adm');
-
 /*************** CORE AND CONFIGURATION ****************/
 \Ig\Config\Loader::configure(API_DIR . DS . 'config.php');
 $setting = \Ig\Config::getProfile();
@@ -99,6 +95,16 @@ if(\Ig\Config::getConfig('debugEmail')) {
 
 //timezone
 date_default_timezone_set($setting->timeZone);
+
+/**************** Server URL ****************************/
+if ((\Ig\Config::getConfig('serverurl'))) {
+	$serverHostUrl = \Ig\Config::getConfig('serverurl');
+}
+else {
+	$serverHostUrl = substr(\Util::getServerUrl(), 0, -4);
+}
+define('SERVER_URL', $serverHostUrl); //to remove '/api'
+define('SERVER_ADM_URL', SERVER_URL . '/adm');
 
 //template engine
 $config = array(

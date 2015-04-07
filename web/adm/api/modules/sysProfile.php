@@ -33,7 +33,7 @@ class SysProfile {
 			$result[$key] = \Ig\Config::getProfile($key)->get();
 		}
 		
-		$defaultKey = \Ig\Config\getDefaultProfileKey();
+		$defaultKey = \Ig\Config::getDefaultProfileKey();
 		
 		return array(
 			'items' => $result,
