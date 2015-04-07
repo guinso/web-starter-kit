@@ -1,7 +1,4 @@
 <?php 
-$igDir = dirname(__FILE__);
-
-require_once $igDir . DIRECTORY_SEPARATOR . 'util.php';
 
 //implement PSR-4 autoloading
 function IgAutoload($className)
