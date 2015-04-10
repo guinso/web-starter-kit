@@ -316,8 +316,11 @@ class Login {
 	private static function _getTokenValue() 
 	{
 		$tokenKey = self::_getTokenKey();
-		
-		return $_COOKIE[$tokenKey];
+
+		if (isset($_COOKIE[$tokenKey]))
+			return $_COOKIE[$tokenKey];
+		else 
+			return '';
 	}
 }
 ?>
