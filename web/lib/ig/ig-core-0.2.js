@@ -302,7 +302,7 @@ service('$util', ['$resource', '$http', function($resource, $http) {
 		}
     };
     
-    this.setMsg = function(msg, status) {
+    var setMessage = function(msg, status) {
 		
 		var statusType = 'info';
 		switch(status) {
@@ -324,6 +324,8 @@ service('$util', ['$resource', '$http', function($resource, $http) {
 		});
 	};
 	
+    this.setMsg = setMessage;
+	
 	this.handleErrorMsg = function(response) {
 		var code = response.status;
 		var err = response.data;
@@ -335,9 +337,9 @@ service('$util', ['$resource', '$http', function($resource, $http) {
 		}
 		
 		if(code == 500) {
-			this.setMsg('error code 500: internal server error, please contact system administration.', 'error');
+			setMessage('error code 500: internal server error, please contact system administration.', 'error');
 		} else {
-			this.setMsg('error code ' + internalCode + ': ' + internalMsg, 'error');
+			setMessage('error code ' + internalCode + ': ' + internalMsg, 'error');
 		}
 	};
 }]);
