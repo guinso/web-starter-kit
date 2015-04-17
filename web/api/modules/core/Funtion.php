@@ -71,6 +71,71 @@ class Func {
 
 		return self::getById($idd);
 	}
+	
+	/**
+	 * Add function group
+	 * @param string $groupName
+	 * @param number $weight
+	 * @throws \Exception
+	 * @return string	system id of fucntino group
+	 */
+	public static function addFunctionGroup($groupName, $weight = 0) {
+		$db = \Ig\Db::getDb();
+		$id = \Ig\Db::getNextRunningNumber('function_group');
+		
+		$cnt = $db->function_group
+			->where('name', $groupName)
+			->count('*');
+		
+		if ($cnt > 0)
+			Throw new \Exception(
+				"function_group already have $groupName record.");
+		
+		$db->function_group->insert(array(
+			'id' => $id,
+			'name' => $groupName,
+			'weight' => intval($weight)
+		));
+		
+		return $id;
+	}
+	
+	/**
+	 * Add fucntion access record
+	 * @param string $name
+	 * @param string $groupName
+	 * @param number $weight
+	 * @throws \Exception
+	 * @return string
+	 */
+	public static function addFunction($name, $groupName, $weight = 0) {
+		$db = \Ig\Db::getDb();
+		
+		$cnt = $db->function->where('name', $name)->count('*');
+		if ($cnt > 0)
+			Throw new \Exception(
+				"Datatable <function> already have $name");
+		
+		$x = $db->function_group
+			->where('name', $groupName)
+			->fetch();
+		
+		if (empty($x['id']))
+			Throw new \Exception(
+				"function_group with <$groupName> not found in record.");
+		
+		$id = \Ig\Db::getNextRunningNumber('function');
+		
+		$db->function->insert(array(
+			'id' => $id,
+			'name' => $name,
+			'group_id' => $x['id'],
+			'weight' => intval($weight)
+		));
+		
+		return self::getById($id);
+	}
+	
 	/*
 	public static function cancel($id) {
 		$db = \Ig\Db::getDb();
@@ -87,6 +152,7 @@ class Func {
 		return self::getById($id);
 	}
 	*/
+	
 	private static function _getFormat($row) {
 		$db = \Ig\Db::getDb();
 		
