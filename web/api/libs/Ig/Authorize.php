@@ -8,6 +8,8 @@ namespace Ig;
  */
 class Authorize {
 		
+	private static $_accessCache;
+	
 	/**
 	 * Determine current login user is authorize to targeted access(s)
 	 * @param array $functioNames
@@ -15,17 +17,57 @@ class Authorize {
 	 */
 	public static function isAuthorize2($functionNames) 
 	{
-		$user = \Ig\Login::getCurrentUser();
+		//x $user = \Ig\Login::getCurrentUser();
 		
-		return self::_isAuthorizeByUser($user['userId'], $functionNames);
+		//x return self::_isAuthorizeByUser($user['userId'], $functionNames);
+		
+		return self::_isAuthorize($functionNames);
 	}
 	
 	public static function isAuthorize() 
 	{
 		$functionNames = func_get_args();
-		$user = \Ig\Login::getCurrentUser();
+		//x $user = \Ig\Login::getCurrentUser();
 		
-		return self::_isAuthorizeByUser($user['userId'], $functionNames);
+		//x return self::_isAuthorizeByUser($user['userId'], $functionNames);
+		
+		return self::_isAuthorize($functionNames);
+	}
+	
+	private static function _isAuthorize($functionNames) {
+		if(empty(self::$_accessCache)) {
+			self::$_accessCache = self::_buildAccessList();
+		}
+		
+		$cnt = 0;
+		foreach ($functionNames as $f) {
+			if (array_key_exists($f, self::$_accessCache) && 
+				self::$_accessCache[$f] == true)
+				$cnt += 1;
+		}
+		
+		return $cnt > 0;
+	}
+	
+	private static function _buildAccessList() {
+		
+		$user = \Ig\Login::getCurrentUser();
+		$roleId = $user['roleId'];
+		
+		$pdo = \Ig\Db::getPDO();
+		$sql = "SELECT a.*, b.name 
+				FROM access a 
+				JOIN function b ON a.function_id = b.id 
+				WHERE a.role_id = :roleId";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute(array(':roleId' => $roleId));
+		
+		$result = array();
+		foreach ($stmt as $raw) {
+			$result[$raw['name']] = intval($raw['authorize']) == 1;
+		}
+		
+		return $result;
 	}
 	
 	public static function isAuthorizeByUser($userId, $functionNames) 
