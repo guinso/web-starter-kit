@@ -119,6 +119,48 @@ class Authorize {
 		return $result;
 	}
 	
+	public static function getAuthorizeRole2($functionNames)
+	{
+		return self::_getAuthorizeRole($functionNames);
+	}
+	
+	public static function getAuthorizeRole()
+	{
+		$functionNames = func_get_args();
+	
+		return self::_getAuthorizeRole($functionNames);
+	}
+	
+	private static function _getAuthorizeRole($functionNames)
+	{
+		$pdo = \Ig\Db::getPDO();
+	
+		$params = array();
+		$cnt = 0;
+		$x = array();
+	
+		foreach ($functionNames as $fn) {
+			$x[] = ':f' . $cnt;
+			$params[':f' . $cnt] = $fn;
+			$cnt++;
+		}
+	
+		$inQuery = implode(',', $x);
+		$sql = "SELECT a.* FROM access a
+			JOIN function c ON a.function_id = c.id
+			WHERE 	c.name IN (".$inQuery.") AND
+					a.authorize = 1";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute($params);
+	
+		$result = array();
+		foreach ($stmt as $row) {
+			$result[] = $row['role_id'];
+		}
+	
+		return $result;
+	}
+	
 	private static function _getUserFormat($row) 
 	{
 		return array(
