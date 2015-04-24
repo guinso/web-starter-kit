@@ -41,7 +41,7 @@ class Recipe {
 		$this->dbName = $dbName;
 		$this->dbHost = $dbHost;
 
-		$this->dsm = "mysql:dbname=$dbName;host=$dbHost;charset=utf8";
+		$this->dsm = "mysql:dbname=$dbName;host=$dbHost;charset=utf8mb4";
 		$this->dbUsr = $dbUsr;
 		$this->dbPwd = $dbPwd;
 
