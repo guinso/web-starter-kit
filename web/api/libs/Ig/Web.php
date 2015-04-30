@@ -158,6 +158,21 @@ class Web {
 		return $entityBody;
 	}
 	
+	public static function getJson($keyName, $method = 'POST') {
+		if($method == 'GET')
+			$raw = $_GET[$keyName];
+		else
+			$raw = $_POST[$keyName];
+			
+		$obj = json_decode($raw, true);
+		
+		if(is_array($obj)) {
+			self::recurArrayTrimString($obj);
+		}
+		
+		return $obj;
+	}
+	
 	private static function recurArrayTrimString(array &$arr) 
 	{
 		$cnt = count($arr);

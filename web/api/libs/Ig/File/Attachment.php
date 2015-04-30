@@ -79,46 +79,105 @@ class Attachment {
 	 */
 	public static function uploadFile() 
 	{
-		if ($_FILES["file"]["error"] > 0) {
-			\Ig\Web::sendErrorResponse(
-				-1,
-				'Submit upload file error: ' . $_FILES["file"]["error"]);
+		try {
+			$attachment = self::_handleUplaodFile($_FILES['file']);
+		
+			return $attachment;
+			
+		} catch (\Exception $ex) {
+			\Ig\Web::sendErrorResponse(-1, 'Upload Exception:- ' . $ex->getMessage());
 		}
+	}
 	
+	/**
+	 * Handle multiple upload files from HTTP post
+	 * Not support array of files yet
+	 */
+	public static function multipleUploadFile() {
+		$result = array();
+		
+		try {
+			foreach($_FILES as $key => $f) {
+				$attachment = self::_handleUplaodFile($f);
+				
+				$result[$key] = $attachment;
+			}
+			
+			return $result;
+		} catch (\Exception $ex) {
+			\Ig\Web::sendErrorResponse(-1, 'Multiple upload Exception:- ' . $ex->getMessage());
+		}
+		
+	}
+	
+	public static function registerAttachment($keyName) {
+		return self::_handleUplaodFile($_FILES[$keyName]);
+	}
+	
+	/**
+	 * Register uplaod file into attachment record
+	 * @return attachment record or an array of attachment records
+	 */
+	private static function _handleUplaodFile($file)
+	{
+		$result = null;
+		
+		//check input is array fashion or single fashion
+		if(is_array($file['name'])) {
+			$result = array();
+			
+			$cnt = COUNT($file['name']);
+			for($i = 0; $i < $cnt; $i++) {
+				$result[] = self::_registerAttachment(
+					$file['error'][$i],
+					$file['name'][$i],
+					$file['tmp_name'][$i]
+				);
+			}
+		} else {
+			$result = self::_registerAttachment(
+				$file['error'],
+				$file['name'],
+				$file['tmp_name']
+			);
+		}
+		
+		return $result;
+	}
+	
+	private static function _registerAttachment($error, $name, $tmpName) {
+		if ($error > 0) {
+			Throw new \Exception('Submit upload file error: ' . $error);
+		}
+		
 		//check directory exist of not
 		if(!is_dir(self::$directory)) {
-			\Ig\Web::sendErrorResponse(
-				-1,
-				'Directory not found! please set properly.');
+			Throw new \Exception('Targeted directory not found, please contact system admin.');
 		}
-	
+		
 		if(!is_writable(self::$directory)) {
-			\Ig\Web::sendErrorResponse(
-				-1,
-				'Targeted directory is not writtable for server.');
+			Throw new \Exception('Targeted directory is not writtable, please contact system admin.');
 		}
-	
+		
 		$guid = uniqid();
-		$uniqueFile = $guid . '-' . $_FILES["file"]["name"];
+		$uniqueFile = $guid . '-' . $name;
 		$var = move_uploaded_file(
-			$_FILES["file"]["tmp_name"],
+			$tmpName,
 			self::$directory .DIRECTORY_SEPARATOR. $uniqueFile);
-	
+		
 		if ($var == false) {
-			\Ig\Web::sendErrorResponse(
-				-1,
-				'Internal move file failed. Please check directory permission.');
+			Throw new \Exception('Internal move file failed. Please check directory permission.');
 		}
 		
 		$db = \Ig\Db::getDb();
 		$id = \Ig\Db::getNextRunningNumber('attachment');
 		$db->attachment->insert(array(
 			'id' => $id,
-			'filename' => $_FILES["file"]["name"],
+			'filename' => $name,
 			'filepath' => $uniqueFile,
 			'guid' => $guid
 		));
-	
+		
 		return self::getById($id);
 	}
 	
@@ -143,7 +202,6 @@ class Attachment {
 			$attachment['filename']);
 	}
 	
-
 	private static function _getFormat($row) 
 	{
 		return array(

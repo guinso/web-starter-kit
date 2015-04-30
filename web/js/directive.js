@@ -51,17 +51,18 @@ angular.module('MyApp').run(["$templateCache", function($templateCache) {
 		"		size='40'  " +
 		"		onchange='angular.element(this).scope().fileChange($(this).val())'>" +
 		"	</a>&nbsp;" +
-		"	<span ng-bind='targetFileName'></span>" +
+		"	<div><span ng-bind='targetFileName'></span></div>" +
 		"</div>" +
 
 		"<div ng-show='fileName'>" +
+		"	<button type='button' class='btn btn-default' " +
+		"		ng-hide='hideRemove'" +
+		"		ng-click='removeFile()'>Remove File" +
+		"	</button>" +
 		"	<a 	ng-href='{{fileUrl + fileGuid}}' " +
 		"		ng-bind='fileName' " +
 		"		style='padding-left:15px;padding-top:7px;'>" +
 		"	</a>" +
-		"	<button type='button' class='btn btn-default' " +
-		"		ng-click='removeFile()'>Remove File" +
-		"	</button>" +
 		"</div>"
 	);
 	
@@ -96,7 +97,31 @@ angular.module('MyApp').run(["$templateCache", function($templateCache) {
 			"		ng-click='removeFile()'>Remove File " +
 			"	</button>" +
 			"</div>"
-		);
+	);
+	
+	$templateCache.put("modulez/myapp-filepicker-arr.html",
+		"<div class='form-group'>" +
+		"	<button class='btn btn-default' ng-click='addAttachment($event)'>Add attachment</button>" +
+		"</div>" +
+		"<div ng-repeat='r in attachment' class='form-group'>" +
+		"<div class='col-md-1'>" +
+		"	<button type='button' " +
+		"		class='btn btn-default' " +
+		"		ng-click='removeAttachment(r)'>" +
+		"		<span class='red glyphicon glyphicon-remove'></span>" +
+		"	</button>" +
+		"</div>" +
+		"<div class='col-md-11'>" +
+		"	<div file-picker-2 " +
+		"		hide-remove='true'" +
+		"		file-model='r.fileModel'" +
+		"		file-name='r.attachment.filename'" +
+		"		file-guid='r.attachment.guid'" +
+		"		file-id='r.attachmentId'" +
+		"		file-url='fileUrl'></div>" +
+		"	</div>" +
+		"</div>"
+	);
 }]).
 
 directive('fileUpload', ['$parse', function ($parse) {
@@ -163,7 +188,8 @@ directive('filePicker2', function() {
 			fileName: '=',
 			fileGuid: '=',
 			fileUrl: '=',
-			fileId: '='
+			fileId: '=',
+			hideRemove: '='
 		},
 		link: f,
 		templateUrl: 'modulez/myapp-filepicker2.html'
@@ -196,5 +222,33 @@ directive('filePickerImg', function() {
 		},
 		link: f,
 		templateUrl: 'modulez/myapp-filepicker-img.html'
+	};
+}).
+
+directive('filePickerArr', function() {
+	function f(scope, element, attrs) {
+
+		scope.removeAttachment = function(item) {
+			
+			var cnt = scope.attachment.indexOf(item);
+			
+			scope.attachment.splice(cnt, 1);
+		};
+		
+		scope.addAttachment = function(e) {
+			e.preventDefault();
+			
+			scope.attachment.push({});
+		};
+	}
+	
+	return {
+		restrict: 'A',
+		scope: {
+			attachment: '=',
+			fileUrl: '=',
+		},
+		link: f,
+		templateUrl: 'modulez/myapp-filepicker-arr.html'
 	};
 });

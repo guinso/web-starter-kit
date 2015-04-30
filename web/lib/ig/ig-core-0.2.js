@@ -220,6 +220,74 @@ service('$util', ['$resource', '$http', function($resource, $http) {
 		});
     };
 	this.uploadFile = uf;
+	
+	var mpost = function(url, vars, files, sccessCallback, failCallback){
+
+		var fd = new FormData();
+		
+		angular.forEach(vars, function(value, key){
+			fd.append(key, JSON.stringify(value));
+		});
+		
+		angular.forEach(files, function(value, key){
+			if(value instanceof Array) {
+				var cnt = value.length;
+				for(var i=0; i < cnt; i++) {
+					fd.append(key + '[' + i + ']', value[i]);
+				}
+			} else {
+				fd.append(key, value);
+			}
+		});
+		
+		$http.post(url, fd, {
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		})
+		.success(function(response) {
+			if(sccessCallback)
+				sccessCallback(response);
+		})
+		.error(function(response) {
+			if(failCallback)
+				failCallback(response);
+		});
+    };
+    this.mixPost = mpost;
+    
+    var mput = function(url, vars, files, sccessCallback, failCallback){
+
+		var fd = new FormData();
+		
+		angular.forEach(vars, function(value, key){
+			fd.append(key, JSON.stringify(value));
+		});
+		
+		angular.forEach(files, function(value, key){
+			if(value instanceof Array) {
+				var cnt = value.length;
+				for(var i=0; i < cnt; i++) {
+					fd.append(key + '[' + i + ']', value[i]);
+				}
+			} else {
+				fd.append(key, value);
+			}
+		});
+		
+		$http.put(url, fd, {
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		})
+		.success(function(response) {
+			if(sccessCallback)
+				sccessCallback(response);
+		})
+		.error(function(response) {
+			if(failCallback)
+				failCallback(response);
+		});
+    };
+    this.mixPut = mput;
     
 	this.countAndQuery = function(cntUrl, url, query, successCallback, errorCallback) {
 
@@ -301,7 +369,7 @@ service('$util', ['$resource', '$http', function($resource, $http) {
 			);
 		}
     };
-    
+
     var setMessage = function(msg, status) {
 		
 		var statusType = 'info';
@@ -329,10 +397,10 @@ service('$util', ['$resource', '$http', function($resource, $http) {
 	this.handleErrorMsg = function(response) {
 		var code = response.status;
 		var err = response.data;
-		var internalCode = err.code;
-		var internalMsg = err.msg;
+		var internalCode = err? err.code : 'unavailable';
+		var internalMsg = err? err.msg : 'unavailable';
 		
-		if(err.attachment) {
+		if(err && err.attachment) {
 			console.info(err.attachment);
 		}
 		
