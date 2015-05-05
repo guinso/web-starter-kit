@@ -1,0 +1,11 @@
+<?php 
+namespace Hx\File\Compare;
+
+class SimpleCompare implements \Hx\File\CompareInterface {
+	
+	public function compare($baseDir, $compareDir)
+	{
+		
+	}
+}
+?>

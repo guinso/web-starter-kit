@@ -4,21 +4,21 @@
 //x ini_set( 'display_errors','1');
 
 /********************** library and settings **********/
-$dir = dirname(dirname(dirname(__FILE__)));
-include $dir . DIRECTORY_SEPARATOR . 'api' . DIRECTORY_SEPARATOR . 'loader.php';
+$dir = dirname(dirname(dirname(dirname(__FILE__))));
+include $dir . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 /********************** Modules ***********************/
 
 //automatic load all module files
 \Ig\Util::recursiveDir(
-	ADM_API_DIR . '/modules',
+	dirname(__FILE__) . DIRECTORY_SEPARATOR . 'modules',
 	function($filePath){
 		include_once $filePath;
 	}, 
 	'/^.+\.php$/');
 
 //place API definition here
-require_once ADM_API_DIR . '/api.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'api.php';
 
 function home() {
 	echo 'Web Admin.<br/>';

@@ -2,12 +2,12 @@
 class JsCompact {
 	
 	public static function minimizeJs() {
-		$destFile = ROOT_DIR . DIRECTORY_SEPARATOR . 
+		$destFile = \Ig\Config\Loader::getRootPath() . DIRECTORY_SEPARATOR . 
 					'deploy' . DIRECTORY_SEPARATOR . 'app.min.js';
 		
 		file_put_contents($destFile, '');
-		self::compact(ROOT_DIR . DIRECTORY_SEPARATOR . 'partials', $destFile, true);
-		self::compact(ROOT_DIR . DIRECTORY_SEPARATOR . 'modules', $destFile, true);
+		self::compact(\Ig\Config\Loader::getRootPath() . DIRECTORY_SEPARATOR . 'partials', $destFile, true);
+		self::compact(\Ig\Config\Loader::getRootPath() . DIRECTORY_SEPARATOR . 'modules', $destFile, true);
 	}
 	
 	public static function compact($directory, $destFile, $append = false) {
