@@ -11,22 +11,16 @@ $libDir = $rootDir . DIRECTORY_SEPARATOR . 'vendor';
 
 session_start();
 
-/******************** Library *************************/
-require_once $libDir . DIRECTORY_SEPARATOR . 'notorm' . DIRECTORY_SEPARATOR . 'NotORM.php';
-require_once $libDir . DIRECTORY_SEPARATOR . 'epiphany' . DIRECTORY_SEPARATOR . 'Epi.php';
 
-require_once $libDir . DIRECTORY_SEPARATOR . 'phpexcel' . DIRECTORY_SEPARATOR . 'PHPExcel.php';
-require_once $libDir . DIRECTORY_SEPARATOR . 'phpexcel' . DIRECTORY_SEPARATOR . 'PHPExcel' . DIRECTORY_SEPARATOR . 'IOFactory.php';
-require_once $libDir . DIRECTORY_SEPARATOR . 'phpmailer' . DIRECTORY_SEPARATOR . 'PHPMailerAutoload.php';
-//x require_once $libDir . DIRECTORY_SEPARATOR . 'guzzle/autoloader.php';
 
-require_once $libDir . DIRECTORY_SEPARATOR . 'parsedown' . DIRECTORY_SEPARATOR . 'Parsedown.php';
+/******************** load Hx Core library *************************/
+require_once $rootDir . DIRECTORY_SEPARATOR . 'src' .DIRECTORY_SEPARATOR .
+	'core' . DIRECTORY_SEPARATOR . 'autoloader.php';
+//x require_once 'phar://' . $rootDir . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'hxCore.phar';
 
-require_once $libDir . DIRECTORY_SEPARATOR . 'jshrink' . DIRECTORY_SEPARATOR . 'Minifier.php';
 
-require_once $libDir . DIRECTORY_SEPARATOR . 'raintpl' . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR . 'Rain' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-//TCPDF
+/******************** configure TCPDF ****************/
 define('K_TCPDF_EXTERNAL_CONFIG', 1); //to override default setting
 define('K_PATH_MAIN', '');
 define('K_PATH_URL', '');
@@ -62,27 +56,35 @@ define('K_TITLE_MAGNIFICATION', 1.3);
 define('K_SMALL_RATIO', 2/3);
 define('K_THAI_TOPCHARS', true);
 define('K_TCPDF_CALLS_IN_HTML', true);
-include_once $libDir . DIRECTORY_SEPARATOR . 'tcpdf' . DIRECTORY_SEPARATOR . 'tcpdf.php';
 
-include_once $libDir . DIRECTORY_SEPARATOR . 'phpjasperxml' . DIRECTORY_SEPARATOR . 'PHPJasperXML.inc.php';
 
-require_once $libDir . DIRECTORY_SEPARATOR . 'Ig' . DIRECTORY_SEPARATOR . 'autoloader.php';
 
-//new core module
-require_once $rootDir . DIRECTORY_SEPARATOR . 'src' .DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'autoloader.php';
-//require_once 'phar://' . $rootDir . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'hxCore.phar';
+/*************** load external library **********************/
+include_once $rootDir .DIRECTORY_SEPARATOR . 
+	'vendor' . DIRECTORY_SEPARATOR . 'include.php';
+//x require_once 'phar://' . $rootDir . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'vendor.phar';
 
+
+
+/*************** configure Epiphany ********************/
 Epi::setPath('base', $libDir . DIRECTORY_SEPARATOR . 'epiphany');
 Epi::init('api');
 Epi::setSetting('exceptions', true);
 
-/*************** CORE AND CONFIGURATION ****************/
-\Ig\Config\Loader::configure($rootDir . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'config.php', $rootDir);
-$setting = \Ig\Config::getProfile();
 
+
+/*************** configure IG ****************/
+\Ig\Config\Loader::configure($rootDir . DIRECTORY_SEPARATOR . 
+	'data' . DIRECTORY_SEPARATOR . 'config.php', 
+	$rootDir);
+
+$setting = \Ig\Config::getProfile();
 \Ig\Db::configure(
-	$setting->dsm, $setting->dbUsr, $setting->dbPwd,
-	$setting->dbInitial, $setting->dbLen);
+	$setting->dsm, 
+	$setting->dbUsr, 
+	$setting->dbPwd,
+	$setting->dbInitial, 
+	$setting->dbLen);
 
 \Ig\File::checkDirectory($setting->absUploadPath, true);
 \Ig\File::checkDirectory($setting->absTemplatePath, true);
@@ -90,18 +92,27 @@ $setting = \Ig\Config::getProfile();
 
 \Ig\Email::configure(
 	$setting->smtpHost,
-	$setting->smtpEmail, $setting->smtpName,
-	$setting->smtpUsr, $setting->smtpPwd,
-	$setting->smtpSecure, $setting->smtpPort);
+	$setting->smtpEmail, 
+	$setting->smtpName,
+	$setting->smtpUsr, 
+	$setting->smtpPwd,
+	$setting->smtpSecure, 
+	$setting->smtpPort);
 
 if(\Ig\Config::getConfig('debugEmail')) {
-	\Ig\Email::setDebug(true, \Ig\Config::getConfig('debugEmailAddress'));
+	\Ig\Email::setDebug(
+		true, 
+		\Ig\Config::getConfig('debugEmailAddress'));
 }
 
 \Ig\File\Attachment::configure($setting->absUploadPath);
 
-//timezone
+
+
+/*************** Time Zone ******************************/
 date_default_timezone_set($setting->timeZone);
+
+
 
 /**************** Server URL ****************************/
 if ((\Ig\Config::getConfig('serverurl'))) {
@@ -113,7 +124,9 @@ else {
 define('SERVER_URL', $serverHostUrl); //to remove '/api'
 define('SERVER_ADM_URL', SERVER_URL . '/adm');
 
-//template engine
+
+
+/**************** configure Rain Tpl Engine ***********************/
 $config = array(
 	"tpl_ext"	=> 'tpl',
 	"tpl_dir"	=> \Ig\Config::getProfile()->absTemplatePath . DIRECTORY_SEPARATOR,
