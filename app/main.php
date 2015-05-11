@@ -8,6 +8,7 @@ include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 /********************** Load Modules ********************************/
 
+
 //load all module files
 \Ig\Util::recursiveDir(
 	dirname(__FILE__) . DIRECTORY_SEPARATOR . 'modules',
@@ -25,7 +26,7 @@ function home() {
 	echo  \Ig\Date::getDate() . "<br/>";
 
 	$g = new Parsedown();
-	$f = file_get_contents(\Ig\Config\Loader::getRootPath() . DS . 'log.md');
+	$f = file_get_contents(\Ig\Config\Loader::getRootPath() . DIRECTORY_SEPARATOR . 'log.md');
 	echo $g->text($f);
 }
 

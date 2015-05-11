@@ -61,7 +61,7 @@ define('K_TCPDF_CALLS_IN_HTML', true);
 
 /*************** load external library **********************/
 include_once $rootDir .DIRECTORY_SEPARATOR . 
-	'vendor' . DIRECTORY_SEPARATOR . 'include.php';
+	'vendor' . DIRECTORY_SEPARATOR . 'autoloader.php';
 //x require_once 'phar://' . $rootDir . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'vendor.phar';
 
 

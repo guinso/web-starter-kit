@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ioc>
+	<rules>
+		<rule>
+			<class>Hx\IocContainer\IocContainerInterface</class>
+			<service>true</service>
+			<code>
+				function($ioc) { return $ioc; }
+			</code>
+		</rule>
+		
+		<rule>
+			<class>Hx\Router\InfoInterface</class>
+			<replace>Info</replace>
+			<service>false</service>
+			<args>
+				<arg>13</arg>
+				<arg>qee</arg>
+			</args>
+		</rule>
+		<rule>
+			<class>Hx\RouterRouterInterface</class>
+			<replace>HttpRouter</replace>
+			<service>false</service>
+			<rule>
+				<class>Hx\Router\MapperInterface</class>
+				<replace>Hx\Router\Mapper</replace>
+			</rule>
+		</rule>
+		<rule>
+			<class>Hx\Router\MapLoaderInterface</class>
+			<service>true</service>
+			<!-- code is total override replace tag role -->
+			<code>
+				function($ioc)
+				{
+					$file = new \Hx\Router\Loader\XmlMapLoader(
+						$ioc->make('\\Hx\\File\\FileInterface')
+					);
+					
+					return $file;
+				}
+			</code>
+		</rule>
+		<rule>
+			<class>Hx\File\FileInterface</class>
+			<replace>Hx\File\File</replace>
+			<service>true</service>
+		</rule>
+	</rules>
+</ioc>

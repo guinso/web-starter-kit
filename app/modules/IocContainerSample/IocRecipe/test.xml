@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ioc>
+	<rules>
+		<rule>
+			<class>Hx\Logger\LoggerInterface</class>
+			<replace>Hx\Logger\SysLogger</replace>
+			<service>false</service>
+		</rule>
+		
+	</rules>
+</ioc>
