@@ -6,95 +6,87 @@ class SoapClient implements \Hx\Soap\Client\AdaptorInterface {
 	
 	public function __construct($url, Array $options) {
 		try {
-			$x = array_merge(
-				array(
-					'trace' => true,
-					'exceptions' => true,
-					'connection_timeout' => 15
-				),
-				$options);
-			
-			$this->soapClient = new \SoapClient($url, $x);
+			$this->soapClient = new \SoapClient(
+				$url,
+				array_merge(
+					[
+						'trace' => true,
+						'exceptions' => true,
+						'connection_timeout' => 15
+					],
+					$options
+				)
+			);
 				
 		} catch(\SoapFault $fault) {
-			throw new \Hx\Soap\Client\Exception(
-					$functionName,
-					"SoapClient Adaptor constructor fault:- " . $fault->getMessage(),
-					$fault->getCode());
-		} catch (\Exception $ex) {
-			throw new \Hx\Soap\Client\Exception(
-					$functionName,
-					"Unknown SoapClient Adaptor exception encountered on constructor.",
-					$ex->getCode(),
-					$ex
-			);
+			throw new \Hx\Exception\NetworkException(
+				"Fail to instantiate SOAP client :- " . $fault->getMessage(),
+				$fault->getCode(),
+				$fault);
 		}
 	}
 	
 	public function sent($functionName, Array $parameters)
 	{
-		$param = $this->_processParam($parameters);
-		
 		try {
 				
-			$result = $this->soapClient->__soapCall(
-				$functionName, 
-				array('parameters' => $param));
-			
-			if($result) {
-				$resultCallback = $functionName . 'Result';
-				$x = $result->$resultCallback;
-				
-				return $x;
-			} else {
-				throw new \Hx\Soap\Client\Exception($functionName, "Fail to send request $functionName");
-			}
-			
-		} catch(\SoapFault $fault) {
-			throw new \Hx\Soap\Client\Exception(
-				$functionName, 
-				"SoapClient Adaptor sent request fault:- " . $fault->getMessage(),
-				$fault->getCode());
-		} catch (\Exception $ex) {
-			throw new \Hx\Soap\Client\Exception(
-				$functionName, 
-				"Unknown SoapClient Adaptor exception encountered during sent request.",
-				$ex->getCode(),
-				$ex
+			return $this->_handleSent(
+				$this->soapClient->__soapCall(
+					$functionName, 
+					['parameters' => $this->_processParams($parameters)]
+				), 
+				$functionName
 			);
+		} 
+		catch (\SoapFault $fault) 
+		{
+			throw new \Hx\Exception\NetworkException(
+				"SOAP client fail to send on function <$functionName> :- " . $fault->getMessage(),
+				$fault->getCode(),
+				$fault);
 		}
 	}
 	
-	private function _processParam(Array $params)
+	private function _handleSent($result, $functionName)
 	{
-		$x = array();
-		
-		foreach($params as $key => $p)
+		if($result)
 		{
-			if($p instanceof \Hx\Soap\Client\ParamInterface)
-				$x[$p->getName()] = $this->_handleParameter($p);
-			else
-				Throw new \Hx\Soap\Client\ParamException($key,
-					"Index of '$key' is not instance of type \Hx\Soap\Client\ParamInterface.");
+			return $result->{$functionName . 'Result'};
 		}
-		
-		return $x;
+		else 
+		{
+			throw new \Hx\Exception\NetworkException(
+				"Fail to send SOAP request on function <$functionName>");
+		}
 	}
 	
-	private function _handleParameter(\Hx\Soap\Client\ParamInterface $param)
+	private function _processParams(Array $params, $i = 0)
 	{
-		$opt = $param->getConfig();
+		if ($i < COUNT($params))
+			return array_merge(
+				$this->_atomProcesParam($params[$i]),
+				$this->_processParams($params, $i + 1)
+			);
+		else
+			return [];
+	}
 	
-		if(is_array($opt) &&
-				array_key_exists('rawXml', $opt) &&
-				$opt['rawXml'] == true)
-		{
-			$var = new \SoapVar($param->getValue(), XSD_ANYXML, null, null, null);
+	private function _atomProcesParam(\Hx\Soap\Client\ParamInterface $p)
+	{
+		return array($p->getName() =>
+			is_array($p->getConfig() && 
+			array_key_exists('rawXml', $p->getConfig()) && 
+			$p->getConfig()['rawXml'] == true)  ?
 				
-			return $var;
-		} else {
-			return $param->getValue();
-		}
+				new \SoapVar($p->getValue(), XSD_ANYXML, null, null, null) :
+				
+				$p->getValue()
+		);
+	}
+	
+	public function __destruct()
+	{
+		$this->soapClient = null;
 	}
 }
 ?>
