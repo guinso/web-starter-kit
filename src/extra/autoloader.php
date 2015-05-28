@@ -1,7 +1,7 @@
 <?php 
 
 //implement PSR-4 autoloading
-function HxAutoload($className)
+function HxExtraAutoload($className)
 {
 	$xx = explode('\\', $className);
 	
