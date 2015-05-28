@@ -1,27 +1,20 @@
 <?php 
-namespace Hx\IocContainer\Loader;
+namespace Hx\IocContainer\RuleLoader;
 
 class XmlRuleLoader implements \Hx\IocContainer\RuleLoaderInterface {
 	
-	private $lut, $fileService, $rootDir;
+	private $fileService, $rootDir;
 	
 	public function __construct(\Hx\File\FileInterface $fileService, $rootDir)
 	{
 		if (!is_dir($rootDir))
-			Throw new \RuntimeException("$rootDir is not a valid directory");
+			Throw new \Hx\Exception\IocException("$rootDir is not a valid directory");
 		
 		$this->rootDir = $rootDir;
 		
 		$this->fileService = $fileService;
-	
-		$this->lut = array();
 	}
-	
-	public function getRules()
-	{
-		return $this->lut;
-	}
-	
+
 	public function getRootDir()
 	{
 		return $this->rootDir;
@@ -29,46 +22,48 @@ class XmlRuleLoader implements \Hx\IocContainer\RuleLoaderInterface {
 	
 	public function loadFile($filePath)
 	{
-		$this->lut = $this->loadSingleFile($filePath);
+		return $this->loadSingleFile($filePath);
 	}
 	
 	public function loadDir($directory)
 	{
-		$this->lut = array();
+		$lut = array();
 	
 		$this->fileService->recursiveDir(
 			$directory,
-			function($filePath)
+			function($filePath) use (&$lut)
 			{
 				$temp = $this->loadSingleFile($filePath);
 				
 				foreach ($temp as $key => $value)
 				{
-					if (array_key_exists($key, $this->lut))
-						Throw new \Hx\Exception\ParseException(
+					if (array_key_exists($key, $lut))
+						Throw new \Hx\Exception\IocException(
 							"Cannot assign same rule class $key twice." .
 							"Source:- $filePath");
 				}
 				
-				$this->lut = array_merge(
-					$this->lut,
+				$lut = array_merge(
+					$lut,
 					$temp
 				);
 			},
 			'/^.+\.xml$/'
 		);
+		
+		return $lut;
 	}
 	
 	private function loadSingleFile($filePath)
 	{
 		if (!file_exists($filePath))
 		{
-			Throw new \Hx\Exception\NotAccessibleException(
+			Throw new \Hx\Exception\IocException(
 					"Source file <$filePath> not found.");
 		}
 		else if (!is_readable($filePath))
 		{
-			Throw new \Hx\Exception\NotAccessibleException(
+			Throw new \Hx\Exception\IocException(
 					"Source file <$filePath> is not readable");
 		}
 		else
@@ -82,7 +77,7 @@ class XmlRuleLoader implements \Hx\IocContainer\RuleLoaderInterface {
 	
 	public function loadString($content)
 	{
-		$this->lut = $this->parse($content, 'memory string');
+		return $this->parse($content, 'memory string');
 	}
 	
 	private function parse($content, $filePath)
@@ -95,7 +90,7 @@ class XmlRuleLoader implements \Hx\IocContainer\RuleLoaderInterface {
 		
 		if ($ruleTags === false)
 		{
-			Throw new \Hx\Exception\ParseException(
+			Throw new \Hx\Exception\IocException(
 				"There is no rule tag found in $filePath");
 		}
 		else 
@@ -107,7 +102,7 @@ class XmlRuleLoader implements \Hx\IocContainer\RuleLoaderInterface {
 				$rule = $this->parseRule($ruleTag, $filePath);
 				
 				if (array_key_exists($rule->getClassName(), $result))
-					Throw new \Hx\Exception\ParseException(
+					Throw new \Hx\Exception\IocException(
 						"Cannot assign same rule class {$rule->getClassName()} twice. " .
 						"Source:- $filePath");
 				else 
@@ -141,7 +136,7 @@ class XmlRuleLoader implements \Hx\IocContainer\RuleLoaderInterface {
 		if (isset($tag->code))
 		{
 			if($this->castClosure($tag->code) instanceof \Closure)
-				return eval('return ' . $tag->code . ';');
+				return $this->castClosure($tag->code);
 			else
 				return null;
 		}
@@ -191,7 +186,11 @@ class XmlRuleLoader implements \Hx\IocContainer\RuleLoaderInterface {
 			
 			foreach($argTags as $arg)
 			{
-				$result[] = $arg;
+				$result[] = mb_ereg_replace(
+					'@', 
+					$this->rootDir . DIRECTORY_SEPARATOR, 
+					$arg
+				);
 			}
 			
 			return $result;
@@ -206,7 +205,7 @@ class XmlRuleLoader implements \Hx\IocContainer\RuleLoaderInterface {
 	{
 		if(!isset($tag->class))
 		{
-			Throw new \Hx\Exception\ParseException(
+			Throw new \Hx\Exception\IocException(
 				"Node <class> not found. Source:- $filePath");
 		}
 
@@ -215,7 +214,7 @@ class XmlRuleLoader implements \Hx\IocContainer\RuleLoaderInterface {
 		}
 		catch (\Exception $ex)
 		{
-			Throw new \Hx\Exception\ParseException(
+			Throw new \Hx\Exception\IocException(
 				"Node <class> {$tag->class} not define! Source:- $filePath");
 		}
 		
@@ -223,12 +222,12 @@ class XmlRuleLoader implements \Hx\IocContainer\RuleLoaderInterface {
 		{
 			if (!isset($tag->replace))
 			{
-				Throw new \Hx\Exception\ParseException(
+				Throw new \Hx\Exception\IocException(
 					"Node <replace> not found. Source:- $filePath");
 			}
 			else if (!class_exists($tag->replace))
 			{
-				Throw new \Hx\Exception\ParseException(
+				Throw new \Hx\Exception\IocException(
 					"Node <replace> {$tag->replace} is not a valid class. " . 
 					"Source:- $filePath");
 			}
@@ -241,7 +240,7 @@ class XmlRuleLoader implements \Hx\IocContainer\RuleLoaderInterface {
 		{
 			if (!($this->castClosure($tag->code) instanceof \Closure))
 			{
-				Throw new \Hx\Exception\ParseException(
+				Throw new \Hx\Exception\IocException(
 					"Node <code> is not a closure. Source:- $filePath, Code:- {$tag->code}");
 			}
 		}
@@ -267,7 +266,7 @@ class XmlRuleLoader implements \Hx\IocContainer\RuleLoaderInterface {
 			if (	!(mb_strtolower($tag->service) == 'true') && 
 					!(mb_strtolower($tag->service) == 'false')
 				)
-				Throw new \Hx\Exception\ParseException(
+				Throw new \Hx\Exception\IocException(
 						"Node <service> is not boolean. Source:- $filePath, Value:- {$tag->service}");
 		}
 	}

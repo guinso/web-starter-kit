@@ -1,12 +1,12 @@
 <?php 
-namespace Hx\IocContainer;
+namespace Hx\Route;
 
-interface RuleLoaderInterface {
-
-	/**
-	 * Get project root directory
-	 */
-	public function getRootDir();
+/**
+ * Router mapping loader tools
+ * @author chingchetsiang
+ *
+ */
+interface MapLoaderInterface {
 	
 	/**
 	 * Load from file

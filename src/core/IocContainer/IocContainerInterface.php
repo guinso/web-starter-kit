@@ -11,6 +11,6 @@ interface IocContainerInterface {
 	 * make instance of class
 	 * @param String 	$className		targeted class name
 	 */
-	public function make($className);
+	public function resolve($className);
 }
 ?>

@@ -29,13 +29,20 @@ class SoapSample {
 			return $x;
 			*/
 			
+			//"http://192.168.56.101/testService/Service1.svc?wsdl"
+			
+			
+			
 			//FP style.... (almost)
 			return (new \Hx\Soap\Client\Handler(
 				new \Hx\Soap\Client\Adaptor\SoapClient(
-					"http://192.168.56.101/testService/Service1.svc?wsdl",
-					[]
+					'http://192.168.56.101/testService/Service1.svc?wsdl',
+					[
+						'cache_wsdl' => WSDL_CACHE_NONE	
+					]
 				)
-			))->sent(
+			))
+			->sent(
 				'FireOrder', 
 				[
 					new \Hx\Soap\Client\Param(
@@ -52,8 +59,9 @@ class SoapSample {
 				], 
 				[]
 			);
+			
 		} 
-		catch(\Hx\Exception\NetworkException $ex) {
+		catch(\Hx\Exception\SoapException $ex) {
 			//handle typical SOAP connection exception
 			echo $ex->getMessage();
 		} 

@@ -21,7 +21,7 @@ class IocContainer implements IocContainerInterface {
 		foreach ($rules as $key => $rule)
 		{
 			if (!($rule instanceof \Hx\IocContainer\RuleInterface))
-				Throw new \InvalidArgumentException(
+				Throw new \Hx\Exception\IocException(
 					"Rules index of $key is not " . 
 					"type of \\Hx\\IocContainer\\RuleInterface");
 			else
@@ -33,11 +33,11 @@ class IocContainer implements IocContainerInterface {
 		$this->rules = $temp;
 	}
 	
-	public function make($className)
+	public function resolve($className)
 	{
 		if (!array_key_exists($className, $this->rules))
 		{
-			Throw new \OutOfBoundsException("Ioc rule for $className not found");
+			Throw new \Hx\Exception\IocException("Ioc rule for $className not found");
 		}
 		else 
 		{
@@ -69,12 +69,14 @@ class IocContainer implements IocContainerInterface {
 					$reflection->getConstructor()->getParameters() : 
 					array();
 				
-				$object = $reflection->newInstanceArgs(
-					$this->getArguments(
+				$aa = $this->getArguments(
 						$parameters,
 						$rule,
 						$rule->getPrimitiveArgs()
-					)
+					);
+				
+				$object = $reflection->newInstanceArgs(
+					$aa
 				);
 			}
 			
@@ -93,11 +95,11 @@ class IocContainer implements IocContainerInterface {
 		if(COUNT($parameters) > 0)
 		{
 			return array_merge(
-				$this->getArgumentValue(
+				[$this->getArgumentValue(
 					array_shift($parameters),
 					$rule,
 					$args
-				), 
+				)], 
 				$this->getArguments(
 					$parameters, 
 					$rule,
@@ -114,52 +116,76 @@ class IocContainer implements IocContainerInterface {
 	private function getArgumentValue(
 		\ReflectionParameter $reflectionParam, 
 		\Hx\IocContainer\RuleInterface $rule,
-		Array $args)
+		Array &$args)
 	{
-		if ($reflectionParam->isDefaultValueAvailable())
+		if (	!empty($reflectionParam->getClass()) && 
+				!empty($reflectionParam->getClass()->getName()))
 		{
-			return array(
-				'value' => $reflectionParam->getDefaultValue(),
-				'args' => $args
-			);
-		}
-		else if ($reflectionParam->canBePassedByValue())
-		{
-			return array(
-				'value' => array_shift($args),
-				'args' => $args
-			);
-		}
-		else 
-		{
-			$className = $reflectionParam->getClass()->__toString();
+			$className = "\\" . $reflectionParam->getClass()->getName();
 			
 			if (array_key_exists($className, $rule->getSubRules()))
 			{
+				/*
 				return array(
 					'value' => $this->getInstance(
 						$className, 
 						$rule->getSubRules()[$className]
 					),
 					'args' => $args
+				);*/
+				
+				return $this->getInstance(
+					$className,
+					$rule->getSubRules()[$className]
 				);
 			}
 			else if (array_key_exists($className, $this->rules))
 			{
+				/*
 				return array(
 					'value' => $this->getInstance(
 						$className, 
 						$this->rules[$className]
 					),
 					'args' => $args
+				);*/
+				
+				return $this->getInstance(
+					$className, 
+					$this->rules[$className]
 				);
 			}
 			else 
 			{
-				Throw new \OutOfBoundsException(
-					"Rules index of $key is not " . 
-					"type of \\Hx\\IocContainer\\RuleInterface");
+				Throw new \Hx\Exception\IocException(
+					"Ioc rule for $className not found.");
 			}
+		}
+		else if ($reflectionParam->isDefaultValueAvailable())
+		{
+			/*
+			return array(
+					'value' => $reflectionParam->getDefaultValue(),
+					'args' => $args
+			);*/
+			
+			return $reflectionParam->getDefaultValue();
+		}
+		else if ($reflectionParam->canBePassedByValue())
+		{
+			return array_shift($args);
+			
+			/*
+			return array(
+					'value' => array_shift($args),
+					'args' => $args
+			);*/
+		}
+		else 
+		{
+			Throw new \Hx\Exception\IocException(
+				"Ioc contructor argument " . $reflectionParam->getName() . 
+				" unable to handled.");;
 		}
 	}
 }

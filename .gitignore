@@ -1,0 +1,5 @@
+#ignore Mac specific files
+.DS_Store
+
+#ignore build files
+build/*

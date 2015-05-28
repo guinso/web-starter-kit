@@ -10,11 +10,12 @@ class IocContainerSample {
 		$rulesLoader->loadDir(__DIR__ . DIRECTORY_SEPARATOR . 'IocRecipe');
 		
 		$iocContainer = new \Hx\IocContainer\IocContainer(
-			$rulesLoader->getRules());
+			$rulesLoader->loadDir(
+				__DIR__ . DIRECTORY_SEPARATOR . 'IocRecipe'
+			)
+		);
 		
-		$file = $iocContainer->make("\Hx\File\FileInterface");
-		
-		
+		$file = $iocContainer->resolve("\Hx\File\FileInterface");
 	}
 }
 ?>

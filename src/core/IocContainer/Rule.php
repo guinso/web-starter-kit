@@ -1,7 +1,6 @@
 <?php 
 namespace Hx\IocContainer;
 
-use Doctrine\Instantiator\Exception\InvalidArgumentException;
 class Rule implements RuleInterface {
 	
 	private $className, $instanceClassName, $isService, $args, $rules, $func;
@@ -16,13 +15,15 @@ class Rule implements RuleInterface {
 		Array $rules = null, 
 		\Closure $closure = null)
 	{
+		$this->serviceInstance = null;
+		
 		$this->className = $className;
 		
 		$this->isService = $isService;
 		
 		$this->args = $args;
 		
-		if(isset($closure))
+		if(!empty($closure))
 		{
 			$this->instanceClassName = null;
 			
@@ -31,7 +32,7 @@ class Rule implements RuleInterface {
 		else 
 		{
 			if (empty($instanceClassName))
-				Throw new \InvalidArgumentException(
+				Throw new \Hx\Exception\IocException(
 					"Cannot pass empty value on instanceClassName parameter.");
 			else 
 			{
@@ -46,7 +47,7 @@ class Rule implements RuleInterface {
 			foreach($rules as $k => $r)
 			{
 				if (! ($r instanceof RuleInterface))
-					Throw new InvalidArgumentException(
+					Throw new \Hx\Exception\IocException(
 						"Fail to initiate Rule instance, rules index of " . 
 						"$k is not type of \Hx\IocContainer\RuleInterface.");
 			}
@@ -92,7 +93,7 @@ class Rule implements RuleInterface {
 	
 	public function isCodeOverride()
 	{
-		return isset($this->func);
+		return !empty($this->func);
 	}
 	
 	public function isService()
@@ -120,8 +121,8 @@ class Rule implements RuleInterface {
 		if (empty($this->serviceInstance))
 			$this->serviceInstance = $object;
 		else if(!$this->isService)
-			Throw new \RuntimeException(
-				"Rule {$this->className} is not service.");
+			Throw new \Hx\Exception\IocException(
+				"Rule {$this->className} is not service type.");
 		else
 			$this->serviceInstance = $object;
 	}

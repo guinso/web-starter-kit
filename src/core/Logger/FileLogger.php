@@ -1,10 +1,16 @@
 <?php 
 namespace Hx\Logger;
 
-class SysLogger implements \Hx\Logger\LoggerInterface {
-	public function __construct()
+class FileLogger implements \Hx\Logger\LoggerInterface {
+	
+	private $directory;
+	
+	public function __construct($logDirectory)
 	{
+		if (!is_dir($logDirectory))
+			Throw new \Hx\Exception\LoggerException("Directory $logDirectory not found.");
 		
+		$this->directory = $logDirectory;
 	}
 	
 	/**
@@ -126,12 +132,27 @@ class SysLogger implements \Hx\Logger\LoggerInterface {
 		if(array_key_exists('linecode', $context))
 			$line = $context['linecode'];
 		
-		
+		$time = date('H:i:s');
+		$date = date('Y-m-d');
 		
 		if(!empty($filepath) && !empty($line))
 			$routineTag = '[' . $filepath . ':' . $line . ']';
 		
-		error_log('[HxSysLogger:' . $level . ']' . $routineTag . ' ' . $message);
+		if (file_exists($this->directory . DIRECTORY_SEPARATOR . $date . '.log'))
+		{
+			file_put_contents(
+				$this->directory . DIRECTORY_SEPARATOR . $date . '.log', 
+				'[' . $time . ':' . $level . ']' . $routineTag . ' ' . $message . "\n", 
+				FILE_APPEND
+			);
+		}
+		else
+		{
+			file_put_contents(
+				$this->directory . DIRECTORY_SEPARATOR . $date . '.log',
+				'[' . $time . ':' . $level . ']' . $routineTag . ' ' . $message . "\n"
+			);
+		}
 	}
 }
 ?>

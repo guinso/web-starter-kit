@@ -35,7 +35,7 @@
 				function($ioc)
 				{
 					$file = new \Hx\Router\Loader\XmlMapLoader(
-						$ioc->make('\\Hx\\File\\FileInterface')
+						$ioc->resolve('\\Hx\\File\\FileInterface')
 					);
 					
 					return $file;

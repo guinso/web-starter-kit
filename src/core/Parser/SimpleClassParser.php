@@ -30,7 +30,7 @@ class SimpleClassParser implements ClassParserInterface {
 				$xx = '\\';
 				for($j=$i+1; $j < $cnt; $j++)
 				{
-					if($tokens[$j] == ';' || $token[$j] == '}')
+					if($tokens[$j] == ';' || $tokens[$j] == '}')
 					{
 						$ns[$xx] = array();
 						$nsKey = $xx;
