@@ -2,8 +2,6 @@
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'notorm' . DIRECTORY_SEPARATOR . 'NotORM.php';
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'epiphany' . DIRECTORY_SEPARATOR . 'Epi.php';
-
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'phpexcel' . DIRECTORY_SEPARATOR . 'PHPExcel.php';
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'phpexcel' . DIRECTORY_SEPARATOR . 
 	'PHPExcel' . DIRECTORY_SEPARATOR . 'IOFactory.php';
