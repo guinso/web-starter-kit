@@ -134,9 +134,11 @@ class Login {
 		$writeLog = false;
 		$x = self::getCurrentUser();
 		
+		/*
 		//logout other login records if username matched
 		self::logoutUser($user['id'],
 				'force logout due to new client login with this username');
+		*/
 			
 		if ($x['userId'] == self::_getAnonymousId()) {
 			//anonymous user
