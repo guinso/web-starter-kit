@@ -29,8 +29,8 @@ class RestRouter implements \Hx\Route\RouterInterface {
 		}
 		catch (\Exception $ex)
 		{
-			Throw new \Hx\Route\RestRouteException(
-				RestRouteException::INPUT_ERROR, 
+			Throw new \Hx\Route\RestRouterException(
+				RestRouterException::INPUT_ERROR, 
 				"Fail to get request path", 
 				0, 
 				$ex);
@@ -42,8 +42,8 @@ class RestRouter implements \Hx\Route\RouterInterface {
 		}
 		catch (\Exception $ex)
 		{
-			Throw new \Hx\Route\RestRouteException(
-				RestRouteException::INPUT_ERROR,
+			Throw new \Hx\Route\RestRouterException(
+				RestRouterException::INPUT_ERROR,
 				"Fail to get user input",
 				0,
 				$ex);
@@ -58,8 +58,8 @@ class RestRouter implements \Hx\Route\RouterInterface {
 		}
 		catch (\Exception $ex)
 		{
-			Throw new \Hx\Route\RestRouteException(
-				RestRouteException::DOMAIN_ERROR,
+			Throw new \Hx\Route\RestRouterException(
+				RestRouterException::DOMAIN_ERROR,
 				"Fail to process content",
 				0,
 				$ex);
