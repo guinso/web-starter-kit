@@ -8,7 +8,7 @@ interface OutputInterface {
 	 * @param unknown $data
 	 * @param int $statusCode
 	 */
-	public function generateOutput(Array $data, $statusCode);
+	public function generateOutput($statusCode, Array $data = null);
 	
 	/**
 	 * Get generated output format type

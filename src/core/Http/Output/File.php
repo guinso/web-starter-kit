@@ -15,7 +15,7 @@ class File implements \Hx\Http\OutputInterface {
 		return 'file';
 	}
 	
-	public function generateOutput(Array $data, $statusCode)
+	public function generateOutput($statusCode, Array $data = null)
 	{
 		$fileName = $data['fileName'];
 	

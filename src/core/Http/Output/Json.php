@@ -16,7 +16,7 @@ class Json implements \Hx\Http\OutputInterface {
 		return 'json';
 	}
 	
-	public function generateOutput(Array $data, $statusCode)
+	public function generateOutput($statusCode, Array $data = null)
 	{
 		$this->writeHeader($statusCode);
 	
@@ -34,7 +34,10 @@ class Json implements \Hx\Http\OutputInterface {
 	
 	private function writeBody($data)
 	{
-		echo json_encode($data, JSON_UNESCAPED_UNICODE);
+		if($data === null)
+			echo "{}";
+		else
+			echo json_encode($data, JSON_UNESCAPED_UNICODE);
 	}
 }
 ?>

@@ -35,7 +35,8 @@ class RestRouter implements \Hx\Route\RouterInterface {
 		{
 			Throw new \Hx\Route\RestRouterException(
 				RestRouterException::INPUT_ERROR, 
-				"Fail to get request path", 
+				"Fail to get request path '{$this->httpHeadReader->getRequestUri()}'," . 
+					" '{$this->httpHeadReader->getMethod()}'", 
 				0, 
 				$ex);
 		}
@@ -54,7 +55,7 @@ class RestRouter implements \Hx\Route\RouterInterface {
 				$ex);
 		}
 		
-		$output = array();
+		$output = null;
 		
 		//3. handle business logic
 		try 
@@ -68,7 +69,9 @@ class RestRouter implements \Hx\Route\RouterInterface {
 		{
 			Throw new \Hx\Route\RestRouterException(
 				RestRouterException::DOMAIN_ERROR,
-				"Fail to process content",
+				"Fail to process content at Class: " . 
+					$match->getClassName() . ', Method: ' . 
+					$match->getFunctionName(),
 				0,
 				$ex);
 		}
@@ -89,7 +92,7 @@ class RestRouter implements \Hx\Route\RouterInterface {
 		{
 			Throw new \Hx\Route\RestRouterException(
 				RestRouterException::OUTPUT_ERROR,
-				"Fail to generate output content",
+				"Fail to generate output content, {$match->getOutputFormat()}",
 				0,
 				$ex);
 		}

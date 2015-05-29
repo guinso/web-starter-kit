@@ -15,7 +15,7 @@ class Text implements \Hx\Http\OutputInterface {
 		return 'text';
 	}
 	
-	public function generateOutput(Array $data, $statusCode)
+	public function generateOutput($statusCode, Array $data = null)
 	{
 		$this->writeHeader($statusCode);
 	

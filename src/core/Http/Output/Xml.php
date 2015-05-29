@@ -15,7 +15,7 @@ class Xml implements \Hx\Http\OutputInterface {
 		return 'xml';
 	}
 	
-	public function generateOutput(Array $data, $statusCode)
+	public function generateOutput($statusCode, Array $data = null)
 	{
 		$this->writeHeader($statusCode);
 	

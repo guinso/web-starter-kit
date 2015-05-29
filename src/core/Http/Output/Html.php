@@ -15,7 +15,7 @@ class Html implements \Hx\Http\OutputInterface {
 		return 'html';
 	}
 	
-	public function generateOutput(Array $data, $statusCode)
+	public function generateOutput($statusCode, Array $data = null)
 	{
 		$this->writeHeader($statusCode);
 	

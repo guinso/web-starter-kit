@@ -22,11 +22,11 @@ class OutputService implements OutputServiceInterface {
 			$this->registerDefaultPlugin();
 	}
 	
-	public function generateOutput($outputFormat, array $data)
+	public function generateOutput($outputFormat, array $data = null)
 	{
 		return $this
 			->getPlugin($outputFormat)
-			->generateOutput($data, 200);
+			->generateOutput(200, $data);
 	}
 	
 	public function registerPlugin(OutputInterface $plugin)
