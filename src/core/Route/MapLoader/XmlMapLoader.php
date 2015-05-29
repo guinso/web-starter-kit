@@ -113,10 +113,11 @@ class XmlMapLoader implements \Hx\Route\MapLoaderInterface {
 				else
 				{
 					$uri = (string) $map->uri;
+					$method = (string) mb_strtoupper($map->method);
 					
-					$temp[$uri] = new \Hx\Route\Info(
+					$temp[$method . '-' .$uri] = new \Hx\Route\Info(
 						$uri,
-						(string) mb_strtoupper($map->method),
+						$method,
 						empty($map->class)? '' : (string) $map->class,
 						(string) $map->function,
 						(string) $map->outputFormat,
