@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ioc>
+	<rules>
+		<rule>
+			<class>Starter\Recipe\SimpleXmlLoader</class>
+			<replace>Starter\Recipe\SimpleXmlLoader</replace>
+			<service>true</service>
+			<args>
+				<arg>@</arg>
+			</args>
+		</rule>
+		<rule>
+			<class>Starter\Recipe\SimpleRecipeService</class>
+			<replace>Starter\Recipe\SimpleRecipeService</replace>
+			<service>true</service>
+			<args>
+				<arg>@data/recipe.xml</arg>
+			</args>
+		</rule>
+	</rules>
+</ioc>

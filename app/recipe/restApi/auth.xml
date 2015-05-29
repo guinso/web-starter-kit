@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<route>
+	<maps>
+		<!-- Authenticate -->
+		<map>
+			<uri>/current-user</uri>
+			<method>get</method>
+			<class>Ig\Login</class>
+			<function>getCurrentUser</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		<map>
+			<uri>/logout</uri>
+			<method>get</method>
+			<class>Ig\Login</class>
+			<function>logoutUser</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		<map>
+			<uri>/login</uri>
+			<method>post</method>
+			<class>Ig\Login</class>
+			<function>loginUser</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		<map>
+			<uri>/login-log</uri>
+			<method>get</method>
+			<class>UserAccount</class>
+			<function>getActivityLog</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		<map>
+			<uri>/login-log-count</uri>
+			<method>get</method>
+			<class>UserAccount</class>
+			<function>getActivityLogCount</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+	</maps>
+</route>

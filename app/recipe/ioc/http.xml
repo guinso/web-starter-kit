@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ioc>
+	<rules>
+		<!-- Http -->
+		<rule>
+			<class>Hx\Http\HeaderReaderInterface</class>
+			<replace>Hx\Http\HeaderReader</replace>
+			<service>true</service>
+		</rule>
+		<rule>
+			<class>Hx\Http\StatusCode</class>
+			<replace>Hx\Http\StatusCode</replace>
+			<service>true</service>
+		</rule>
+		<rule>
+			<class>Hx\Http\InputServiceInterface</class>
+			<replace>Hx\Http\InputService</replace>
+		</rule>
+		<rule>
+			<class>Hx\Http\OutputServiceInterface</class>
+			<replace>Hx\Http\OutputService</replace>
+			<service>true</service>
+		</rule>
+		
+		<!-- Http Input -->
+		<rule>
+			<class>Hx\Http\Input\Json</class>
+			<replace>Hx\Http\Input\Json</replace>
+			<service>true</service>
+		</rule>
+		<rule>
+			<class>Hx\Http\Input\Multipart</class>
+			<replace>Hx\Http\Input\Multipart</replace>
+			<service>true</service>
+		</rule>
+		<rule>
+			<class>Hx\Http\Input\UrlEncoded</class>
+			<replace>Hx\Http\Input\UrlEncoded</replace>
+			<service>true</service>
+		</rule>
+		<rule>
+			<class>Hx\Http\Input\UrlParam</class>
+			<replace>Hx\Http\Input\UrlParam</replace>
+			<service>true</service>
+		</rule>
+		
+		<!-- Http Output -->
+		<rule>
+			<class>Hx\Http\Output\File</class>
+			<replace>Hx\Http\Output\File</replace>
+			<service>true</service>
+		</rule>
+		<rule>
+			<class>Hx\Http\Output\Html</class>
+			<replace>Hx\Http\Output\Html</replace>
+			<service>true</service>
+		</rule>
+		<rule>
+			<class>Hx\Http\Output\Json</class>
+			<replace>Hx\Http\Output\Json</replace>
+			<service>true</service>
+		</rule>
+		<rule>
+			<class>Hx\Http\Output\Text</class>
+			<replace>Hx\Http\Output\text</replace>
+			<service>true</service>
+		</rule>
+		<rule>
+			<class>Hx\Http\Output\Xml</class>
+			<replace>Hx\Http\Output\Xml</replace>
+			<service>true</service>
+		</rule>
+	</rules>
+</ioc>

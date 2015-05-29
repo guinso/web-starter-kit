@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<route>
+	<maps>
+		<!-- Update Module -->
+		<map>
+			<uri>/update-available</uri>
+			<method>get</method>
+			<class>IgModUpdate</class>
+			<function>getAvailableUpdate</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		<map>
+			<uri>/update-run</uri>
+			<method>post</method>
+			<class>IgModUpdate</class>
+			<function>executeUpdate</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		
+		<!-- MISC admin setting -->
+		<map>
+			<uri>/misc-setting</uri>
+			<method>get</method>
+			<class>AdmMiscREST</class>
+			<function>get</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		<map>
+			<uri>/misc-setting</uri>
+			<method>post</method>
+			<class>AdmMiscREST</class>
+			<function>post</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		<map>
+			<uri>/update-account</uri>
+			<method>post</method>
+			<class>AdmLoginREST</class>
+			<function>postAccount</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		
+		<!-- System Profile -->
+		<map>
+			<uri>/sys-profile</uri>
+			<method>get</method>
+			<class>SysProfileRest</class>
+			<function>get</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		<map>
+			<uri>/sys-profile</uri>
+			<method>post</method>
+			<class>SysProfileRest</class>
+			<function>post</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		
+		<!-- Company Profile -->
+		<map>
+			<uri>/com-profile</uri>
+			<method>get</method>
+			<class>ComProfileRest</class>
+			<function>get</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		<map>
+			<uri>/com-profile</uri>
+			<method>post</method>
+			<class>ComProfileRest</class>
+			<function>post</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+	</maps>
+</route>

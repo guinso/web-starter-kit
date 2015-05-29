@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ioc>
+	<rules>
+		<!-- Router -->
+		<rule>
+			<class>Hx\Route\RestRouter</class>
+			<replace>Hx\Route\RestRouter</replace>
+			<service>true</service>
+		</rule>
+		<rule>
+			<class>Hx\Route\MapperInterface</class>
+			<service>true</service>
+			<code>
+				function($ioc)
+				{
+					$mapLoader = $ioc->resolve("\Hx\Route\MapLoader\XmlMapLoader");
+					
+					return new \Hx\Route\Mapper(
+						$mapLoader->loadDir(
+							"@nextApp" . DIRECTORY_SEPARATOR . 
+							'recipe' . DIRECTORY_SEPARATOR . 'restApi'
+						)
+					);
+				}
+			</code>
+		</rule>
+		<rule>
+			<class>Hx\Route\MapLoader\XmlMapLoader</class>
+			<replace>Hx\Route\MapLoader\XmlMapLoader</replace>
+			<service>true</service>
+		</rule>
+		<rule>
+			<class>Hx\Route\HandlerInterface</class>
+			<replace>Starter\Route\EpiClassHandler</replace>
+			<service>true</service>
+		</rule>
+	</rules>
+</ioc>

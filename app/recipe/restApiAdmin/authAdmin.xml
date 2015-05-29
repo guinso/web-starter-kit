@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<route>
+	<maps>
+		<!-- Authenticate -->
+		<map>
+			<uri>/current-user</uri>
+			<method>get</method>
+			<class>AdmLoginREST</class>
+			<function>get</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		<map>
+			<uri>/logout</uri>
+			<method>get</method>
+			<class>AdmLoginREST</class>
+			<function>getLogout</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+		<map>
+			<uri>/login</uri>
+			<method>post</method>
+			<class>AdmLoginREST</class>
+			<function>postLogin</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+	</maps>
+</route>

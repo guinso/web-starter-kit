@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ioc>
+	<rules>
+		<rule>
+			<class>Hx\IocContainer\IocContainerInterface</class>
+			<service>true</service>
+			<code>
+				function($ioc) { return $ioc; }
+			</code>
+		</rule>
+		<rule>
+			<class>Hx\File\FileInterface</class>
+			<replace>Hx\File\File</replace>
+			<service>true</service>
+		</rule>
+		<rule>
+			<class>Hx\Parser\ClassParserInterface</class>
+			<replace>Hx\Parser\SimpleClassParser</replace>
+		</rule>
+		<rule>
+			<class>Hx\Logger\LoggerInterface</class>
+			<replace>Hx\Logger\FileLogger</replace>
+			<service>true</service>
+			<args>
+				<arg>@data/log</arg>
+			</args>
+		</rule>
+	</rules>
+</ioc>
