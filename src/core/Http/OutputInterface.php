@@ -8,6 +8,11 @@ interface OutputInterface {
 	 * @param unknown $data
 	 * @param int $statusCode
 	 */
-	public function generateOuput(Array $data, $statusCode);
+	public function generateOutput(Array $data, $statusCode);
+	
+	/**
+	 * Get generated output format type
+	 */
+	public function getFormatType();
 }
 ?>

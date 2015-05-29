@@ -2,9 +2,9 @@
 namespace Hx\Route;
 
 class Info implements InfoInterface {
-	private $uri, $method, $isStatic, $className, $functionName;
+	private $uri, $method, $isStatic, $className, $functionName, $outputFormat;
 	
-	public function __construct($uri, $method, $className, $functionName, $isStatic = false)
+	public function __construct($uri, $method, $className, $functionName, $outputFormat, $isStatic = false)
 	{
 		$this->uri = $uri;
 		
@@ -13,6 +13,8 @@ class Info implements InfoInterface {
 		$this->className = $className;
 		
 		$this->functionName = $functionName;
+		
+		$this->outputFormat = $outputFormat;
 		
 		$this->isStatic = $isStatic;
 	}
@@ -40,6 +42,11 @@ class Info implements InfoInterface {
 	public function getFunctionName()
 	{
 		return $this->functionName;
+	}
+	
+	public function getOutputFormat()
+	{
+		return $this->outputFormat;
 	}
 }
 ?>

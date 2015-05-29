@@ -27,5 +27,10 @@ interface InfoInterface {
 	 * Get targetted Function name
 	 */
 	public function getFunctionName();
+	
+	/**
+	 * Get output format
+	 */
+	public function getOutputFormat();
 }
 ?>

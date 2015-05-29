@@ -2,17 +2,20 @@
 namespace Hx\Route;
 
 class RestRouter implements \Hx\Route\RouterInterface {
-	private $mapper, $inputHandler, $exeHandler, $httpHeadReader;
+	private $mapper, $inputHandler, $outputHandler, $exeHandler, $httpHeadReader;
 	
 	public function __construct(
 		\Hx\Route\MapperInterface $mapper, 
 		\Hx\Http\HeaderReaderInterface $headReader,
-		\Hx\Http\InputServiceInterface $input,
+		\Hx\Http\InputServiceInterface $inputHandler,
+		\Hx\Http\OutputServiceInterface $outputHandler,
 		\Hx\Route\HandlerInterface $handler)
 	{
 		$this->mapper = $mapper;
 		
-		$this->inputHandler = $input;
+		$this->inputHandler = $inputHandler;
+		
+		$this->outputHandler = $outputHandler;
 		
 		$this->exeHandler = $handler;
 		
@@ -21,6 +24,7 @@ class RestRouter implements \Hx\Route\RouterInterface {
 	
 	public function run()
 	{
+		//1. handler command
 		try 
 		{
 			$match = $this->mapper->find(
@@ -36,6 +40,7 @@ class RestRouter implements \Hx\Route\RouterInterface {
 				$ex);
 		}
 		
+		//2. handle input data
 		try 
 		{
 			$input = $this->inputHandler->getInput();
@@ -49,9 +54,12 @@ class RestRouter implements \Hx\Route\RouterInterface {
 				$ex);
 		}
 		
+		$output = array();
+		
+		//3. handle business logic
 		try 
 		{
-			$this->exeHandler->handle(
+			$output = $this->exeHandler->handle(
 				$match,
 				$input
 			);
@@ -61,6 +69,27 @@ class RestRouter implements \Hx\Route\RouterInterface {
 			Throw new \Hx\Route\RestRouterException(
 				RestRouterException::DOMAIN_ERROR,
 				"Fail to process content",
+				0,
+				$ex);
+		}
+		
+		//4. handler output
+		try
+		{
+			if($match->getOutputFormat() == 'none')
+				return;
+			else 
+			{
+				$this->outputHandler->generateOutput(
+					$match->getOutputFormat(), 
+					$output);
+			}
+		}
+		catch (\Exception $ex)
+		{
+			Throw new \Hx\Route\RestRouterException(
+				RestRouterException::OUTPUT_ERROR,
+				"Fail to generate output content",
 				0,
 				$ex);
 		}

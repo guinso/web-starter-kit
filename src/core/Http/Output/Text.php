@@ -10,7 +10,12 @@ class Text implements \Hx\Http\OutputInterface {
 		$this->statusCodeService = $statusCodeService;
 	}
 	
-	public function generateOuput(Array $data, $statusCode)
+	public function getFormatType()
+	{
+		return 'text';
+	}
+	
+	public function generateOutput(Array $data, $statusCode)
 	{
 		$this->writeHeader($statusCode);
 	
@@ -19,8 +24,9 @@ class Text implements \Hx\Http\OutputInterface {
 	
 	private function writeHeader($statusCode) 
 	{
-		header('HTTP/1.1' . $statusCode . ' ' . 
-			$this->statusCodeService->getStatusMessage($statusCode));
+		$msg = $this->statusCodeService->getStatusMessage($statusCode);
+		
+		header("HTTP/1.1 $statusCode $msg");
 		
 		header('Content-Type: text/plain; charset=utf-8');
 	}

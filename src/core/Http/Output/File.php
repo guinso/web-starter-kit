@@ -1,7 +1,7 @@
 <?php 
 namespace Hx\Http\Output;
 
-class Text implements \Hx\Http\OutputInterface {
+class File implements \Hx\Http\OutputInterface {
 
 	private $statusCodeService;
 	
@@ -10,7 +10,12 @@ class Text implements \Hx\Http\OutputInterface {
 		$this->statusCodeService = $statusCodeService;
 	}
 	
-	public function generateOuput(Array $data, $statusCode)
+	public function getFormatType()
+	{
+		return 'file';
+	}
+	
+	public function generateOutput(Array $data, $statusCode)
 	{
 		$fileName = $data['fileName'];
 	
@@ -23,8 +28,9 @@ class Text implements \Hx\Http\OutputInterface {
 	
 	private function writeHeader($statusCode, $fileName, $filePath) 
 	{
-		header('HTTP/1.1' . $statusCode . ' ' . 
-			$this->statusCodeService->getStatusMessage($statusCode));
+		$msg = $this->statusCodeService->getStatusMessage($statusCode);
+		
+		header("HTTP/1.1 $statusCode $msg");
 		
 		header('Content-Type: ' . finfo_file(
 				finfo_open(FILEINFO_MIME_TYPE), 

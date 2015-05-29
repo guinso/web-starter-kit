@@ -7,6 +7,8 @@ interface MatchInterface {
 	
 	public function getFunctionName();
 	
+	public function getOutputFormat();
+	
 	public function isStaticCall();
 
 	public function getArgs();

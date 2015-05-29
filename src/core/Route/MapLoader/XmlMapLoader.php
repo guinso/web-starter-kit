@@ -105,6 +105,11 @@ class XmlMapLoader implements \Hx\Route\MapLoaderInterface {
 					Throw new \Hx\Exception\ParseException(
 							"Node <function> not found, Source:- $filePath");
 				}
+				else if (empty($map->outputFormat))
+				{
+					Throw new \Hx\Exception\ParseException(
+							"Node <outputFormat> not found, Source:- $filePath");
+				}
 				else
 				{
 					$uri = (string) $map->uri;
@@ -114,6 +119,7 @@ class XmlMapLoader implements \Hx\Route\MapLoaderInterface {
 						(string) mb_strtoupper($map->method),
 						empty($map->class)? '' : (string) $map->class,
 						(string) $map->function,
+						(string) $map->outputFormat,
 						empty($map->static)? false : $this->parseBool($map->static)
 					);
 				}

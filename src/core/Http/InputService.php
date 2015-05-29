@@ -2,12 +2,13 @@
 namespace Hx\Http;
 
 class InputService implements InputServiceInterface {
-	private $plugins, $classParser, $fileService, $headerReader;
+	private $plugins, $classParser, $fileService, $headerReader, $iocContainer;
 	
 	public function __construct(
 		\Hx\Http\HeaderReaderInterface $headerReader,
 		\Hx\Parser\ClassParserInterface $classParser, 
 		\Hx\File\FileInterface $fileService,
+		\Hx\IocContainer\IocContainerInterface $iocContainer,
 		$loadDefaultPlugins = true)
 	{
 		$this->headerReader = $headerReader;	
@@ -17,6 +18,8 @@ class InputService implements InputServiceInterface {
 		$this->classParser = $classParser;
 		
 		$this->fileService = $fileService;
+		
+		$this->iocContainer = $iocContainer;
 		
 		if($loadDefaultPlugins == true)
 			$this->registerDefaultPlugin();
@@ -84,9 +87,11 @@ class InputService implements InputServiceInterface {
 							//echo '<br/>';
 							
 							if (in_array(
-									"Hx\\Http\\InputInterface",
-									$reflection->getInterfaceNames()))
-										$this->registerPlugin($reflection->newInstance());
+								"Hx\\Http\\InputInterface",
+								$reflection->getInterfaceNames()))
+									$this->registerPlugin(
+										$this->iocContainer->resolve($namespaceKey . '\\' . $className)		
+									);
 						}
 					}
 				}

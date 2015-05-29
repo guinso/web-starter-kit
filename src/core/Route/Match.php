@@ -2,7 +2,7 @@
 namespace Hx\Route;
 
 class Match implements MatchInterface {
-	private $className, $functionName, $isStaticCall, $args;
+	private $className, $functionName, $isStaticCall, $args, $outputFormat;
 
 	
 	public function __construct(InfoInterface $info, Array $arguments)
@@ -10,6 +10,8 @@ class Match implements MatchInterface {
 		$this->className = $info->getClassName();
 		
 		$this->functionName = $info->getFunctionName();
+		
+		$this->outputFormat = $info->getOutputFormat();
 		
 		$this->isStaticCall = $info->isStaticCall();
 		
@@ -24,6 +26,11 @@ class Match implements MatchInterface {
 	public function getFunctionName()
 	{
 		return $this->functionName;
+	}
+	
+	public function getOutputFormat()
+	{
+		return $this->outputFormat;
 	}
 	
 	public function isStaticCall()

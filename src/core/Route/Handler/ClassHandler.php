@@ -15,7 +15,7 @@ class ClassHandler implements \Hx\Route\HandlerInterface {
 	{
 		if ($match->isStaticCall())
 		{
-			call_user_func(
+			return call_user_func(
 				(empty($match->getClassName())? '' : $match->getClassName() . '::') . 
 					$match->getFunctionName(), 
 				new \Hx\Route\InputParam\SimpleInputParam(
@@ -26,7 +26,7 @@ class ClassHandler implements \Hx\Route\HandlerInterface {
 		}
 		else 
 		{
-			$this->iocContainer->make($match->getClassName())->
+			return $this->iocContainer->make($match->getClassName())->
 				{$match->getFunctionName()}(
 					new \Hx\Route\InputParam\SimpleInputParam(
 						$data['data'], 
