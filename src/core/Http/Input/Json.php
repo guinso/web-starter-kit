@@ -24,18 +24,18 @@ class Json implements \Hx\Http\InputInterface {
 		}
 		else if ($method == 'POST')
 		{
-			mb_parse_str(file_get_contents("php://input"), $result);
+			//mb_parse_str(file_get_contents("php://input"), $result);
 			
 			return array(
-				'data' => json_decode($result, true)
+				'data' => json_decode(file_get_contents("php://input"), true)
 			);
 		}
 		else if ($method == 'PUT')
 		{
-			mb_parse_str(file_get_contents("php://input"), $result);
+			//mb_parse_str(file_get_contents("php://input"), $result);
 			
 			return array(
-				'data' => json_decode($result, true)
+				'data' => json_decode(file_get_contents("php://input"), true)
 			);
 		}
 		else 

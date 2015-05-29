@@ -5,8 +5,23 @@ class HeaderReader implements \Hx\Http\HeaderReaderInterface {
 	
 	public function getContentType()
 	{
-		return  array_key_exists("CONTENT_TYPE", $_SERVER)? 
-			$_SERVER["CONTENT_TYPE"] : '';
+		if (array_key_exists("CONTENT_TYPE", $_SERVER))
+		{
+			$result = $_SERVER["CONTENT_TYPE"];
+			
+			$position = strpos($result, ';');
+			
+			if($position === false)
+				return $result;
+			else 
+			{
+				return substr($result, 0, $position);
+			}
+			
+			return $result;
+		}
+		else 
+			return '';
 	}
 	
 	public function getMethod()
