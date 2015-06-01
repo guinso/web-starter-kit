@@ -6,7 +6,7 @@ namespace Hx\Parser;
  * @author chingchetsiang
  *
  */
-interface ClassParserInterface extends ParserInterface {
+interface ClassParserInterface {
 	
 	public function load($sourcePath);
 	
