@@ -1,8 +1,12 @@
 <?php 
 namespace Hx\Database\Sql;
 
-interface SelectInterface extends Hx\Database\SqlBuilderInterface {
-	public function execute($param);
+interface SelectInterface {
+	const RESET_SQL = 1;
+	
+	const RESET_PARAM = 2;
+	
+	public function execute($param = null);
 	
 	public function generateSql();
 	
@@ -19,5 +23,9 @@ interface SelectInterface extends Hx\Database\SqlBuilderInterface {
 	public function group($column);
 	
 	public function join($mode, $table, $clause);
+	
+	public function paginate($pageIndex, $pageSize);
+	
+	public function param($paramName, $value);
 }
 ?>
