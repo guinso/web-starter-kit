@@ -24,7 +24,8 @@ $phar->setDefaultStub('autoloader.php');
 
 $phar->buildFromDirectory($sourcePath);
 
-$phar->compress(Phar::GZ);
+//create compressed version phar file
+//x $phar->compress(Phar::GZ);
 
 //external library is excluded from  phar file, developer need to explicitly includ it accordingly
 ?>

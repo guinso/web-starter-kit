@@ -1,7 +1,7 @@
 <?php 
 namespace Hx\Route;
 
-class RestRouterException extends \Hx\Exception\RouteException
+class RestRouterException extends RouteException
 {
 	public function __construct($errorType, $message, $code, $previous)
 	{

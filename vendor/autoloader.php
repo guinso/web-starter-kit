@@ -22,6 +22,6 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'tcpdf' . DIRECTORY_SEPARATOR . 'tc
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'phpjasperxml' . DIRECTORY_SEPARATOR . 'PHPJasperXML.inc.php';
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'Ig' . DIRECTORY_SEPARATOR . 'autoloader.php';
+//x require_once __DIR__ . DIRECTORY_SEPARATOR . 'Ig' . DIRECTORY_SEPARATOR . 'autoloader.php';
 
 ?>

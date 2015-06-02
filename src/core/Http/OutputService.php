@@ -33,7 +33,7 @@ class OutputService implements OutputServiceInterface {
 	{
 		if(array_key_exists($plugin->getFormatType(), $this->plugins))
 		{
-			Throw new \Hx\Exception\HttpException(
+			Throw new \Hx\Http\HttpException(
 				"Plugin for {$plugin->getFormatType()} already registered.");
 		}
 		else 
@@ -47,7 +47,7 @@ class OutputService implements OutputServiceInterface {
 		if(array_key_exists($contentType, $this->plugins))
 			unset($this->plugins[$contentType]);
 		else
-			Throw new \Hx\Exception\HttpException(
+			Throw new \Hx\Http\HttpException(
 				"No available InputHandler plugin for <$contentType> found.");
 	}
 	
@@ -60,7 +60,7 @@ class OutputService implements OutputServiceInterface {
 		if(array_key_exists($formatType, $this->plugins))
 			return $this->plugins[$formatType];
 		else 
-			Throw new \Hx\Exception\HttpException(
+			Throw new \Hx\Http\HttpException(
 				"No available OutputHandler plugin for <$formatType> found.");
 	}
 	

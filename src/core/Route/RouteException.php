@@ -1,5 +1,5 @@
 <?php 
-namespace Hx\Exception;
+namespace Hx\Route;
 
 class RouteException extends \RuntimeException {
 	private $errorType;

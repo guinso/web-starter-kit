@@ -14,9 +14,9 @@ $rootDir = dirname(__DIR__);
 
 
 /******************** load Hx Core library *************************/
-require_once $rootDir . DIRECTORY_SEPARATOR . 'src' .DIRECTORY_SEPARATOR .
-	'core' . DIRECTORY_SEPARATOR . 'autoloader.php';
-//x require_once 'phar://' . $rootDir . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'hxCore.phar';
+//x require_once $rootDir . DIRECTORY_SEPARATOR . 'src' .DIRECTORY_SEPARATOR .
+//x 	'core' . DIRECTORY_SEPARATOR . 'autoloader.php';
+require_once 'phar://' . $rootDir . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'hxCore.phar';
 
 
 
@@ -62,14 +62,19 @@ define('K_TCPDF_CALLS_IN_HTML', true);
 
 
 /*************** load 3rd party library **********************/
-include_once $rootDir .DIRECTORY_SEPARATOR . 
-	'vendor' . DIRECTORY_SEPARATOR . 'autoloader.php';
-//x require_once 'phar://' . $rootDir . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'vendor.phar';
+//x include_once $rootDir .DIRECTORY_SEPARATOR . 
+//x 	'vendor' . DIRECTORY_SEPARATOR . 'autoloader.php';
+require_once 'phar://' . $rootDir . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'vendor.phar';
+
+
+
+/*************** IG library *********************************/
+require_once $rootDir . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'Ig' . DIRECTORY_SEPARATOR . 'autoloader.php';
 
 
 
 /*************** HX Extra Package **************************/
-require_once $rootDir . DIRECTORY_SEPARATOR . 'src' .DIRECTORY_SEPARATOR .
-	'extra' . DIRECTORY_SEPARATOR . 'autoloader.php';
-
+//x require_once $rootDir . DIRECTORY_SEPARATOR . 'src' .DIRECTORY_SEPARATOR .
+//x 	'extra' . DIRECTORY_SEPARATOR . 'autoloader.php';
+require_once 'phar://' . $rootDir . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'hxExtra.phar';
 ?>

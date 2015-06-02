@@ -1,5 +1,5 @@
 <?php 
-namespace Hx\Exception;
+namespace Hx\Http;
 
 class HttpException extends \LogicException {
 	

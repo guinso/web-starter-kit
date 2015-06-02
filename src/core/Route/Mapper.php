@@ -11,7 +11,7 @@ class Mapper implements \Hx\Route\MapperInterface {
 		foreach ($mapTable as $key => $map)
 		{
 			if (!($map instanceof InfoInterface))
-				Throw new \Hx\Exception\RouteException(
+				Throw new \Hx\Route\RouteException(
 					"Map table index of $key is not " .
 					"type of \\Hx\\Route\\InfoInterface");
 		}
@@ -34,7 +34,7 @@ class Mapper implements \Hx\Route\MapperInterface {
 		{
 			if (!(reset($table) instanceof \Hx\Route\InfoInterface))
 			{
-				Throw new \Hx\Exception\RouteException(
+				Throw new \Hx\Route\RouteException(
 					"Mapper table's element is not type of \\Hx\\Route\\InfoInterface");
 			}
 			else if ($this->_isMatch(reset($table), $method, $requestUri))

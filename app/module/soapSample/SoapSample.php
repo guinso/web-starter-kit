@@ -62,7 +62,7 @@ class SoapSample {
 				[]
 			);
 		} 
-		catch(\Hx\Exception\SoapException $ex) {
+		catch(\Hx\Soap\SoapException $ex) {
 			//handle typical SOAP connection exception
 			echo $ex->getMessage();
 		} 

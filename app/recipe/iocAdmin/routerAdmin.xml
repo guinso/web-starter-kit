@@ -17,7 +17,7 @@
 					
 					return new \Hx\Route\Mapper(
 						$mapLoader->loadDir(
-							"@nextApp" . DIRECTORY_SEPARATOR . 
+							"@app" . DIRECTORY_SEPARATOR . 
 							'recipe' . DIRECTORY_SEPARATOR . 'restApiAdmin'
 						)
 					);

@@ -31,7 +31,7 @@ class Multipart implements \Hx\Http\InputInterface {
 		*/
 		else 
 		{
-			Throw new \Hx\Exception\HttpException(
+			Throw new \Hx\Http\HttpException(
 				"multipart input decoder not support request method <$method>");
 		}
 	}

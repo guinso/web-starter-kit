@@ -43,12 +43,12 @@ class XmlMapLoader implements \Hx\Route\MapLoaderInterface {
 	{
 		if (!file_exists($filePath))
 		{
-			Throw new \Hx\Exception\RouteException(
+			Throw new \Hx\Route\RouteException(
 					"Source file <$filePath> not found.");
 		}
 		else if (!is_readable($filePath))
 		{
-			Throw new \Hx\Exception\RouteException(
+			Throw new \Hx\Route\RouteException(
 					"Source file <$filePath> is not readable");
 		}
 		else

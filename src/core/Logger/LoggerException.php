@@ -1,5 +1,5 @@
 <?php 
-namespace Hx\Exception;
+namespace Hx\Logger;
 
 class LoggerException extends \Exception {
 	

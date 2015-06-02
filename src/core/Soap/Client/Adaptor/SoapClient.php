@@ -19,7 +19,7 @@ class SoapClient implements \Hx\Soap\Client\AdaptorInterface {
 			);
 				
 		} catch(\SoapFault $fault) {
-			throw new \Hx\Exception\SoapException(
+			throw new \Hx\Soap\SoapException(
 				"Fail to instantiate SOAP client :- " . $fault->getMessage(),
 				$fault->getCode(),
 				$fault);
@@ -40,7 +40,7 @@ class SoapClient implements \Hx\Soap\Client\AdaptorInterface {
 		} 
 		catch (\SoapFault $fault) 
 		{
-			throw new \Hx\Exception\SoapException(
+			throw new \Hx\Soap\SoapException(
 				"SOAP client fail to send on function <$functionName> :- " . $fault->getMessage(),
 				$fault->getCode(),
 				$fault);
@@ -55,7 +55,7 @@ class SoapClient implements \Hx\Soap\Client\AdaptorInterface {
 		}
 		else 
 		{
-			throw new \Hx\Exception\SoapException(
+			throw new \Hx\Soap\SoapException(
 				"Fail to send SOAP request on function <$functionName>");
 		}
 	}

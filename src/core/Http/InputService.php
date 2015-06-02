@@ -36,7 +36,7 @@ class InputService implements InputServiceInterface {
 	{
 		if(array_key_exists($plugin->getContentType(), $this->plugins))
 		{
-			Throw new \Hx\Exception\HttpException(
+			Throw new \Hx\Http\HttpException(
 				"Plugin for {$plugin->getContentType()} already registered.");
 		}
 		else 
@@ -50,7 +50,7 @@ class InputService implements InputServiceInterface {
 		if(array_key_exists($contentType, $this->plugins))
 			unset($this->plugins[$contentType]);
 		else
-			Throw new \Hx\Exception\HttpException(
+			Throw new \Hx\Http\HttpException(
 				"No available InputHandler plugin for <$contentType> found.");
 	}
 	
@@ -63,7 +63,7 @@ class InputService implements InputServiceInterface {
 		if(array_key_exists($contentType, $this->plugins))
 			return $this->plugins[$contentType];
 		else 
-			Throw new \Hx\Exception\HttpException(
+			Throw new \Hx\Http\HttpException(
 				"No available InputHandler plugin for <$contentType> found.");
 	}
 	

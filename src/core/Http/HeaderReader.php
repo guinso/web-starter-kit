@@ -40,9 +40,9 @@ class HeaderReader implements \Hx\Http\HeaderReaderInterface {
 			}
 			else
 			{
-				Throw new \Hx\Exception\RouteException(
+				Throw new \Hx\Route\HttpException(
 					"Http request method <$method> not support.",
-					\Hx\Exception\RouteException::METHOD_NOT_SUPPORT);
+					\Hx\Route\HttpException::METHOD_NOT_SUPPORT);
 			}
 		}
 		else

@@ -24,7 +24,7 @@ class UrlParam implements \Hx\Http\InputInterface {
 		}
 		else 
 		{
-			Throw new \Hx\Exception\HttpException(
+			Throw new \Hx\Http\HttpException(
 				"Url param input decoder not support request method <$method>");
 		}
 	}

@@ -1,5 +1,5 @@
 <?php 
-namespace Hx\Exception;
+namespace Hx\IocContainer;
 
 class IocException extends \LogicException {
 	

@@ -21,7 +21,7 @@ class IocContainer implements IocContainerInterface {
 		foreach ($rules as $key => $rule)
 		{
 			if (!($rule instanceof \Hx\IocContainer\RuleInterface))
-				Throw new \Hx\Exception\IocException(
+				Throw new \Hx\IocContainer\IocException(
 					"Rules index of $key is not " . 
 					"type of \\Hx\\IocContainer\\RuleInterface");
 			else
@@ -37,7 +37,7 @@ class IocContainer implements IocContainerInterface {
 	{
 		if (!array_key_exists($className, $this->rules))
 		{
-			Throw new \Hx\Exception\IocException("Ioc rule for $className not found");
+			Throw new \Hx\IocContainer\IocException("Ioc rule for $className not found");
 		}
 		else 
 		{
@@ -157,7 +157,7 @@ class IocContainer implements IocContainerInterface {
 			}
 			else 
 			{
-				Throw new \Hx\Exception\IocException(
+				Throw new \Hx\IocContainer\IocException(
 					"Ioc rule for $className not found.");
 			}
 		}
@@ -183,7 +183,7 @@ class IocContainer implements IocContainerInterface {
 		}
 		else 
 		{
-			Throw new \Hx\Exception\IocException(
+			Throw new \Hx\IocContainer\IocException(
 				"Ioc contructor argument " . $reflectionParam->getName() . 
 				" unable to handled.");;
 		}

@@ -40,7 +40,7 @@ class File implements FileInterface {
 	public function deleteFile($filePath)
 	{
 		if(!file_exists($filePath))
-			Throw new \Hx\Exception\FileException(
+			Throw new \Hx\File\FileException(
 					"Targeted delete file <$filePath> not found.");
 			
 		unlink($filePath);

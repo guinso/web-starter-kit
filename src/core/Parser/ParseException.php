@@ -1,5 +1,5 @@
 <?php 
-namespace Hx\Exception;
+namespace Hx\Parser;
 
 /**
  * To catch parse exception, example serialization, reading xml into class object

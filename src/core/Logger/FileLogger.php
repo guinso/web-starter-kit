@@ -8,7 +8,7 @@ class FileLogger implements \Hx\Logger\LoggerInterface {
 	public function __construct($logDirectory)
 	{
 		if (!is_dir($logDirectory))
-			Throw new \Hx\Exception\LoggerException("Directory $logDirectory not found.");
+			Throw new \Hx\Logger\LoggerException("Directory $logDirectory not found.");
 		
 		$this->directory = $logDirectory;
 	}

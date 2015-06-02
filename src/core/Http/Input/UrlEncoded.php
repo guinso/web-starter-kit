@@ -26,7 +26,7 @@ class UrlEncoded implements \Hx\Http\InputInterface {
 		}
 		else 
 		{
-			Throw new \Hx\Exception\HttpException(
+			Throw new \Hx\Http\HttpException(
 				"UrlEncoded input decoder not support request method <$method>");
 		}
 	}

@@ -32,7 +32,7 @@ class Rule implements RuleInterface {
 		else 
 		{
 			if (empty($instanceClassName))
-				Throw new \Hx\Exception\IocException(
+				Throw new \Hx\IocContainer\IocException(
 					"Cannot pass empty value on instanceClassName parameter.");
 			else 
 			{
@@ -47,7 +47,7 @@ class Rule implements RuleInterface {
 			foreach($rules as $k => $r)
 			{
 				if (! ($r instanceof RuleInterface))
-					Throw new \Hx\Exception\IocException(
+					Throw new \Hx\IocContainer\IocException(
 						"Fail to initiate Rule instance, rules index of " . 
 						"$k is not type of \Hx\IocContainer\RuleInterface.");
 			}
@@ -121,7 +121,7 @@ class Rule implements RuleInterface {
 		if (empty($this->serviceInstance))
 			$this->serviceInstance = $object;
 		else if(!$this->isService)
-			Throw new \Hx\Exception\IocException(
+			Throw new \Hx\IocContainer\IocException(
 				"Rule {$this->className} is not service type.");
 		else
 			$this->serviceInstance = $object;
