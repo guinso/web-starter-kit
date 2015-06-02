@@ -84,7 +84,7 @@ class SimpleRecipe implements \Hx\Recipe\RecipeInterface {
 	public function setDefaultProfile($name)
 	{
 		if (!array_key_exists($name, $this->profile))
-			Throw new \Starter\Exception\RecipeException("There is no such profile $name.");
+			Throw new \Starter\Recipe\RecipeException("There is no such profile $name.");
 		else
 			$this->lut[self::DEFAULT_PROFILE_KEY] = $name;
 	}

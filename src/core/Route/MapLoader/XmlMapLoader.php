@@ -73,7 +73,7 @@ class XmlMapLoader implements \Hx\Route\MapLoaderInterface {
 		
 		if ($maps === false)
 		{
-			Throw new \Hx\Exception\ParseException(
+			Throw new \Hx\Route\RouteException(
 				"There is no </route/maps/map> xpath found. source:- $filePath");
 		}
 		else 
@@ -85,29 +85,29 @@ class XmlMapLoader implements \Hx\Route\MapLoaderInterface {
 			{
 				if (empty($map->uri))
 				{
-					Throw new \Hx\Exception\ParseException(
+					Throw new \Hx\Route\RouteException(
 							"Node <uri> not found, Source:- $filePath");
 				}
 				else if (empty($map->method))
 				{
-					Throw new \Hx\Exception\ParseException(
+					Throw new \Hx\Route\RouteException(
 							"Node <method> not found, Source:- $filePath");
 				}
 				else if (!empty($map->static) &&
 						$this->parseBool($map->static) == false &&
 						empty($map->class))
 				{
-					Throw new \Hx\Exception\ParseException(
+					Throw new \Hx\Route\RouteException(
 							"Node <class> not found, Source:- $filePath");
 				}
 				else if (empty($map->function))
 				{
-					Throw new \Hx\Exception\ParseException(
+					Throw new \Hx\Route\RouteException(
 							"Node <function> not found, Source:- $filePath");
 				}
 				else if (empty($map->outputFormat))
 				{
-					Throw new \Hx\Exception\ParseException(
+					Throw new \Hx\Route\RouteException(
 							"Node <outputFormat> not found, Source:- $filePath");
 				}
 				else
@@ -138,7 +138,7 @@ class XmlMapLoader implements \Hx\Route\MapLoaderInterface {
 		else if (mb_strtolower($value) == 'false')
 			return false;
 		else
-			Throw new \Hx\Exception\ParseException("Fail to parse value to boolean: $value");
+			Throw new \Hx\Route\RouteException("Fail to parse value to boolean: $value");
 	}
 }
 ?>

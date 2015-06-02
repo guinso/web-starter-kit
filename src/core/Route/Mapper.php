@@ -52,7 +52,7 @@ class Mapper implements \Hx\Route\MapperInterface {
 		}
 		else 
 		{
-			Throw new  \Hx\Exception\RouteException(
+			Throw new  \Hx\Route\RouteException(
 				"No matching candidate for method <$method>, uri <$requestUri>");
 		}
 	}

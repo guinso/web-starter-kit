@@ -117,7 +117,7 @@ catch(\Hx\Route\RestRouterException $ex)
 			$httpOutput->generateOuput(
 				500,
 				array('data' => date('Y-m-d H:s:i') . 
-					"System encountered application pipeline error," . 
+					" System encountered input error," . 
 					" kindly contact system administrator to solve issue.")
 			);
 			break;
@@ -128,12 +128,21 @@ catch(\Hx\Route\RestRouterException $ex)
 				array('data' => $ex->getMessage())
 			);
 			break;
-			
+
+		case \Hx\Route\RestRouterException::OUTPUT_ERROR: //delivery mechnism
+			$httpOutput->generateOuput(
+				500,
+				array('data' => date('Y-m-d H:s:i') .
+					" System encountered output error," .
+					" kindly contact system administrator to solve issue.")
+			);
+			break;
+				
 		default:
 			$httpOutput->generateOutput(
 				500,
 				array('data' => date('Y-m-d H:s:i') .
-					"Unknown routing error code catched: {$ex->getErrorType()}")
+					" Unknown routing error code catched: {$ex->getErrorType()}")
 			);
 			break; //something wrong with the code...
 	}
