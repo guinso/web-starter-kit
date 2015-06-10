@@ -41,7 +41,7 @@ class Mapper implements \Hx\Route\MapperInterface {
 			{
 				preg_match('*^' . reset($table)->getUri() . '$*', $requestUri, $args);
 			
-				return new \Hx\Route\Match(reset($table), $args);
+				return new \Hx\Route\Match(reset($table), $this->shiftArray($args));
 			}
 			else 
 			{
@@ -64,6 +64,16 @@ class Mapper implements \Hx\Route\MapperInterface {
 			preg_match(
 				'*^' . $info->getUri() . '$*', 
 				$uri) === 1;
+	}
+	
+	private function shiftArray(array $args)
+	{
+		array_shift($args);
+
+		if (is_array($args))
+			return $args;
+		else 
+			return array($args);
 	}
 }
 ?>

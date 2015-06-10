@@ -15,7 +15,7 @@ class ClassHandler implements \Hx\Route\HandlerInterface {
 	{
 		if ($match->isStaticCall())
 		{
-			return call_user_func(
+			return call_user_func_array(
 				(empty($match->getClassName())? '' : $match->getClassName() . '::') . 
 					$match->getFunctionName(), 
 				new \Hx\Route\InputParam\SimpleInputParam(
