@@ -69,60 +69,69 @@ class XmlMapLoader implements \Hx\Route\MapLoaderInterface {
 	{
 		$xmlObj = simplexml_load_string($content);
 
-		$maps = $xmlObj->xpath('/route/maps/map');
+		$mapGroup = $xmlObj->xpath('/route/maps');
 		
-		if ($maps === false)
+		if ($mapGroup === false)
 		{
 			Throw new \Hx\Route\RouteException(
-				"There is no </route/maps/map> xpath found. source:- $filePath");
+				"There is no </route/maps> xpath found. source:- $filePath");
 		}
 		else 
 		{
 			$temp = array();
 			
 			//parse xml into LUT array
-			foreach($maps as $map)
+			foreach($mapGroup as $maps)
 			{
-				if (empty($map->uri))
-				{
+				$mm = $maps->xpath('map');
+				
+				if ($mm === false)
 					Throw new \Hx\Route\RouteException(
-							"Node <uri> not found, Source:- $filePath");
-				}
-				else if (empty($map->method))
+						"There is no </route/maps/map> xpath found. source:- $filePath");
+				
+				foreach($mm as $map)
 				{
-					Throw new \Hx\Route\RouteException(
-							"Node <method> not found, Source:- $filePath");
-				}
-				else if (!empty($map->static) &&
-						$this->parseBool($map->static) == false &&
-						empty($map->class))
-				{
-					Throw new \Hx\Route\RouteException(
-							"Node <class> not found, Source:- $filePath");
-				}
-				else if (empty($map->function))
-				{
-					Throw new \Hx\Route\RouteException(
-							"Node <function> not found, Source:- $filePath");
-				}
-				else if (empty($map->outputFormat))
-				{
-					Throw new \Hx\Route\RouteException(
-							"Node <outputFormat> not found, Source:- $filePath");
-				}
-				else
-				{
-					$uri = (string) $map->uri;
-					$method = (string) mb_strtoupper($map->method);
-					
-					$temp[$method . '-' .$uri] = new \Hx\Route\Info(
-						$uri,
-						$method,
-						empty($map->class)? '' : (string) $map->class,
-						(string) $map->function,
-						(string) $map->outputFormat,
-						empty($map->static)? false : $this->parseBool($map->static)
-					);
+					if (empty($map->uri))
+					{
+						Throw new \Hx\Route\RouteException(
+								"Node <uri> not found, Source:- $filePath");
+					}
+					else if (empty($map->method))
+					{
+						Throw new \Hx\Route\RouteException(
+								"Node <method> not found, Source:- $filePath");
+					}
+					else if (!empty($map->static) &&
+							$this->parseBool($map->static) == false &&
+							empty($map->class))
+					{
+						Throw new \Hx\Route\RouteException(
+								"Node <class> not found, Source:- $filePath");
+					}
+					else if (empty($map->function))
+					{
+						Throw new \Hx\Route\RouteException(
+								"Node <function> not found, Source:- $filePath");
+					}
+					else if (empty($map->outputFormat))
+					{
+						Throw new \Hx\Route\RouteException(
+								"Node <outputFormat> not found, Source:- $filePath");
+					}
+					else
+					{
+						$uri = (string) $map->uri;
+						$method = (string) mb_strtoupper($map->method);
+							
+						$temp[$method . '-' .$uri] = new \Hx\Route\Info(
+								$uri,
+								$method,
+								empty($map->class)? '' : (string) $map->class,
+								(string) $map->function,
+								(string) $map->outputFormat,
+								empty($map->static)? false : $this->parseBool($map->static)
+						);
+					}
 				}
 			}
 			
