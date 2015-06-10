@@ -172,7 +172,7 @@
 		
 		<!-- Function -->
 		<map>
-			<uri>/user/(\w+)</uri>
+			<uri>/function</uri>
 			<method>get</method>
 			<class>\Func</class>
 			<function>get</function>
