@@ -14,7 +14,7 @@
 <dbName>starter</dbName>
 <dbHost>localhost</dbHost>
 <dbUsr>root</dbUsr>
-<dbPwd>1q2w3e</dbPwd>
+<dbPwd>123456789</dbPwd>
 <dbLen>10</dbLen>
 <dbInitial>A</dbInitial>
 <uploadPath>@data/upload</uploadPath>
