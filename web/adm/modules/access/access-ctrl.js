@@ -13,7 +13,7 @@ controller('AccessCtrl', function($scope, $resource, $util) {
 			group,
 			function(response) {
 				$util.setMsg('Update access success.', 'ok');
-				$scope.accMain.reload();
+				$scope.access.reload();
 			},
 			function(response) {
 				$util.setMsg('Update access fail.', 'error');
@@ -27,7 +27,7 @@ controller('AccessCtrl', function($scope, $resource, $util) {
 		
 		$resource('api/access-matrix-rebuild').get(
 			function() { 
-				$scope.accMain.reload();
+				$scope.access.reload();
 			},
 			function(response) { 
 				$util.handleErrorMsg(response); 
