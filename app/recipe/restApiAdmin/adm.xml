@@ -62,7 +62,8 @@
 			<static>true</static>
 			<outputFormat>json</outputFormat>
 		</map>
-		
+	</maps>
+	<maps>
 		<!-- Company Profile -->
 		<map>
 			<uri>/com-profile</uri>

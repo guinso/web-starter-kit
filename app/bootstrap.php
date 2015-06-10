@@ -15,7 +15,7 @@ $rootDir = dirname(__DIR__);
 
 /******************** load Hx Core library *************************/
 //x require_once $rootDir . DIRECTORY_SEPARATOR . 'src' .DIRECTORY_SEPARATOR .
-//x  	'core' . DIRECTORY_SEPARATOR . 'autoloader.php';
+//x   	'core' . DIRECTORY_SEPARATOR . 'autoloader.php';
 require_once 'phar://' . $rootDir . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'hxCore.phar';
 
 
