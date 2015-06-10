@@ -62,7 +62,7 @@
 		</rule>
 		<rule>
 			<class>Hx\Http\Output\Text</class>
-			<replace>Hx\Http\Output\text</replace>
+			<replace>Hx\Http\Output\Text</replace>
 			<service>true</service>
 		</rule>
 		<rule>
