@@ -14,7 +14,7 @@
 		</rule>
 		<rule>
 			<class>Hx\Http\InputServiceInterface</class>
-			<replace>Hx\Http\InputService</replace>
+			<replace>Starter\Http\DummyInputService</replace>
 		</rule>
 		<rule>
 			<class>Hx\Http\OutputServiceInterface</class>
