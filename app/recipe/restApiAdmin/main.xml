@@ -296,4 +296,16 @@
 			<outputFormat>json</outputFormat>
 		</map>
 	</maps>
+	
+	<!-- upload file -->
+	<maps>
+		<map>
+			<uri>/file-upload</uri>
+			<method>post</method>
+			<class>Ig\File\Attachment</class>
+			<function>uploadFile</function>
+			<static>true</static>
+			<outputFormat>json</outputFormat>
+		</map>
+	</maps>
 </route>
