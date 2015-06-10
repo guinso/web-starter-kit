@@ -20,7 +20,7 @@ if(file_exists($outputPath . '.gz'))
 //rebuild phar file
 $phar = new \Phar($outputPath);
 
-$phar->setDefaultStub('include.php');
+$phar->setDefaultStub('autoloader.php');
 
 $phar->buildFromDirectory($sourcePath);
 
