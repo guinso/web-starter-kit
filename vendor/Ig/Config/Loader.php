@@ -26,6 +26,14 @@ Class Loader {
 		}
 	}
 	
+	public static function setRootPath($rootPath)
+	{
+		if (file_exists($rootPath))
+			self::$_rootpath = $rootPath;
+		else 
+			throw new \Exception("Root path $rootPath not found.");
+	}
+	
 	public static function getRootPath()
 	{
 		return self::$_rootpath;
