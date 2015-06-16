@@ -105,14 +105,14 @@ catch(\Hx\Route\RestRouterException $ex)
 	switch($ex->getErrorType())
 	{
 		case \Hx\Route\RestRouterException::INPUT_ERROR: //delivery mechanism
-			$httpOutput->generateOuput(
+			$httpOutput->generateOutput(
 				500,
 				array('data' => "Invalid request info: " . $ex->getMessage())
 			);
 			break;
 			
 		case \Hx\Route\RestRouterException::MSG_ERROR: //application pipeline
-			$httpOutput->generateOuput(
+			$httpOutput->generateOutput(
 				500,
 				array('data' => date('Y-m-d H:s:i') . 
 					"System encountered input error," . 
@@ -121,14 +121,14 @@ catch(\Hx\Route\RestRouterException $ex)
 			break;
 			
 		case \Hx\Route\RestRouterException::DOMAIN_ERROR: //business logic
-			$httpOutput->generateOuput(
+			$httpOutput->generateOutput(
 				406,
 				array('data' => $ex->getMessage())
 			);
 			break;
 
 		case \Hx\Route\RestRouterException::OUTPUT_ERROR: //delivery mechnism
-			$httpOutput->generateOuput(
+			$httpOutput->generateOutput(
 				500,
 				array('data' => date('Y-m-d H:s:i') .
 					" System encountered ouput error," .
@@ -167,7 +167,7 @@ catch(\Exception $ex)
 	//send 500 error code with message
 	$httpOutput = $iocContainer->resolve('\Hx\Http\Output\Text');
 	
-	$httpOutput->generateOuput(
+	$httpOutput->generateOutput(
 		500,
 		array('data' => 
 			date('Y-m-d H:s:i') . ' System encounter internal runtime error. ' . 
