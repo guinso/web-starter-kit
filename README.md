@@ -2,13 +2,8 @@ web-starter-kit
 ===============
 
 This is general purpose client-server web server model. 
-This project collect various libraries to unify and simplified all services into single library package (**Ig lib**) for developers:
-* **REST API**	headless data (_JSON_) communication, general service for all modern application client (html, android, ios, .NET, etc.)
-* **Database**	one time setup, no need to hardcord database username and password during development (audit trail ready, key-value service)
-* **Email**		SMTP based email agent to sent email, independent from site server email configuration
-* **PDF**		Template based markup scripting for easier PDF creation without using PHP coding instead of simple template scripting (sandbox model, reusable JSON data from REST)
-* **MS Excel**	Provide Excel generator (.xlsx) for general data export (need PHP scripting)
-* **HTML**		Using _AngularJS_ to develop dynamic front-end single page design web application
+Backend service server: Implement in-house Ioc style (agile development) Hx library
+Frontend web server: Implement AngularJS library
 
 This project consists of two main web sites:
 - Production site _/_, (for enduser, this is end product)
@@ -23,12 +18,16 @@ Set crontab run once per minute
 /usr/bin/php path-of-project/api/cron.php
 ```
 
+Build Hx Phar Package
+---------------------
+
+Run *script/buildCorePhar.php**, **script/buildVendorPhar.php*, and *script/buildHxExtraPhar.php* respectively 
+
 Credits
 -------
 
 ###Backend Library
 - *[notORM](https://github.com/vrana/notorm)* database tool [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
-- *[epiphany](https://github.com/jmathai/epiphany)* mirco PHP framework [BSD](http://opensource.org/licenses/BSD-3-Clause)
 - *[phpExcel](https://github.com/PHPOffice/PHPExcel)* spreadsheet library [LGPL](https://github.com/PHPOffice/PHPExcel/blob/master/license.md)
 - *[phpMailer](https://github.com/PHPMailer/PHPMailer)* email library [LGPL 2.1](http://www.gnu.org/licenses/lgpl-2.1.html)
 - *[jShrink](https://github.com/tedious/JShrink)* javasrcipt compressor library [BSD](http://opensource.org/licenses/BSD-3-Clause)
@@ -59,12 +58,12 @@ Credits
 Milestone
 ---------
 
-* Support server update from version server
 * Add basic database creation scripting
 * Support database backup to _DropBox_ with encrypted content
 * Support REST request from server side
 * Add central data repository with distributed micro-server configuration
 * Build side project which support android development
+* Migrate Ig library implementation to Hx library
 
 License
 -------
