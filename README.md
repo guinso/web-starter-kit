@@ -2,8 +2,8 @@ web-starter-kit
 ===============
 
 This is general purpose client-server web server model. 
-Backend service server: Implement in-house Ioc style (agile development) Hx library
-Frontend web server: Implement AngularJS library
+- Backend service server: Implement in-house Ioc style (agile development) Hx library
+- Frontend web server: Implement AngularJS library
 
 This project consists of two main web sites:
 - Production site _/_, (for enduser, this is end product)
