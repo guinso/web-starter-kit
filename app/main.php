@@ -84,15 +84,7 @@ try
 catch(\Hx\Route\RestRouterException $ex)
 {
 	//unexpected error ocurred, need to fix ASAP
-	
-	$logger->error(
-		$ex->getMessage(),
-		array(
-			'filepath' => $ex->getFile(),
-			'linecode' => $ex->getLine()
-		)
-	);
-	
+
 	$prevEx = $ex->getPrevious();
 	if(!empty($prevEx))
 		$logger->error(
@@ -102,6 +94,14 @@ catch(\Hx\Route\RestRouterException $ex)
 				'linecode' => $prevEx->getLine())
 		);
 	
+	$logger->error(
+		$ex->getMessage(),
+		array(
+			'filepath' => $ex->getFile(),
+			'linecode' => $ex->getLine()
+		)
+	);
+	
 	$httpOutput = $iocContainer->resolve('\Hx\Http\Output\Text');
 	
 	switch($ex->getErrorType())
@@ -109,7 +109,7 @@ catch(\Hx\Route\RestRouterException $ex)
 		case \Hx\Route\RestRouterException::INPUT_ERROR: //delivery mechanism
 			$httpOutput->generateOutput(
 				500,
-				array('data' => "Invalid request info: " . $ex->getMessage())
+				array('data' => "Invalid request info: " . $ex->getPrevious()->getMessage())
 			);
 			break;
 			
@@ -125,7 +125,7 @@ catch(\Hx\Route\RestRouterException $ex)
 		case \Hx\Route\RestRouterException::DOMAIN_ERROR: //business logic
 			$httpOutput->generateOutput(
 				406,
-				array('data' => $ex->getMessage())
+				array('data' => $ex->getPrevious()->getMessage())
 			);
 			break;
 
@@ -149,12 +149,7 @@ catch(\Hx\Route\RestRouterException $ex)
 }
 catch(\Exception $ex)
 {
-	$logger->error(
-		$ex->getMessage(), 
-		array(
-			'filepath' => $ex->getFile(), 
-			'linecode' => $ex->getLine())
-	);
+	
 	
 	$prevEx = $ex->getPrevious();
 	
@@ -165,6 +160,13 @@ catch(\Exception $ex)
 				'filepath' => $prevEx->getFile(),
 				'linecode' => $prevEx->getLine())
 		);
+	
+	$logger->error(
+		$ex->getMessage(),
+		array(
+			'filepath' => $ex->getFile(),
+			'linecode' => $ex->getLine())
+	);
 	
 	//send 500 error code with message
 	$httpOutput = $iocContainer->resolve('\Hx\Http\Output\Text');

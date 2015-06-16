@@ -82,15 +82,7 @@ try
 catch(\Hx\Route\RestRouterException $ex)
 {
 	//unexpected error ocurred, need to fix ASAP
-	
-	$logger->error(
-		$ex->getMessage(),
-		array(
-			'filepath' => $ex->getFile(),
-			'linecode' => $ex->getLine()
-		)
-	);
-	
+
 	$prevEx = $ex->getPrevious();
 	if(!empty($prevEx))
 		$logger->error(
@@ -99,6 +91,14 @@ catch(\Hx\Route\RestRouterException $ex)
 				'filepath' => $prevEx->getFile(),
 				'linecode' => $prevEx->getLine())
 		);
+	
+	$logger->error(
+		$ex->getMessage(),
+		array(
+			'filepath' => $ex->getFile(),
+			'linecode' => $ex->getLine()
+		)
+	);
 	
 	$httpOutput = $iocContainer->resolve('\Hx\Http\Output\Text');
 	
@@ -147,13 +147,6 @@ catch(\Hx\Route\RestRouterException $ex)
 }
 catch(\Exception $ex)
 {
-	$logger->error(
-		$ex->getMessage(), 
-		array(
-			'filepath' => $ex->getFile(), 
-			'linecode' => $ex->getLine())
-	);
-	
 	$prevEx = $ex->getPrevious();
 	
 	if(!empty($prevEx))
@@ -163,6 +156,13 @@ catch(\Exception $ex)
 				'filepath' => $prevEx->getFile(),
 				'linecode' => $prevEx->getLine())
 		);
+	
+	$logger->error(
+		$ex->getMessage(),
+		array(
+			'filepath' => $ex->getFile(),
+			'linecode' => $ex->getLine())
+	);
 	
 	//send 500 error code with message
 	$httpOutput = $iocContainer->resolve('\Hx\Http\Output\Text');

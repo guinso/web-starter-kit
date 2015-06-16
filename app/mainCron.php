@@ -77,13 +77,6 @@ try
 }
 catch(\Exception $ex)
 {
-	$logger->error(
-		$ex->getMessage(), 
-		array(
-			'filepath' => $ex->getFile(), 
-			'linecode' => $ex->getLine())
-	);
-	
 	$prevEx = $ex->getPrevious();
 	
 	if(!empty($prevEx))
@@ -93,6 +86,13 @@ catch(\Exception $ex)
 				'filepath' => $prevEx->getFile(),
 				'linecode' => $prevEx->getLine())
 		);
+	
+	$logger->error(
+		$ex->getMessage(),
+		array(
+			'filepath' => $ex->getFile(),
+			'linecode' => $ex->getLine())
+	);
 	
 	echo $ex->getMessage();
 }
