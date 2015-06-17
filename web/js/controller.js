@@ -71,7 +71,8 @@ controller('AppCtrl', function($scope, $resource, $location, $util) {
 	$scope.togglePinSidebar = function() {
 		$scope.pinSidebar = !$scope.pinSidebar;
 		
-		$scope.needToggleMenu = !$scope.pinSidebar;
+		if ($scope.needToggleMenu == true)
+			$scope.needToggleMenu = !$scope.pinSidebar;
 	};
 
 	$scope.checkUser = function() {
