@@ -29,6 +29,9 @@ else
 
 define('SERVER_URL', $serverHostUrl);
 
+//root path
+\Ig\Config\Loader::setRootPath(dirname(__DIR__));
+
 //timezone
 date_default_timezone_set($profile->getTimeZone());
 

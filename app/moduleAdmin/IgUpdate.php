@@ -64,6 +64,9 @@ class IgModUpdate {
 	 * @param number $maxRev
 	 */
 	public static function executeUpdate($maxRev = 0) {
+		
+		self::backupDatabase();
+		
 		$version = \Ig\Db::getKeyValue('update-ver', 0);
 		$updates = self::getAvailableUpdate();
 		
@@ -82,6 +85,27 @@ class IgModUpdate {
 		}
 		
 		return array('version' => \Ig\Db::getKeyValue('update-ver', 0));
+	}
+	
+	private static function backupDatabase() {
+		$profile = \Ig\Config::getProfile();
+		
+		$vesion = \Ig\Db::getKeyValue('update-ver', 0);
+		
+		$path = \Ig\Config\Loader::getRootPath() . DIRECTORY_SEPARATOR . 'data' . 
+			DIRECTORY_SEPARATOR . 'backup'. DIRECTORY_SEPARATOR . 
+			'patch-' . \Ig\Db::getKeyValue('update-ver', 0) . '_' . date('Y-m-d_H--i--s') . '.sql';
+		
+		//delete file if exists
+		if (file_exists($path))
+			unlink($path);
+		
+		$cmd = "mysqldump -u {$profile->dbUsr} -p{$profile->dbPwd} {$profile->dbName} > $path";
+		
+		$output = shell_exec($cmd);
+		
+		if (!file_exists($path))
+			Throw new Exception("Fail to backup database before run patch. Msg: $output, Path: $path");
 	}
  }
 ?>
