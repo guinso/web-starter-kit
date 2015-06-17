@@ -62,6 +62,19 @@ controller('AppCtrl', function($scope, $resource, $location, $util) {
 		$scope.needToggleMenu = !$scope.needToggleMenu;
 	};
 
+	//hide side bar
+	$scope.pinSidebar = true;
+	$scope.hideSidebar = function() {
+		if ($scope.pinSidebar == false)
+			$scope.needToggleMenu = true;
+	};
+	$scope.togglePinSidebar = function() {
+		$scope.pinSidebar = !$scope.pinSidebar;
+		
+		if ($scope.needToggleMenu == true)
+			$scope.needToggleMenu = !$scope.pinSidebar;
+	};
+	
 	$scope.checkUser = function() {
 		/*
 		var x = $resource('api/access-right-list').get(

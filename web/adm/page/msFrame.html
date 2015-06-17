@@ -14,6 +14,12 @@
 			<span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+			<li role="presentation">
+				<a href='' role='menuitem' tabindex="-1" ng-click="togglePinSidebar()">Pin Sidebar
+					<span class='glyphicon glyphicon-ok pull-right' ng-hide='!pinSidebar'></span>
+				</a>
+			</li>
+			<li role="presentation"><hr/></li>
 			<li role="presentation"><a href='' role="menuitem" tabindex="-1" ng-click='logout()'>logout</a></li>
 		</ul>
 	</div>
@@ -66,7 +72,7 @@
 	</div>
 	
 	<!-- Container -->
-	<div id='ms-content-wrapper'>
+	<div id='ms-content-wrapper' ng-click='hideSidebar()'>
 		<!-- Main Container -->
 		<div ng-view class='ms-view' ng-class='{blur:loader.show}'></div>
 		
