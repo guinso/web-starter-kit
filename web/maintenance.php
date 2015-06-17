@@ -24,7 +24,7 @@ $iocContainer = new \Hx\IocContainer\IocContainer(
 );
 
 /********************* Recipe *******************************/
-$recipeService = $iocContainer->resolve("\Erp\Recipe\SimpleRecipeService");
+$recipeService = $iocContainer->resolve("\Starter\Recipe\SimpleRecipeService");
 
 $recipe = $recipeService->getRecipe();
 

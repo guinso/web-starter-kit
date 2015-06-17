@@ -21,12 +21,11 @@ require_once 'phar://' . $rootDir . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SE
 
 
 /******************** configure TCPDF ****************/
-$libDir = $rootDir . DIRECTORY_SEPARATOR . 'vendor';
 
 define('K_TCPDF_EXTERNAL_CONFIG', 1); //to override default setting
 define('K_PATH_MAIN', '');
 define('K_PATH_URL', '');
-define('K_PATH_FONTS', $libDir . DIRECTORY_SEPARATOR . 'resource' . DIRECTORY_SEPARATOR . 'tcpdfFont' . DIRECTORY_SEPARATOR);
+define('K_PATH_FONTS', $rootDir . DIRECTORY_SEPARATOR . 'resource' . DIRECTORY_SEPARATOR . 'tcpdfFont' . DIRECTORY_SEPARATOR);
 define('K_PATH_CACHE', $rootDir . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR);
 define('K_PATH_URL_CACHE', $rootDir . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR);
 define('K_PATH_IMAGES', $rootDir . DIRECTORY_SEPARATOR . 'resource' . DIRECTORY_SEPARATOR . 'image' . DIRECTORY_SEPARATOR);

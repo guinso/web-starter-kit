@@ -1,3 +1,13 @@
+html,body {
+	min-height: 100%;
+	height: 100%;
+}
+
+#bodyy {
+	min-height: 100%;
+	height: 100%;
+}
+
 /** Topbar **/
 #ms-topbar {
 	position: fixed;
@@ -29,8 +39,29 @@
 	color: #000;
 }
 
+#ms-topbar .dropdown-icon {
+	width: 36px;
+}
+
+#ms-topbar .dropdown-icon a {
+	width: 36px;	
+}
+
+#ms-topbar .dropdown-icon .btn {
+	font-size: 18px;	
+}
+
+#ms-topbar .badge-notify {
+	top: -12px;
+  	left: -16px;
+  	color: white;
+}
+
 /** Wrapper **/
 #ms-wrapper {
+	min-height: 100%;
+	height: 100%;
+	
 	margin-top: 40px;
 	padding-left: 0;
     -webkit-transition: all 0.5s ease;
@@ -56,9 +87,11 @@
 }
 
 #ms-content-wrapper {
+	min-height: 100%;
+	height: 100%;
+	
 	padding-top: 2px;
     width: 100%;
-    height: 100%;
     position: absolute;
     
     white-space:nowrap;
