@@ -1,6 +1,9 @@
 html,body {
 	min-height: 100%;
 	height: 100%;
+	
+	/* hide main scrollbar */
+	overflow:hidden;
 }
 
 #bodyy {
@@ -96,6 +99,14 @@ html,body {
     
     white-space:nowrap;
     overflow-x:auto;
+    
+    /* fix bottom scroll offset */
+    padding-bottom: 50px;
+}
+
+/* fix ng-view test wrap */
+#ms-content-wrapper div {
+	white-space: normal;
 }
 
 #ms-view {
