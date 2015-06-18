@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<recipe>
+	<guid>54a0e8442cbf1</guid>
+	<maintenance></maintenance>
+	<debugEmail>1</debugEmail>
+	<serverUrl>http://localhost</serverUrl>
+	<username>admin</username>
+	<password>1q2w3e</password>
+	<debugEmailAddress>your_cc_mailbox@abc.com</debugEmailAddress>
+	<defaultProfile>web</defaultProfile>
+	<profiles>
+		<profile>
+			<name>web</name>
+			<dbName>starter</dbName>
+			<dbHost>localhost</dbHost>
+			<dbUsr>root</dbUsr>
+			<dbPwd>123456789</dbPwd>
+			<dbLen>10</dbLen>
+			<dbInitial>A</dbInitial>
+			<uploadPath>@data/upload</uploadPath>
+			<templatePath>@data/template</templatePath>
+			<cachePath>@data/cache</cachePath>
+			<timeZone>Asia/Kuala_Lumpur</timeZone>
+			<smtpHost>mail.abc.com</smtpHost>
+			<smtpUsr>user</smtpUsr>
+			<smtpPwd>xxx</smtpPwd>
+			<smtpName>your-email-display-name</smtpName>
+			<smtpEmail>system_mailbox@abc.com</smtpEmail>
+			<smtpSecure>tls</smtpSecure><!-- leave blank if no security -->
+			<smtpPort>587</smtpPort>
+		</profile>
+	</profiles>
+</recipe>
