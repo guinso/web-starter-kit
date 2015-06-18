@@ -1,1 +1,6 @@
 /recipe.xml
+/backup/*
+/cache/*
+/log/*
+/template/*
+/upload/*
