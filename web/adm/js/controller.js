@@ -63,16 +63,20 @@ controller('AppCtrl', function($scope, $resource, $location, $util) {
 	};
 
 	//hide side bar
-	$scope.pinSidebar = true;
+	$scope.pinSidebar = window.innerWidth >= 768;
 	$scope.hideSidebar = function() {
+		var hide = window.innerWidth >= 768;
+		
 		if ($scope.pinSidebar == false)
-			$scope.needToggleMenu = true;
+			$scope.needToggleMenu = hide;
 	};
 	$scope.togglePinSidebar = function() {
 		$scope.pinSidebar = !$scope.pinSidebar;
 		
-		if ($scope.needToggleMenu == true)
-			$scope.needToggleMenu = !$scope.pinSidebar;
+		var show = window.innerWidth < 768;
+		
+		if ($scope.pinSidebar == true)
+			$scope.needToggleMenu = show;
 	};
 	
 	$scope.checkUser = function() {
