@@ -65,13 +65,13 @@ try
 {
 	$logger = $iocContainer->resolve('\Hx\Logger\LoggerInterface');
 	
+	$httpOutput = $iocContainer->resolve('\Hx\Http\Output\Json');
+	
 	if ($recipe->getIsMaintenance())
 	{
-		$httpOutput = $iocContainer->resolve('\Hx\Http\Output\Text');
-		
 		$httpOutput->generateOuput(
 			503,
-			array('data' => "System under maintenance")
+			array('msg' => "System under maintenance", 'code' => -1)
 		);
 	}
 	
@@ -100,47 +100,55 @@ catch(\Hx\Route\RestRouterException $ex)
 		)
 	);
 	
-	$httpOutput = $iocContainer->resolve('\Hx\Http\Output\Text');
-	
 	switch($ex->getErrorType())
 	{
 		case \Hx\Route\RestRouterException::INPUT_ERROR: //delivery mechanism
 			$httpOutput->generateOutput(
 				500,
-				array('data' => "Invalid request info: " . $ex->getMessage())
+				array(
+					'msg' => "Invalid request info: " . $ex->getMessage(), 
+					'code' => $ex->getCode())
 			);
 			break;
 			
 		case \Hx\Route\RestRouterException::MSG_ERROR: //application pipeline
 			$httpOutput->generateOutput(
 				500,
-				array('data' => date('Y-m-d H:s:i') . 
-					"System encountered input error," . 
-					" kindly contact system administrator to solve issue.")
+				array(
+					'msg' => date('Y-m-d H:s:i') . 
+						"System encountered input error," . 
+						" kindly contact system administrator to solve issue.", 
+					'code' => $ex->getCode())
 			);
 			break;
 			
 		case \Hx\Route\RestRouterException::DOMAIN_ERROR: //business logic
 			$httpOutput->generateOutput(
 				406,
-				array('data' => $ex->getMessage())
+				array(
+					'msg' => $ex->getMessage(), 
+					'code' => $ex->getCode())
 			);
 			break;
 
 		case \Hx\Route\RestRouterException::OUTPUT_ERROR: //delivery mechnism
 			$httpOutput->generateOutput(
 				500,
-				array('data' => date('Y-m-d H:s:i') .
-					" System encountered ouput error," .
-					" kindly contact system administrator to solve issue.")
+				array(
+					'msg' => date('Y-m-d H:s:i') .
+						" System encountered ouput error," .
+						" kindly contact system administrator to solve issue.", 
+					'code' => $ex->getCode())
 			);
 			break;
 				
 		default:
 			$httpOutput->generateOutput(
 				500,
-				array('data' => date('Y-m-d H:s:i') .
-					"Unknown routing error code catched: {$ex->getErrorType()}")
+				array(
+					'msg' => date('Y-m-d H:s:i') .
+						"Unknown routing error code catched: {$ex->getErrorType()}", 
+					'code' => $ex->getCode())
 			);
 			break; //something wrong with the code...
 	}
@@ -164,14 +172,13 @@ catch(\Exception $ex)
 			'linecode' => $ex->getLine())
 	);
 	
-	//send 500 error code with message
-	$httpOutput = $iocContainer->resolve('\Hx\Http\Output\Text');
-	
 	$httpOutput->generateOutput(
 		500,
-		array('data' => 
-			date('Y-m-d H:s:i') . ' System encounter internal runtime error. ' . 
-			'kindly contact system administrator to solve the issue.'
+		array(
+			'msg' => 
+				date('Y-m-d H:s:i') . ' System encounter internal runtime error. ' . 
+				'kindly contact system administrator to solve the issue.', 
+			'code' => $ex->getCode()
 		)
 	);
 }
