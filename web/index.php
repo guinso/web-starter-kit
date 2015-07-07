@@ -87,6 +87,7 @@ include_once 'maintenance.php';
 include_once 'loadModules.php';
 ?>
 
+<!-- 
 <script type="text/javascript">
 	$('#loading-desc').html('Loading completed.');
 	$('#loading-msg').fadeOut(1500, function(){
@@ -94,5 +95,6 @@ include_once 'loadModules.php';
 	});
 	
 </script>
+-->
 
 </html>
