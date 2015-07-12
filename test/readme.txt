@@ -1,0 +1,9 @@
+Untest Classes:
+1. \Hx\Authenticate\Login\CookieLogin
+2. \Hx\Authenticate\Login\SessionLogin
+3. \Hx\Soap\Client\Adaptor\SoapClient
+4. \Hx\Logger\FileLogger
+5. \Hx\Logger\SysLogger
+6. \Hx\Http\HeaderReader
+7. \Hx\Route\RestRouter
+9. \Hx\Route\Handler\ClassHandler
