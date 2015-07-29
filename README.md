@@ -35,7 +35,7 @@ Credits
 - *[parsedown](https://github.com/erusev/parsedown)* markdown parser tool [MIT](http://opensource.org/licenses/MIT)
 - *[phpjasperXML](https://github.com/SIMITGROUP/phpjasperxml)* jasper report generator __open source, not decided yet__
 - *[tcpdf](http://www.tcpdf.org/)* pdf generator [LGLP v3](https://www.gnu.org/licenses/lgpl.html)
-- *[RainTpl](http://www.raintpl.com) Template engine [MIT](http://opensource.org/licenses/MIT)
+- *[RainTpl](http://www.raintpl.com)* Template engine [MIT](http://opensource.org/licenses/MIT)
 
 ###Frontend Library
 - *[Animate CSS](http://daneden.github.io/animate.css/)* collection of CSS animation library [MIT](http://opensource.org/licenses/MIT)
@@ -63,7 +63,7 @@ Milestone
 * Support REST request from server side
 * Add central data repository with distributed micro-server configuration
 * Build side project which support android development
-* Migrate Ig library implementation to Hx library
+* ~~Migrate Ig library implementation to Hx library~~
 
 License
 -------
